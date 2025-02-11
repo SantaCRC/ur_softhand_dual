@@ -1,0 +1,147 @@
+controller_manager:
+  ros__parameters:
+    joint_state_broadcaster_ur_dual_I:
+      type: joint_state_broadcaster/JointStateBroadcaster
+
+    joint_state_broadcaster_ur_dual_D:
+      type: joint_state_broadcaster/JointStateBroadcaster
+
+    io_and_status_controller_ur_dual_I:
+      type: ur_controllers/GPIOController
+
+    io_and_status_controller_ur_dual_D:
+      type: ur_controllers/GPIOController
+
+    speed_scaling_state_broadcaster_ur_dual_I:
+      type: ur_controllers/SpeedScalingStateBroadcaster
+
+    speed_scaling_state_broadcaster_ur_dual_D:
+      type: ur_controllers/SpeedScalingStateBroadcaster
+
+    force_torque_sensor_broadcaster_ur_dual_I:
+      type: force_torque_sensor_broadcaster/ForceTorqueSensorBroadcaster
+
+    force_torque_sensor_broadcaster_ur_dual_D:
+      type: force_torque_sensor_broadcaster/ForceTorqueSensorBroadcaster
+
+    scaled_joint_trajectory_controller_ur_dual_I:
+      type: ur_controllers/ScaledJointTrajectoryController
+
+    scaled_joint_trajectory_controller_ur_dual_D:
+      type: ur_controllers/ScaledJointTrajectoryController
+
+    forward_velocity_controller_ur_dual_I:
+      type: velocity_controllers/JointGroupVelocityController
+
+    forward_velocity_controller_ur_dual_D:
+      type: velocity_controllers/JointGroupVelocityController
+
+    forward_position_controller_ur_dual_I:
+      type: position_controllers/JointGroupPositionController
+
+    forward_position_controller_ur_dual_D:
+      type: position_controllers/JointGroupPositionController
+
+# ------------------------------
+# ⚡ Parámetros del UR5e IZQUIERDO (ur_dual_I)
+# ------------------------------
+speed_scaling_state_broadcaster_ur_dual_I:
+  ros__parameters:
+    state_publish_rate: 100.0
+    tf_prefix: "ur_dual_I_"
+
+io_and_status_controller_ur_dual_I:
+  ros__parameters:
+    tf_prefix: "ur_dual_I_"
+
+force_torque_sensor_broadcaster_ur_dual_I:
+  ros__parameters:
+    sensor_name: ur_dual_I_tcp_fts_sensor
+    state_interface_names:
+      - force.x
+      - force.y
+      - force.z
+      - torque.x
+      - torque.y
+      - torque.z
+    frame_id: ur_dual_I_tool0
+    topic_name: ft_data
+
+scaled_joint_trajectory_controller_ur_dual_I:
+  ros__parameters:
+    joints:
+      - ur_dual_I_shoulder_pan_joint
+      - ur_dual_I_shoulder_lift_joint
+      - ur_dual_I_elbow_joint
+      - ur_dual_I_wrist_1_joint
+      - ur_dual_I_wrist_2_joint
+      - ur_dual_I_wrist_3_joint
+    command_interfaces:
+      - position
+    state_interfaces:
+      - position
+      - velocity
+    state_publish_rate: 100.0
+    action_monitor_rate: 20.0
+    constraints:
+      stopped_velocity_tolerance: 0.2
+      goal_time: 0.0
+      ur_dual_I_shoulder_pan_joint: { trajectory: 0.2, goal: 0.1 }
+      ur_dual_I_shoulder_lift_joint: { trajectory: 0.2, goal: 0.1 }
+      ur_dual_I_elbow_joint: { trajectory: 0.2, goal: 0.1 }
+      ur_dual_I_wrist_1_joint: { trajectory: 0.2, goal: 0.1 }
+      ur_dual_I_wrist_2_joint: { trajectory: 0.2, goal: 0.1 }
+      ur_dual_I_wrist_3_joint: { trajectory: 0.2, goal: 0.1 }
+    speed_scaling_interface_name: ur_dual_I_speed_scaling/speed_scaling_factor
+
+# ------------------------------
+# ⚡ Parámetros del UR5e DERECHO (ur_dual_D)
+# ------------------------------
+speed_scaling_state_broadcaster_ur_dual_D:
+  ros__parameters:
+    state_publish_rate: 100.0
+    tf_prefix: "ur_dual_D_"
+
+io_and_status_controller_ur_dual_D:
+  ros__parameters:
+    tf_prefix: "ur_dual_D_"
+
+force_torque_sensor_broadcaster_ur_dual_D:
+  ros__parameters:
+    sensor_name: ur_dual_D_tcp_fts_sensor
+    state_interface_names:
+      - force.x
+      - force.y
+      - force.z
+      - torque.x
+      - torque.y
+      - torque.z
+    frame_id: ur_dual_D_tool0
+    topic_name: ft_data
+
+scaled_joint_trajectory_controller_ur_dual_D:
+  ros__parameters:
+    joints:
+      - ur_dual_D_shoulder_pan_joint
+      - ur_dual_D_shoulder_lift_joint
+      - ur_dual_D_elbow_joint
+      - ur_dual_D_wrist_1_joint
+      - ur_dual_D_wrist_2_joint
+      - ur_dual_D_wrist_3_joint
+    command_interfaces:
+      - position
+    state_interfaces:
+      - position
+      - velocity
+    state_publish_rate: 100.0
+    action_monitor_rate: 20.0
+    constraints:
+      stopped_velocity_tolerance: 0.2
+      goal_time: 0.0
+      ur_dual_D_shoulder_pan_joint: { trajectory: 0.2, goal: 0.1 }
+      ur_dual_D_shoulder_lift_joint: { trajectory: 0.2, goal: 0.1 }
+      ur_dual_D_elbow_joint: { trajectory: 0.2, goal: 0.1 }
+      ur_dual_D_wrist_1_joint: { trajectory: 0.2, goal: 0.1 }
+      ur_dual_D_wrist_2_joint: { trajectory: 0.2, goal: 0.1 }
+      ur_dual_D_wrist_3_joint: { trajectory: 0.2, goal: 0.1 }
+    speed_scaling_interface_name: ur_dual_D_speed_scaling/speed_scaling_factor

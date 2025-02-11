@@ -1,0 +1,59 @@
+{
+  "configurations": [
+    {
+      "browse": {
+        "databaseFilename": "${default}",
+        "limitSymbolsToIncludedHeaders": false
+      },
+      "includePath": [
+        "/home/gii-exp/ur_softhand/install/qb_hand_ros2_control/include/**",
+        "/home/gii-exp/ur_softhand/install/qb_device_ros2_control/include/**",
+        "/home/gii-exp/ur_softhand/install/qb_device_driver/include/**",
+        "/home/gii-exp/ur_softhand/install/qb_device_msgs/include/**",
+        "/home/gii-exp/ws_moveit2/install/pilz_industrial_motion_planner_testutils/include/**",
+        "/home/gii-exp/ws_moveit2/install/pilz_industrial_motion_planner/include/**",
+        "/home/gii-exp/ws_moveit2/install/moveit_ros_control_interface/include/**",
+        "/home/gii-exp/ws_moveit2/install/moveit_simple_controller_manager/include/**",
+        "/home/gii-exp/ws_moveit2/install/moveit_setup_assistant/include/**",
+        "/home/gii-exp/ws_moveit2/install/moveit_setup_srdf_plugins/include/**",
+        "/home/gii-exp/ws_moveit2/install/moveit_setup_core_plugins/include/**",
+        "/home/gii-exp/ws_moveit2/install/moveit_setup_controllers/include/**",
+        "/home/gii-exp/ws_moveit2/install/moveit_setup_app_plugins/include/**",
+        "/home/gii-exp/ws_moveit2/install/moveit_setup_framework/include/**",
+        "/home/gii-exp/ws_moveit2/install/moveit_servo/include/**",
+        "/home/gii-exp/ws_moveit2/install/moveit_ros_trajectory_cache/include/**",
+        "/home/gii-exp/ws_moveit2/install/moveit_ros_visualization/include/**",
+        "/home/gii-exp/ws_moveit2/install/moveit_py/include/**",
+        "/home/gii-exp/ws_moveit2/install/moveit_hybrid_planning/include/**",
+        "/home/gii-exp/ws_moveit2/install/moveit_ros_planning_interface/include/**",
+        "/home/gii-exp/ws_moveit2/install/moveit_ros_benchmarks/include/**",
+        "/home/gii-exp/ws_moveit2/install/moveit_ros_warehouse/include/**",
+        "/home/gii-exp/ws_moveit2/install/moveit_ros_robot_interaction/include/**",
+        "/home/gii-exp/ws_moveit2/install/moveit_ros_perception/include/**",
+        "/home/gii-exp/ws_moveit2/install/moveit_ros_move_group/include/**",
+        "/home/gii-exp/ws_moveit2/install/moveit_planners_ompl/include/**",
+        "/home/gii-exp/ws_moveit2/install/moveit_kinematics/include/**",
+        "/home/gii-exp/ws_moveit2/install/moveit_ros_planning/include/**",
+        "/home/gii-exp/ws_moveit2/install/moveit_ros_occupancy_map_monitor/include/**",
+        "/home/gii-exp/ws_moveit2/install/moveit_resources_prbt_ikfast_manipulator_plugin/include/**",
+        "/home/gii-exp/ws_moveit2/install/moveit_planners_stomp/include/**",
+        "/home/gii-exp/ws_moveit2/install/chomp_motion_planner/include/**",
+        "/home/gii-exp/ws_moveit2/install/moveit_core/include/**",
+        "/home/gii-exp/ws_moveit2/install/srdfdom/include/**",
+        "/home/gii-exp/ws_moveit2/install/moveit_msgs/include/**",
+        "/home/gii-exp/ws_moveit2/install/geometric_shapes/include/**",
+        "/home/gii-exp/realsense_ws/install/realsense2_camera/include/**",
+        "/home/gii-exp/realsense_ws/install/realsense2_camera_msgs/include/**",
+        "/opt/ros/humble/include/**",
+        "/home/gii-exp/ur_softhand/src/qbdevice-ros/qb_device_driver/include/**",
+        "/usr/include/**"
+      ],
+      "name": "ROS",
+      "intelliSenseMode": "gcc-x64",
+      "compilerPath": "/usr/bin/gcc",
+      "cStandard": "gnu11",
+      "cppStandard": "c++14"
+    }
+  ],
+  "version": 4
+}

@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+<robot name="ur_dual" xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <!-- First, include the macro from our custom description -->
+  <xacro:include filename="$(find ur_dual_description)/urdf/ur_dual_macro.xacro"/>
+  <xacro:include filename="$(find ur_robot_driver)/urdf/ur.ros2_control.xacro"/>
+
+  <!-- Define the arguments for parametrization -->
+  <xacro:arg name="ur_type_1" default="ur5e"/>
+  <xacro:arg name="ur_type_2" default="ur5e"/>
+  
+  <xacro:arg name="robot_ip_1" default="10.113.36.96"/>
+  <xacro:arg name="robot_ip_2" default="10.113.36.97"/>
+  
+  <xacro:arg name="joint_limit_parameters_file_1" default="$(find ur_description)/config/$(arg ur_type_1)/joint_limits.yaml"/>
+  <xacro:arg name="joint_limit_parameters_file_2" default="$(find ur_description)/config/$(arg ur_type_2)/joint_limits.yaml"/>
+  
+  <xacro:arg name="kinematics_parameters_file_1" default="$(find ur_description)/config/$(arg ur_type_1)/default_kinematics.yaml"/>
+  <xacro:arg name="kinematics_parameters_file_2" default="$(find ur_description)/config/$(arg ur_type_2)/default_kinematics.yaml"/>
+  
+  <xacro:arg name="physical_parameters_file_1" default="$(find ur_description)/config/$(arg ur_type_1)/physical_parameters.yaml"/>
+  <xacro:arg name="physical_parameters_file_2" default="$(find ur_description)/config/$(arg ur_type_2)/physical_parameters.yaml"/>
+  
+  <xacro:arg name="visual_parameters_file_1" default="$(find ur_description)/config/$(arg ur_type_1)/visual_parameters.yaml"/>
+  <xacro:arg name="visual_parameters_file_2" default="$(find ur_description)/config/$(arg ur_type_2)/visual_parameters.yaml"/>
+
+  <xacro:arg name="headless_mode" default="false"/>
+  <xacro:arg name="use_mock_hardware" default="false"/>
+  <xacro:arg name="mock_sensor_commands" default="false"/>
+
+  <xacro:arg name="ur_script_filename" default="$(find ur_client_library)/resources/external_control.urscript"/>
+  <xacro:arg name="ur_output_recipe_filename" default="$(find ur_robot_driver)/resources/rtde_output_recipe.txt"/>
+  <xacro:arg name="ur_input_recipe_filename" default="$(find ur_robot_driver)/resources/rtde_input_recipe.txt"/>
+
+  <!-- Define world link -->
+  <link name="world"/>
+
+  <!-- Add both UR5e robots to the scene -->
+  <xacro:ur_dual
+    parent="world"
+    ur_type_1="$(arg ur_type_1)"
+    ur_type_2="$(arg ur_type_2)"
+    joint_limits_parameters_file_1="$(arg joint_limit_parameters_file_1)"
+    joint_limits_parameters_file_2="$(arg joint_limit_parameters_file_2)"
+    kinematics_parameters_file_1="$(arg kinematics_parameters_file_1)"
+    kinematics_parameters_file_2="$(arg kinematics_parameters_file_2)"
+    physical_parameters_file_1="$(arg physical_parameters_file_1)"
+    physical_parameters_file_2="$(arg physical_parameters_file_2)"
+    visual_parameters_file_1="$(arg visual_parameters_file_1)"
+    visual_parameters_file_2="$(arg visual_parameters_file_2)"
+  >
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </xacro:ur_dual>
+
+  <!-- ROS2 Control configuration for the first UR5e -->
+  <xacro:ur_ros2_control
+    name="ur_dual_1"
+    tf_prefix="ur_dual_1_"
+    kinematics_parameters_file="$(arg kinematics_parameters_file_1)"
+    robot_ip="$(arg robot_ip_1)"
+    script_filename="$(arg ur_script_filename)"
+    output_recipe_filename="$(arg ur_output_recipe_filename)"
+    input_recipe_filename="$(arg ur_input_recipe_filename)"
+    use_mock_hardware="$(arg use_mock_hardware)"
+    mock_sensor_commands="$(arg mock_sensor_commands)"
+    headless_mode="$(arg headless_mode)"
+  />
+
+  <!-- ROS2 Control configuration for the second UR5e -->
+  <xacro:ur_ros2_control
+    name="ur_dual_2"
+    tf_prefix="ur_dual_2_"
+    kinematics_parameters_file="$(arg kinematics_parameters_file_2)"
+    robot_ip="$(arg robot_ip_2)"
+    script_filename="$(arg ur_script_filename)"
+    output_recipe_filename="$(arg ur_output_recipe_filename)"
+    input_recipe_filename="$(arg ur_input_recipe_filename)"
+    use_mock_hardware="$(arg use_mock_hardware)"
+    mock_sensor_commands="$(arg mock_sensor_commands)"
+    headless_mode="$(arg headless_mode)"
+  />
+
+</robot>

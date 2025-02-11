@@ -1,0 +1,294 @@
+positions:
+- delay_in_position: 1000
+  joint_values:
+    qbhand2m1_manipulation_joint: -0.001
+    qbhand2m1_synergy_joint: -0.001
+    ur5e_elbow_joint: 5.236
+    ur5e_shoulder_lift_joint: -91.646
+    ur5e_shoulder_pan_joint: -99.493
+    ur5e_wrist_1_joint: 79.85
+    ur5e_wrist_2_joint: 272.287
+    ur5e_wrist_3_joint: -179.156
+  time_to_step: 1000
+- delay_in_position: 0
+  joint_values:
+    qbhand2m1_manipulation_joint: -0.001
+    qbhand2m1_synergy_joint: -0.001
+    ur5e_elbow_joint: -0.648
+    ur5e_shoulder_lift_joint: -159.691
+    ur5e_shoulder_pan_joint: -94.267
+    ur5e_wrist_1_joint: 178.015
+    ur5e_wrist_2_joint: 265.428
+    ur5e_wrist_3_joint: -179.936
+  time_to_step: 1000
+- delay_in_position: 0
+  joint_values:
+    qbhand2m1_manipulation_joint: -0.001
+    qbhand2m1_synergy_joint: -0.001
+    ur5e_elbow_joint: -0.606
+    ur5e_shoulder_lift_joint: -176.522
+    ur5e_shoulder_pan_joint: -95.734
+    ur5e_wrist_1_joint: 168.511
+    ur5e_wrist_2_joint: 267.076
+    ur5e_wrist_3_joint: -179.945
+  time_to_step: 1000
+- delay_in_position: 0
+  joint_values:
+    qbhand2m1_manipulation_joint: -0.001
+    qbhand2m1_synergy_joint: -0.001
+    ur5e_elbow_joint: -0.202
+    ur5e_shoulder_lift_joint: -177.53
+    ur5e_shoulder_pan_joint: -95.734
+    ur5e_wrist_1_joint: 168.511
+    ur5e_wrist_2_joint: 267.076
+    ur5e_wrist_3_joint: -179.945
+  time_to_step: 1000
+- delay_in_position: 1000
+  joint_values:
+    qbhand2m1_manipulation_joint: 0.001
+    qbhand2m1_synergy_joint: 0.001
+    ur5e_elbow_joint: -0.558
+    ur5e_shoulder_lift_joint: -121.766
+    ur5e_shoulder_pan_joint: -94.259
+    ur5e_wrist_1_joint: 168.658
+    ur5e_wrist_2_joint: 266.792
+    ur5e_wrist_3_joint: -179.15
+  time_to_step: 1000
+- delay_in_position: 1000
+  joint_values:
+    qbhand2m1_manipulation_joint: -0.028
+    qbhand2m1_synergy_joint: 0.797
+    ur5e_elbow_joint: -74.167
+    ur5e_shoulder_lift_joint: -142.513
+    ur5e_shoulder_pan_joint: -62.565
+    ur5e_wrist_1_joint: 221.581
+    ur5e_wrist_2_joint: 307.735
+    ur5e_wrist_3_joint: -177.242
+  time_to_step: 1000
+- delay_in_position: 1000
+  joint_values:
+    qbhand2m1_manipulation_joint: -0.029
+    qbhand2m1_synergy_joint: 0.798
+    ur5e_elbow_joint: -47.264
+    ur5e_shoulder_lift_joint: -107.973
+    ur5e_shoulder_pan_joint: -67.184
+    ur5e_wrist_1_joint: 159.871
+    ur5e_wrist_2_joint: 303.111
+    ur5e_wrist_3_joint: -176.771
+  time_to_step: 1000
+- delay_in_position: 1000
+  joint_values:
+    qbhand2m1_manipulation_joint: -0.029
+    qbhand2m1_synergy_joint: 0.799
+    ur5e_elbow_joint: -61.367
+    ur5e_shoulder_lift_joint: -105.668
+    ur5e_shoulder_pan_joint: -136.292
+    ur5e_wrist_1_joint: 171.788
+    ur5e_wrist_2_joint: 234.211
+    ur5e_wrist_3_joint: -171.451
+  time_to_step: 1000
+- delay_in_position: 1000
+  joint_values:
+    qbhand2m1_manipulation_joint: -0.03
+    qbhand2m1_synergy_joint: -0.001
+    ur5e_elbow_joint: -61.85
+    ur5e_shoulder_lift_joint: -134.696
+    ur5e_shoulder_pan_joint: -141.087
+    ur5e_wrist_1_joint: 168.583
+    ur5e_wrist_2_joint: 251.665
+    ur5e_wrist_3_joint: -171.561
+  time_to_step: 1000
+- delay_in_position: 1000
+  joint_values:
+    qbhand2m1_manipulation_joint: -0.03
+    qbhand2m1_synergy_joint: -0.0
+    ur5e_elbow_joint: -61.709
+    ur5e_shoulder_lift_joint: -105.353
+    ur5e_shoulder_pan_joint: -141.095
+    ur5e_wrist_1_joint: 168.693
+    ur5e_wrist_2_joint: 251.667
+    ur5e_wrist_3_joint: -171.56
+  time_to_step: 1000
+- delay_in_position: 1000
+  joint_values:
+    ur5e_elbow_joint: -147.253
+    ur5e_shoulder_lift_joint: -55.102
+    ur5e_shoulder_pan_joint: -31.013
+    ur5e_wrist_1_joint: 213.272
+    ur5e_wrist_2_joint: 331.398
+    ur5e_wrist_3_joint: -183.461
+  time_to_step: 1000
+- delay_in_position: 1000
+  joint_values:
+    qbhand2m1_manipulation_joint: -0.105
+    qbhand2m1_synergy_joint: 0.901
+    ur5e_elbow_joint: -132.649
+    ur5e_shoulder_lift_joint: -97.911
+    ur5e_shoulder_pan_joint: -43.957
+    ur5e_wrist_1_joint: 224.565
+    ur5e_wrist_2_joint: 317.924
+    ur5e_wrist_3_joint: -171.439
+  time_to_step: 1000
+- delay_in_position: 1000
+  joint_values:
+    qbhand2m1_manipulation_joint: -0.105
+    qbhand2m1_synergy_joint: 0.901
+    ur5e_elbow_joint: -108.805
+    ur5e_shoulder_lift_joint: -90.425
+    ur5e_shoulder_pan_joint: -133.625
+    ur5e_wrist_1_joint: 198.823
+    ur5e_wrist_2_joint: 229.758
+    ur5e_wrist_3_joint: -172.186
+  time_to_step: 1000
+- delay_in_position: 1000
+  joint_values:
+    qbhand2m1_manipulation_joint: -0.105
+    qbhand2m1_synergy_joint: 0.901
+    ur5e_elbow_joint: -58.122
+    ur5e_shoulder_lift_joint: -131.705
+    ur5e_shoulder_pan_joint: -147.146
+    ur5e_wrist_1_joint: 189.293
+    ur5e_wrist_2_joint: 216.227
+    ur5e_wrist_3_joint: -172.347
+  time_to_step: 1000
+- delay_in_position: 1000
+  joint_values:
+    qbhand2m1_manipulation_joint: -0.027
+    qbhand2m1_synergy_joint: 0.0
+    ur5e_elbow_joint: -58.116
+    ur5e_shoulder_lift_joint: -131.706
+    ur5e_shoulder_pan_joint: -147.145
+    ur5e_wrist_1_joint: 189.293
+    ur5e_wrist_2_joint: 216.224
+    ur5e_wrist_3_joint: -172.349
+  time_to_step: 1000
+- delay_in_position: 1000
+  joint_values:
+    qbhand2m1_manipulation_joint: -0.027
+    qbhand2m1_synergy_joint: 0.0
+    ur5e_elbow_joint: -41.961
+    ur5e_shoulder_lift_joint: -127.077
+    ur5e_shoulder_pan_joint: -175.345
+    ur5e_wrist_1_joint: 166.821
+    ur5e_wrist_2_joint: 188.047
+    ur5e_wrist_3_joint: -174.115
+  time_to_step: 1000
+- delay_in_position: 1000
+  joint_values:
+    qbhand2m1_manipulation_joint: -0.027
+    qbhand2m1_synergy_joint: 1.0
+    ur5e_elbow_joint: -56.513
+    ur5e_shoulder_lift_joint: -147.59
+    ur5e_shoulder_pan_joint: -168.726
+    ur5e_wrist_1_joint: 175.036
+    ur5e_wrist_2_joint: 199.769
+    ur5e_wrist_3_joint: -115.302
+  time_to_step: 1000
+- delay_in_position: 1000
+  joint_values:
+    qbhand2m1_manipulation_joint: -0.033
+    qbhand2m1_synergy_joint: 0.949
+    ur5e_elbow_joint: -17.092
+    ur5e_shoulder_lift_joint: -115.259
+    ur5e_shoulder_pan_joint: -168.729
+    ur5e_wrist_1_joint: 185.872
+    ur5e_wrist_2_joint: 206.83
+    ur5e_wrist_3_joint: -115.294
+  time_to_step: 1000
+- delay_in_position: 1000
+  joint_values:
+    qbhand2m1_manipulation_joint: -0.033
+    qbhand2m1_synergy_joint: 0.951
+    ur5e_elbow_joint: -17.097
+    ur5e_shoulder_lift_joint: -124.346
+    ur5e_shoulder_pan_joint: -214.61
+    ur5e_wrist_1_joint: 214.645
+    ur5e_wrist_2_joint: 183.314
+    ur5e_wrist_3_joint: -90.379
+  time_to_step: 1000
+- delay_in_position: 1000
+  joint_values:
+    qbhand2m1_manipulation_joint: -0.034
+    qbhand2m1_synergy_joint: -0.001
+    ur5e_elbow_joint: -17.096
+    ur5e_shoulder_lift_joint: -124.346
+    ur5e_shoulder_pan_joint: -214.605
+    ur5e_wrist_1_joint: 214.642
+    ur5e_wrist_2_joint: 183.315
+    ur5e_wrist_3_joint: -90.378
+  time_to_step: 1000
+- delay_in_position: 1000
+  joint_values:
+    qbhand2m1_manipulation_joint: -0.035
+    qbhand2m1_synergy_joint: -0.002
+    ur5e_elbow_joint: -17.546
+    ur5e_shoulder_lift_joint: -124.001
+    ur5e_shoulder_pan_joint: -98.16
+    ur5e_wrist_1_joint: 143.853
+    ur5e_wrist_2_joint: 276.283
+    ur5e_wrist_3_joint: -172.742
+  time_to_step: 1000
+- delay_in_position: 1000
+  joint_values:
+    qbhand2m1_manipulation_joint: -0.035
+    qbhand2m1_synergy_joint: -0.002
+    ur5e_elbow_joint: -26.712
+    ur5e_shoulder_lift_joint: -167.457
+    ur5e_shoulder_pan_joint: -106.672
+    ur5e_wrist_1_joint: 196.526
+    ur5e_wrist_2_joint: 267.792
+    ur5e_wrist_3_joint: -172.431
+  time_to_step: 1000
+- delay_in_position: 1000
+  joint_values:
+    qbhand2m1_manipulation_joint: -0.035
+    qbhand2m1_synergy_joint: -0.002
+    ur5e_elbow_joint: -22.665
+    ur5e_shoulder_lift_joint: -125.564
+    ur5e_shoulder_pan_joint: -105.186
+    ur5e_wrist_1_joint: 150.515
+    ur5e_wrist_2_joint: 269.265
+    ur5e_wrist_3_joint: -172.491
+  time_to_step: 1000
+- delay_in_position: 1000
+  joint_values:
+    qbhand2m1_manipulation_joint: -0.074
+    qbhand2m1_synergy_joint: 0.874
+    ur5e_elbow_joint: -22.886
+    ur5e_shoulder_lift_joint: -155.433
+    ur5e_shoulder_pan_joint: -118.79
+    ur5e_wrist_1_joint: 178.332
+    ur5e_wrist_2_joint: 269.026
+    ur5e_wrist_3_joint: -172.088
+  time_to_step: 1000
+- delay_in_position: 1000
+  joint_values:
+    qbhand2m1_manipulation_joint: -0.073
+    qbhand2m1_synergy_joint: 0.876
+    ur5e_elbow_joint: -23.026
+    ur5e_shoulder_lift_joint: -125.772
+    ur5e_shoulder_pan_joint: -108.066
+    ur5e_wrist_1_joint: 141.919
+    ur5e_wrist_2_joint: 266.047
+    ur5e_wrist_3_joint: -172.199
+  time_to_step: 1000
+- delay_in_position: 1000
+  joint_values:
+    qbhand2m1_manipulation_joint: -0.072
+    qbhand2m1_synergy_joint: 0.001
+    ur5e_elbow_joint: -104.765
+    ur5e_shoulder_lift_joint: -120.93
+    ur5e_shoulder_pan_joint: -103.234
+    ur5e_wrist_1_joint: 220.413
+    ur5e_wrist_2_joint: 266.043
+    ur5e_wrist_3_joint: -172.204
+  time_to_step: 1000
+- delay_in_position: 1000
+  joint_values:
+    ur5e_elbow_joint: -2.655
+    ur5e_shoulder_lift_joint: -85.074
+    ur5e_shoulder_pan_joint: -93.471
+    ur5e_wrist_1_joint: 91.666
+    ur5e_wrist_2_joint: 276.208
+    ur5e_wrist_3_joint: -188.505
+  time_to_step: 1000

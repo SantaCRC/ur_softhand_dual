@@ -1,0 +1,87 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+  <xacro:include filename="$(find ur_description)/urdf/ur_macro.xacro"/>
+
+  <xacro:macro name="ur_dual" params="
+    parent
+    *origin
+    ur_type
+    joint_limits_parameters_file
+    kinematics_parameters_file
+    physical_parameters_file
+    visual_parameters_file
+    namespace
+    ">
+
+    <link name="robot_mount_I"/>
+    <joint name="base_to_robot_mount_I" type="fixed">
+      <parent link="world"/>
+      <child link="robot_mount_I"/>
+      <origin xyz="0.46 0 0" rpy="0 0 0" />
+    </joint>
+
+    <link name="robot_mount_D"/>
+    <joint name="base_to_robot_mount_D" type="fixed">
+      <parent link="world"/>
+      <child link="robot_mount_D"/>
+      <origin xyz="-0.46 0 0" rpy="0 0 0" />
+    </joint>
+
+    <!--This will create the specific robot-->
+    <xacro:ur_robot
+      name="${ur_type}_I"
+      tf_prefix="${namespace}_I_"
+      parent="robot_mount_I"
+      joint_limits_parameters_file="${joint_limits_parameters_file}"
+      kinematics_parameters_file="${kinematics_parameters_file}"
+      physical_parameters_file="${physical_parameters_file}"
+      visual_parameters_file="${visual_parameters_file}"
+    >
+      <origin xyz="0 0 0" rpy="0 0 0" />
+    </xacro:ur_robot>
+
+    <xacro:ur_robot
+      name="${ur_type}_D"
+      tf_prefix="${namespace}_D_"
+      parent="robot_mount_D"
+      joint_limits_parameters_file="${joint_limits_parameters_file}"
+      kinematics_parameters_file="${kinematics_parameters_file}"
+      physical_parameters_file="${physical_parameters_file}"
+      visual_parameters_file="${visual_parameters_file}"
+    >
+      <origin xyz="0 0 0" rpy="0 0 0" />
+    </xacro:ur_robot>
+
+    <!-- Agregar un plano al entorno -->
+    <link name="floor">
+      <visual>
+        <geometry>
+          <box size="2.0 2.0 0.01"/> 
+          <!-- Dimensiones del plano 20m x 20m x 0.01m -->
+        </geometry>
+        <origin xyz="0 0 -0.005" rpy="0 0 0"/> <!-- Colocado en z=0 -->
+        <material name="floor_material">
+          <color rgba="0.8 0.8 0.8 1.0"/> <!-- Color gris claro -->
+        </material>
+      </visual>
+      <collision>
+        <geometry>
+          <box size="20.0 20.0 0.01"/>
+        </geometry>
+        <origin xyz="0 0 -0.005" rpy="0 0 0"/>
+      </collision>
+      <inertial>
+        <mass value="1.0"/> <!-- Masa arbitraria -->
+        <origin xyz="0 0 -0.005" rpy="0 0 0"/>
+        <inertia ixx="0.01" iyy="0.01" izz="0.01" ixy="0.0" ixz="0.0" iyz="0.0"/>
+      </inertial>
+    </link>
+
+    <joint name="floor_to_world" type="fixed">
+      <parent link="world"/>
+      <child link="floor"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+    </joint>
+  </xacro:macro>
+
+</robot>
