@@ -132,7 +132,7 @@ def generate_launch_description():
 
     return LaunchDescription(declared_arguments + [
         robot_state_publisher,
-        #controller_manager_D,
+        controller_manager_D,
         controller_manager,
     ])
 
