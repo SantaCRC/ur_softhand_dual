@@ -6,7 +6,6 @@ from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch_ros.actions import Node
 from launch.substitutions import LaunchConfiguration, PathJoinSubstitution, Command, FindExecutable
 
-
 def generate_launch_description():
     # --- Declaración de argumentos ---
     ur_type = LaunchConfiguration("ur_type")
@@ -52,7 +51,7 @@ def generate_launch_description():
     dual_description_dir = get_package_share_directory("ur_dual_description")
 
     # --- Descripción del robot (URDF) ---
-    # Se genera una descripción combinada pasando los prefijos de ambos brazos al archivo XACRO.
+    # Se genera una descripción combinada pasando los prefijos de ambos brazos al archivo XACCO.
     robot_description_content = Command([
         PathJoinSubstitution([FindExecutable(name="xacro")]),
         " ",
@@ -74,42 +73,68 @@ def generate_launch_description():
         parameters=[robot_description],
     )
 
-    # --- Controlador único que combina ambos brazos ---
-    # Se incluye el launch file "ur_control.launch.py" pasando como argumentos los parámetros
-    # tanto del brazo 0 como del brazo 1. (Se asume que dicho launch file está preparado para
-    # gestionar un controlador que combine ambos brazos.)
     controller_manager = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource(
-            os.path.join(ur_launch_dir, "launch", "ur_control.launch.py")
-        ),
-        launch_arguments={
-            "ur_type": ur_type,
-            "robot_ip": arm_0_robot_ip,  # Se utiliza la IP del brazo 0 (o la que corresponda)
-            "kinematics_params_file": PathJoinSubstitution([
-                dual_control_dir, "config", "ur_dual_kinematics.yaml"
-            ]),
-            "headless_mode": "true",
-            "non_blocking_read": "true",
-            "keep_alive_count": "10",
-            "tf_prefix": "ur_dual_D_",
+    PythonLaunchDescriptionSource(
+        os.path.join(dual_control_dir, "launch", "ur_control.launch.py")
+    ),
+    launch_arguments={
+        "ur_type": ur_type,
+        "robot_ip": arm_0_robot_ip,  # Se utiliza la IP asignada para la mano
+        "kinematics_params_file": PathJoinSubstitution([
+            dual_control_dir, "config", "ur_dual_I_kinematics.yaml"
+        ]),
+        "controllers_file": PathJoinSubstitution([
+            dual_control_dir, "config", "ur_dual_controllers.yaml"
+        ]),
+        "headless_mode": "true",
+        "non_blocking_read": "true",
+        "keep_alive_count": "10",
+        "tf_prefix": "ur_dual_I_",
+        "initial_joint_controller": "scaled_joint_trajectory_controller_I",
+        "script_command_port": arm_0_script_command_port,
+        "trajectory_port": arm_0_trajectory_port,
+        "reverse_port": arm_0_reverse_port,
+        "script_sender_port": arm_0_script_sender_port,
+    }.items(),
+)
+    controller_manager_D = IncludeLaunchDescription(
+    PythonLaunchDescriptionSource(
+        os.path.join(dual_control_dir, "launch", "ur_control.launch.py")
+    ),
+    launch_arguments={
+        "ur_type": ur_type,
+        "robot_ip": arm_1_robot_ip,  # Se utiliza la IP asignada para la mano
+        "kinematics_params_file": PathJoinSubstitution([
+            dual_control_dir, "config", "ur_dual_D_kinematics.yaml"
+        ]),
+        "controllers_file": PathJoinSubstitution([
+            dual_control_dir, "config", "ur_dual_controllers.yaml"
+        ]),
+        "headless_mode": "true",
+        "non_blocking_read": "true",
+        "keep_alive_count": "10",
+        "tf_prefix": "ur_dual_D_",
+        "initial_joint_controller": "scaled_joint_trajectory_controller_D",
+        "script_command_port": arm_1_script_command_port,
+        "trajectory_port": arm_1_trajectory_port,
+        "reverse_port": arm_1_reverse_port,
+        "script_sender_port": arm_1_script_sender_port,
+    }.items(),
+)
 
-            # Parámetros para el brazo 0
-            "arm_0_script_command_port": arm_0_script_command_port,
-            "arm_0_trajectory_port": arm_0_trajectory_port,
-            "arm_0_reverse_port": arm_0_reverse_port,
-            "arm_0_script_sender_port": arm_0_script_sender_port,
-            "arm_0_prefix": arm_0_prefix,
-
-            # Parámetros para el brazo 1
-            "arm_1_script_command_port": arm_1_script_command_port,
-            "arm_1_trajectory_port": arm_1_trajectory_port,
-            "arm_1_reverse_port": arm_1_reverse_port,
-            "arm_1_script_sender_port": arm_1_script_sender_port,
-            "arm_1_prefix": arm_1_prefix,
-        }.items(),
+    # --- Spawner para joint_state_broadcaster ---
+    joint_state_broadcaster_spawner = Node(
+        package="controller_manager",
+        executable="spawner",
+        arguments=["joint_state_broadcaster_I"],
+        output="screen"
     )
 
     return LaunchDescription(declared_arguments + [
         robot_state_publisher,
+        #controller_manager_D,
         controller_manager,
     ])
+
+if __name__ == "__main__":
+    generate_launch_description()

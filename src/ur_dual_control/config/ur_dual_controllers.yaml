@@ -1,5 +1,7 @@
 controller_manager:
   ros__parameters:
+  
+    # First arm controllers  
     joint_state_broadcaster_I:
       type: joint_state_broadcaster/JointStateBroadcaster
 
@@ -25,6 +27,34 @@ controller_manager:
       type: position_controllers/JointGroupPositionController
 
     ur_configuration_controller_I:
+      type: ur_controllers/URConfigurationController
+    
+    # Second arm controllers
+    joint_state_broadcaster_D:
+      type: joint_state_broadcaster/JointStateBroadcaster
+
+    io_and_status_controller_D:
+      type: ur_controllers/GPIOController
+
+    speed_scaling_state_broadcaster_D:
+      type: ur_controllers/SpeedScalingStateBroadcaster
+
+    force_torque_sensor_broadcaster_D:
+      type: force_torque_sensor_broadcaster/ForceTorqueSensorBroadcaster
+
+    joint_trajectory_controller_D:
+      type: joint_trajectory_controller/JointTrajectoryController
+
+    scaled_joint_trajectory_controller_D:
+      type: ur_controllers/ScaledJointTrajectoryController
+
+    forward_velocity_controller_D:
+      type: velocity_controllers/JointGroupVelocityController
+
+    forward_position_controller_D:
+      type: position_controllers/JointGroupPositionController
+
+    ur_configuration_controller_D:
       type: ur_controllers/URConfigurationController
 
 speed_scaling_state_broadcaster_I:
