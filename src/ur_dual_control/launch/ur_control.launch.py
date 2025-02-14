@@ -49,7 +49,7 @@ from launch.substitutions import (
 def launch_setup(context, *args, **kwargs):
     # Initialize Arguments
     ur_type = LaunchConfiguration("ur_type")
-    robot_ip = LaunchConfiguration("robot_ip")
+    robot_ip_I = LaunchConfiguration("robot_ip_I")
     safety_limits = LaunchConfiguration("safety_limits")
     safety_pos_margin = LaunchConfiguration("safety_pos_margin")
     safety_k_position = LaunchConfiguration("safety_k_position")
@@ -109,7 +109,7 @@ def launch_setup(context, *args, **kwargs):
             PathJoinSubstitution([FindPackageShare(description_package), "urdf", description_file]),
             " ",
             "robot_ip:=",
-            robot_ip,
+            robot_ip_I,
             " ",
             "joint_limit_params:=",
             joint_limit_params,
@@ -209,7 +209,7 @@ def launch_setup(context, *args, **kwargs):
     )
 
     rviz_config_file = PathJoinSubstitution(
-        [FindPackageShare(description_package), "rviz", "view_robot.rviz"]
+        [FindPackageShare("ur_dual_description"), "rviz", "urdf.rviz"]
     )
 
     # define update rate
@@ -254,7 +254,7 @@ def launch_setup(context, *args, **kwargs):
         name="dashboard_client",
         output="screen",
         emulate_tty=True,
-        parameters=[{"robot_ip": robot_ip}],
+        parameters=[{"robot_ip": robot_ip_I}],
     )
 
     tool_communication_node = Node(
@@ -265,7 +265,7 @@ def launch_setup(context, *args, **kwargs):
         output="screen",
         parameters=[
             {
-                "robot_ip": robot_ip,
+                "robot_ip": robot_ip_I,
                 "tcp_port": tool_tcp_port,
                 "device_name": tool_device_name,
             }
@@ -275,7 +275,7 @@ def launch_setup(context, *args, **kwargs):
     urscript_interface = Node(
         package="ur_robot_driver",
         executable="urscript_interface",
-        parameters=[{"robot_ip": robot_ip}],
+        parameters=[{"robot_ip": robot_ip_I}],
         output="screen",
     )
 
@@ -405,7 +405,7 @@ def generate_launch_description():
     )
     declared_arguments.append(
         DeclareLaunchArgument(
-            "robot_ip", description="IP address by which the robot can be reached."
+            "robot_ip_I", description="IP address by which the robot can be reached."
         )
     )
     declared_arguments.append(

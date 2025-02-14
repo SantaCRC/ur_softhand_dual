@@ -1,48 +1,44 @@
 <?xml version="1.0"?>
 <robot name="ur_dual" xmlns:xacro="http://ros.org/wiki/xacro">
 
-  <!-- Include the dual-arm macro and ROS2 control definitions -->
+  <!-- Incluir las definiciones necesarias -->
   <xacro:include filename="$(find ur_dual_description)/urdf/ur_dual_macro.xacro"/>
   <xacro:include filename="$(find ur_description)/urdf/ur.ros2_control.xacro"/>
 
-  <!-- Define the arguments for parametrization using I and D naming -->
+  <!-- Definir argumentos -->
   <xacro:arg name="ur_type_I" default="ur5e"/>
   <xacro:arg name="ur_type_D" default="ur5e"/>
-  <xacro:arg name="ur_type" default="ur5e"/>
 
   <xacro:arg name="robot_ip_I" default="10.113.36.96"/>
   <xacro:arg name="robot_ip_D" default="10.113.36.97"/>
   
-  <xacro:arg name="joint_limits_parameters_file_I" default="$(find ur_description)/config/$(arg ur_type_I)/joint_limits.yaml"/>
-  <xacro:arg name="joint_limits_parameters_file_D" default="$(find ur_description)/config/$(arg ur_type_D)/joint_limits.yaml"/>
+  <xacro:arg name="joint_limits_parameters_file_I" 
+             default="$(find ur_description)/config/$(arg ur_type_I)/joint_limits.yaml"/>
+  <xacro:arg name="joint_limits_parameters_file_D" 
+             default="$(find ur_description)/config/$(arg ur_type_D)/joint_limits.yaml"/>
   
-  <xacro:arg name="kinematics_parameters_file_I" default="$(find ur_description)/config/$(arg ur_type_I)/default_kinematics.yaml"/>
-  <xacro:arg name="kinematics_parameters_file_D" default="$(find ur_description)/config/$(arg ur_type_D)/default_kinematics.yaml"/>
+  <xacro:arg name="kinematics_parameters_file_I" 
+             default="$(find ur_description)/config/$(arg ur_type_I)/default_kinematics.yaml"/>
+  <xacro:arg name="kinematics_parameters_file_D" 
+             default="$(find ur_description)/config/$(arg ur_type_D)/default_kinematics.yaml"/>
   
-  <xacro:arg name="physical_parameters_file_I" default="$(find ur_description)/config/$(arg ur_type_I)/physical_parameters.yaml"/>
-  <xacro:arg name="physical_parameters_file_D" default="$(find ur_description)/config/$(arg ur_type_D)/physical_parameters.yaml"/>
+  <xacro:arg name="physical_parameters_file_I" 
+             default="$(find ur_description)/config/$(arg ur_type_I)/physical_parameters.yaml"/>
+  <xacro:arg name="physical_parameters_file_D" 
+             default="$(find ur_description)/config/$(arg ur_type_D)/physical_parameters.yaml"/>
   
-  <xacro:arg name="visual_parameters_file_I" default="$(find ur_description)/config/$(arg ur_type_I)/visual_parameters.yaml"/>
-  <xacro:arg name="visual_parameters_file_D" default="$(find ur_description)/config/$(arg ur_type_D)/visual_parameters.yaml"/>
-
-  <xacro:arg name="headless_mode" default="false"/>
-  <xacro:arg name="use_mock_hardware" default="false"/>
-  <xacro:arg name="mock_sensor_commands" default="false"/>
-
-  <xacro:arg name="ur_script_filename" default="$(find ur_client_library)/resources/external_control.urscript"/>
-  <xacro:arg name="ur_output_recipe_filename" default="$(find ur_robot_driver)/resources/rtde_output_recipe.txt"/>
-  <xacro:arg name="ur_input_recipe_filename" default="$(find ur_robot_driver)/resources/rtde_input_recipe.txt"/>
+  <xacro:arg name="visual_parameters_file_I" 
+             default="$(find ur_description)/config/$(arg ur_type_I)/visual_parameters.yaml"/>
+  <xacro:arg name="visual_parameters_file_D" 
+             default="$(find ur_description)/config/$(arg ur_type_D)/visual_parameters.yaml"/>
 
   <xacro:arg name="namespace" default="ur_dual"/>
-  <xacro:arg name="hash_kinematics" default="false"/>
 
-  <!-- Define world link -->
-  <link name="world"/>
-
-  <!-- Instantiate the dual-arm robot using the I and D parameters -->
+  <!-- Instanciar la macro con los dos brazos -->
   <xacro:ur_dual
     parent="world"
-    ur_type="$(arg ur_type_D)"
+    ur_type_I="$(arg ur_type_I)"
+    ur_type_D="$(arg ur_type_D)"
     joint_limits_parameters_file_I="$(arg joint_limits_parameters_file_I)"
     joint_limits_parameters_file_D="$(arg joint_limits_parameters_file_D)"
     kinematics_parameters_file_I="$(arg kinematics_parameters_file_I)"
@@ -51,33 +47,8 @@
     physical_parameters_file_D="$(arg physical_parameters_file_D)"
     visual_parameters_file_I="$(arg visual_parameters_file_I)"
     visual_parameters_file_D="$(arg visual_parameters_file_D)"
-    namespace="$(arg namespace)"
-  >
+    namespace="$(arg namespace)">
     <origin xyz="0 0 0" rpy="0 0 0"/>
   </xacro:ur_dual>
-
-  <!-- ROS2 Control configuration for the first UR5e (arm I) -->
-  <xacro:ur_ros2_control
-    name="ur_dual_I"
-    tf_prefix="ur_dual_I_"
-    robot_ip="$(arg robot_ip_I)"
-    script_filename="$(arg ur_script_filename)"
-    output_recipe_filename="$(arg ur_output_recipe_filename)"
-    input_recipe_filename="$(arg ur_input_recipe_filename)"
-    headless_mode="$(arg headless_mode)"
-    hash_kinematics="$(arg hash_kinematics)"
-  />
-
-  <!-- ROS2 Control configuration for the second UR5e (arm D) -->
-  <xacro:ur_ros2_control
-    name="ur_dual_D"
-    tf_prefix="ur_dual_D_"
-    robot_ip="$(arg robot_ip_D)"
-    script_filename="$(arg ur_script_filename)"
-    output_recipe_filename="$(arg ur_output_recipe_filename)"
-    input_recipe_filename="$(arg ur_input_recipe_filename)"
-    headless_mode="$(arg headless_mode)"
-    hash_kinematics="$(arg hash_kinematics)"
-  />
 
 </robot>

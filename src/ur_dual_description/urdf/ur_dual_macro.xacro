@@ -2,16 +2,24 @@
 <robot xmlns:xacro="http://ros.org/wiki/xacro">
   <xacro:include filename="$(find ur_description)/urdf/ur_macro.xacro"/>
 
+  <!-- Macro para definir los dos brazos del UR -->
   <xacro:macro name="ur_dual" params="
     parent
     *origin
-    ur_type
-    joint_limits_parameters_file
-    kinematics_parameters_file
-    physical_parameters_file
-    visual_parameters_file
+    ur_type_I
+    ur_type_D
+    joint_limits_parameters_file_I
+    joint_limits_parameters_file_D
+    kinematics_parameters_file_I
+    kinematics_parameters_file_D
+    physical_parameters_file_I
+    physical_parameters_file_D
+    visual_parameters_file_I
+    visual_parameters_file_D
     namespace
     ">
+
+    <!-- Base para el brazo izquierdo (I) -->
 
     <link name="robot_mount_I"/>
     <joint name="base_to_robot_mount_I" type="fixed">
@@ -20,6 +28,7 @@
       <origin xyz="0.46 0 0" rpy="0 0 0" />
     </joint>
 
+    <!-- Base para el brazo derecho (D) -->
     <link name="robot_mount_D"/>
     <joint name="base_to_robot_mount_D" type="fixed">
       <parent link="world"/>
@@ -27,27 +36,28 @@
       <origin xyz="-0.46 0 0" rpy="0 0 0" />
     </joint>
 
-    <!--This will create the specific robot-->
+    <!-- Definición del brazo izquierdo (I) -->
     <xacro:ur_robot
-      name="${ur_type}_I"
+      name="${ur_type_I}_I"
       tf_prefix="${namespace}_I_"
       parent="robot_mount_I"
-      joint_limits_parameters_file="${joint_limits_parameters_file}"
-      kinematics_parameters_file="${kinematics_parameters_file}"
-      physical_parameters_file="${physical_parameters_file}"
-      visual_parameters_file="${visual_parameters_file}"
+      joint_limits_parameters_file="${joint_limits_parameters_file_I}"
+      kinematics_parameters_file="${kinematics_parameters_file_I}"
+      physical_parameters_file="${physical_parameters_file_I}"
+      visual_parameters_file="${visual_parameters_file_I}"
     >
       <origin xyz="0 0 0" rpy="0 0 0" />
     </xacro:ur_robot>
 
+    <!-- Definición del brazo derecho (D) -->
     <xacro:ur_robot
-      name="${ur_type}_D"
+      name="${ur_type_D}_D"
       tf_prefix="${namespace}_D_"
       parent="robot_mount_D"
-      joint_limits_parameters_file="${joint_limits_parameters_file}"
-      kinematics_parameters_file="${kinematics_parameters_file}"
-      physical_parameters_file="${physical_parameters_file}"
-      visual_parameters_file="${visual_parameters_file}"
+      joint_limits_parameters_file="${joint_limits_parameters_file_D}"
+      kinematics_parameters_file="${kinematics_parameters_file_D}"
+      physical_parameters_file="${physical_parameters_file_D}"
+      visual_parameters_file="${visual_parameters_file_D}"
     >
       <origin xyz="0 0 0" rpy="0 0 0" />
     </xacro:ur_robot>
@@ -56,12 +66,11 @@
     <link name="floor">
       <visual>
         <geometry>
-          <box size="2.0 2.0 0.01"/> 
-          <!-- Dimensiones del plano 20m x 20m x 0.01m -->
+          <box size="2.0 2.0 0.01"/>
         </geometry>
-        <origin xyz="0 0 -0.005" rpy="0 0 0"/> <!-- Colocado en z=0 -->
+        <origin xyz="0 0 -0.005" rpy="0 0 0"/>
         <material name="floor_material">
-          <color rgba="0.8 0.8 0.8 1.0"/> <!-- Color gris claro -->
+          <color rgba="0.8 0.8 0.8 1.0"/>
         </material>
       </visual>
       <collision>
@@ -71,7 +80,7 @@
         <origin xyz="0 0 -0.005" rpy="0 0 0"/>
       </collision>
       <inertial>
-        <mass value="1.0"/> <!-- Masa arbitraria -->
+        <mass value="1.0"/>
         <origin xyz="0 0 -0.005" rpy="0 0 0"/>
         <inertia ixx="0.01" iyy="0.01" izz="0.01" ixy="0.0" ixz="0.0" iyz="0.0"/>
       </inertial>
@@ -82,6 +91,6 @@
       <child link="floor"/>
       <origin xyz="0 0 0" rpy="0 0 0"/>
     </joint>
-  </xacro:macro>
 
+  </xacro:macro>
 </robot>

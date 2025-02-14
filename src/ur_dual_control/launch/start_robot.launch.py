@@ -79,7 +79,9 @@ def generate_launch_description():
     ),
     launch_arguments={
         "ur_type": ur_type,
-        "robot_ip": arm_0_robot_ip,  # Se utiliza la IP asignada para la mano
+        #"robot_ip": arm_0_robot_ip,  # Se utiliza la IP asignada para la mano
+        "robot_ip_I": arm_0_robot_ip,  # Se utiliza la IP asignada para la mano
+        #"robot_ip_D": arm_1_robot_ip,  # Se utiliza la IP asignada para la mano
         "kinematics_params_file": PathJoinSubstitution([
             dual_control_dir, "config", "ur_dual_I_kinematics.yaml"
         ]),
@@ -103,9 +105,9 @@ def generate_launch_description():
     ),
     launch_arguments={
         "ur_type": ur_type,
-        "robot_ip": arm_1_robot_ip,  # Se utiliza la IP asignada para la mano
+        "robot_ip_I": arm_0_robot_ip,  # Se utiliza la IP asignada para la mano
         "kinematics_params_file": PathJoinSubstitution([
-            dual_control_dir, "config", "ur_dual_D_kinematics.yaml"
+            dual_control_dir, "config", "ur_dual_I_kinematics.yaml"
         ]),
         "controllers_file": PathJoinSubstitution([
             dual_control_dir, "config", "ur_dual_controllers.yaml"
@@ -132,7 +134,7 @@ def generate_launch_description():
 
     return LaunchDescription(declared_arguments + [
         robot_state_publisher,
-        controller_manager_D,
+        #controller_manager_D,
         controller_manager,
     ])
 

@@ -1,25 +1,40 @@
 <?xml version="1.0"?>
 <robot name="ur_dual" xmlns:xacro="http://ros.org/wiki/xacro">
+  <!-- Definir el link "world" al inicio para que esté disponible para todos los joints -->
+  <link name="world"/>
 
   <xacro:include filename="$(find ur_dual_description)/urdf/ur_dual_macro.xacro"/>
 
-  <xacro:arg name="ur_type" default="ur5e"/>
-  <xacro:arg name="joint_limits_parameters_file" default="$(find ur_description)/config/$(arg ur_type)/joint_limits.yaml"/>
-  <xacro:arg name="kinematics_parameters_file" default="$(find ur_description)/config/$(arg ur_type)/default_kinematics.yaml"/>
-  <xacro:arg name="physical_parameters_file" default="$(find ur_description)/config/$(arg ur_type)/physical_parameters.yaml"/>
-  <xacro:arg name="visual_parameters_file" default="$(find ur_description)/config/$(arg ur_type)/visual_parameters.yaml"/>
+  <!-- Se definen argumentos separados para cada brazo -->
+  <xacro:arg name="ur_type_I" default="ur5e"/>
+  <xacro:arg name="ur_type_D" default="ur5e"/>
+  
+  <xacro:arg name="joint_limits_parameters_file_I" default="$(find ur_description)/config/$(arg ur_type_I)/joint_limits.yaml"/>
+  <xacro:arg name="kinematics_parameters_file_I" default="$(find ur_description)/config/$(arg ur_type_I)/default_kinematics.yaml"/>
+  <xacro:arg name="physical_parameters_file_I" default="$(find ur_description)/config/$(arg ur_type_I)/physical_parameters.yaml"/>
+  <xacro:arg name="visual_parameters_file_I" default="$(find ur_description)/config/$(arg ur_type_I)/visual_parameters.yaml"/>
+  
+  <xacro:arg name="joint_limits_parameters_file_D" default="$(find ur_description)/config/$(arg ur_type_D)/joint_limits.yaml"/>
+  <xacro:arg name="kinematics_parameters_file_D" default="$(find ur_description)/config/$(arg ur_type_D)/default_kinematics.yaml"/>
+  <xacro:arg name="physical_parameters_file_D" default="$(find ur_description)/config/$(arg ur_type_D)/physical_parameters.yaml"/>
+  <xacro:arg name="visual_parameters_file_D" default="$(find ur_description)/config/$(arg ur_type_D)/visual_parameters.yaml"/>
+  
   <xacro:arg name="namespace" default="ur_dual"/>
-  <link name="world"/>
-  <!--This will create the scene where the robot is located in-->
+  
+  <!-- Instanciar la macro, la cual ahora recibe los parámetros específicos para cada brazo -->
   <xacro:ur_dual
     parent="world"
-    ur_type="$(arg ur_type)"
-    joint_limits_parameters_file="$(arg joint_limits_parameters_file)"
-    kinematics_parameters_file="$(arg kinematics_parameters_file)"
-    physical_parameters_file="$(arg physical_parameters_file)"
-    visual_parameters_file="$(arg visual_parameters_file)"
-    namespace="$(arg namespace)"
-    >
+    ur_type_I="$(arg ur_type_I)"
+    ur_type_D="$(arg ur_type_D)"
+    joint_limits_parameters_file_I="$(arg joint_limits_parameters_file_I)"
+    joint_limits_parameters_file_D="$(arg joint_limits_parameters_file_D)"
+    kinematics_parameters_file_I="$(arg kinematics_parameters_file_I)"
+    kinematics_parameters_file_D="$(arg kinematics_parameters_file_D)"
+    physical_parameters_file_I="$(arg physical_parameters_file_I)"
+    physical_parameters_file_D="$(arg physical_parameters_file_D)"
+    visual_parameters_file_I="$(arg visual_parameters_file_I)"
+    visual_parameters_file_D="$(arg visual_parameters_file_D)"
+    namespace="$(arg namespace)">
       <origin xyz="0 0 1" rpy="0 0 0" />
   </xacro:ur_dual>
 
