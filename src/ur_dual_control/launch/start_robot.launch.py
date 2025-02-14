@@ -52,29 +52,6 @@ def generate_launch_description():
     
     # --- Definición de rutas a paquetes ---
     dual_control_dir = get_package_share_directory("ur_dual_control")
-    dual_description_dir = get_package_share_directory("ur_dual_description")
-    
-    # --- Descripción del robot (URDF) ---
-    robot_description_content = Command([
-        PathJoinSubstitution([FindExecutable(name="xacro")]),
-        " ",
-        PathJoinSubstitution([dual_description_dir, "urdf", "ur_dual.urdf.xacro"]),
-        " ",
-        "ur_type:=", ur_type,
-        " ",
-        "prefix_I:=", prefix_I,
-        " ",
-        "prefix_D:=", prefix_D,
-    ])
-    robot_description = {"robot_description": robot_description_content}
-    
-    # Nodo que publica el estado del robot (URDF)
-    robot_state_publisher = Node(
-        package="robot_state_publisher",
-        executable="robot_state_publisher",
-        output="both",
-        parameters=[robot_description],
-    )
     
     # --- Controlador para brazo I ---
     controller_manager = IncludeLaunchDescription(
@@ -105,10 +82,9 @@ def generate_launch_description():
             "script_sender_port": script_sender_port_I,
         }.items(),
     )
-    
+
     return LaunchDescription(
         declared_arguments + [
-            #robot_state_publisher,
             controller_manager,
         ]
     )

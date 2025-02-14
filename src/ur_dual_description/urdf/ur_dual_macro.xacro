@@ -36,7 +36,7 @@
     </joint>
 
     <!-- Definición del brazo izquierdo (I) -->
-    <!-- <xacro:ur_robot
+    <xacro:ur_robot
       name="ur_dual_I"
       tf_prefix="ur_dual_I_"
       parent="robot_mount_I"
@@ -44,12 +44,13 @@
       kinematics_parameters_file="${kinematics_parameters_file_I}"
       physical_parameters_file="${physical_parameters_file_I}"
       visual_parameters_file="${visual_parameters_file_I}"
+      generate_ros2_control_tag="false"
     >
       <origin xyz="0 0 0" rpy="0 0 0" />
-    </xacro:ur_robot> -->
+    </xacro:ur_robot> 
 
     <!-- Definición del brazo derecho (D) -->
-    <!-- <xacro:ur_robot
+    <xacro:ur_robot
       name="ur_dual_D"
       tf_prefix="ur_dual_D_"
       parent="robot_mount_D"
@@ -57,9 +58,10 @@
       kinematics_parameters_file="${kinematics_parameters_file_D}"
       physical_parameters_file="${physical_parameters_file_D}"
       visual_parameters_file="${visual_parameters_file_D}"
+      generate_ros2_control_tag="false"
     >
       <origin xyz="0 0 0" rpy="0 0 0" />
-    </xacro:ur_robot> -->
+    </xacro:ur_robot>
 
     <!-- Agregar un plano al entorno -->
     <link name="floor">
