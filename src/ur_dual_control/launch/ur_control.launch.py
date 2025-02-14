@@ -245,7 +245,7 @@ def launch_setup(context, *args, **kwargs):
         condition=UnlessCondition(use_fake_hardware),
     )
 
-    dashboard_client_node = Node(
+    dashboard_client_node_I = Node(
         package="ur_robot_driver",
         condition=IfCondition(
             AndSubstitution(launch_dashboard_client, NotSubstitution(use_fake_hardware))
@@ -257,7 +257,7 @@ def launch_setup(context, *args, **kwargs):
         parameters=[{"robot_ip": robot_ip_I}],
     )
 
-    tool_communication_node = Node(
+    tool_communication_node_I = Node(
         package="ur_robot_driver",
         condition=IfCondition(use_tool_communication),
         executable="tool_communication.py",
@@ -272,14 +272,14 @@ def launch_setup(context, *args, **kwargs):
         ],
     )
 
-    urscript_interface = Node(
+    urscript_interface_I = Node(
         package="ur_robot_driver",
         executable="urscript_interface",
         parameters=[{"robot_ip": robot_ip_I}],
         output="screen",
     )
 
-    controller_stopper_node = Node(
+    controller_stopper_node_I = Node(
         package="ur_robot_driver",
         executable="controller_stopper_node",
         name="controller_stopper",
@@ -291,10 +291,10 @@ def launch_setup(context, *args, **kwargs):
             {"joint_controller_active": activate_joint_controller},
             {
                 "consistent_controllers": [
-                    "io_and_status_controller",
-                    "force_torque_sensor_broadcaster",
+                    "io_and_status_controller_I",
+                    "force_torque_sensor_broadcaster_I",
                     "joint_state_broadcaster",
-                    "speed_scaling_state_broadcaster",
+                    "speed_scaling_state_broadcaster_I",
                     "ur_configuration_controller",
                 ]
             },
@@ -380,10 +380,10 @@ def launch_setup(context, *args, **kwargs):
     nodes_to_start = [
         control_node,
         ur_control_node,
-        dashboard_client_node,
-        tool_communication_node,
-        controller_stopper_node,
-        urscript_interface,
+        dashboard_client_node_I,
+        tool_communication_node_I,
+        controller_stopper_node_I,
+        urscript_interface_I,
         robot_state_publisher_node,
         rviz_node,
         initial_joint_controller_spawner_stopped,
