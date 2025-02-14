@@ -16,14 +16,13 @@
     physical_parameters_file_D
     visual_parameters_file_I
     visual_parameters_file_D
-    namespace
     ">
 
     <!-- Base para el brazo izquierdo (I) -->
 
     <link name="robot_mount_I"/>
     <joint name="base_to_robot_mount_I" type="fixed">
-      <parent link="world"/>
+      <parent link="floor"/>
       <child link="robot_mount_I"/>
       <origin xyz="0.46 0 0" rpy="0 0 0" />
     </joint>
@@ -31,15 +30,15 @@
     <!-- Base para el brazo derecho (D) -->
     <link name="robot_mount_D"/>
     <joint name="base_to_robot_mount_D" type="fixed">
-      <parent link="world"/>
+      <parent link="floor"/>
       <child link="robot_mount_D"/>
       <origin xyz="-0.46 0 0" rpy="0 0 0" />
     </joint>
 
     <!-- Definición del brazo izquierdo (I) -->
-    <xacro:ur_robot
-      name="${ur_type_I}_I"
-      tf_prefix="${namespace}_I_"
+    <!-- <xacro:ur_robot
+      name="ur_dual_I"
+      tf_prefix="ur_dual_I_"
       parent="robot_mount_I"
       joint_limits_parameters_file="${joint_limits_parameters_file_I}"
       kinematics_parameters_file="${kinematics_parameters_file_I}"
@@ -47,12 +46,12 @@
       visual_parameters_file="${visual_parameters_file_I}"
     >
       <origin xyz="0 0 0" rpy="0 0 0" />
-    </xacro:ur_robot>
+    </xacro:ur_robot> -->
 
     <!-- Definición del brazo derecho (D) -->
-    <xacro:ur_robot
-      name="${ur_type_D}_D"
-      tf_prefix="${namespace}_D_"
+    <!-- <xacro:ur_robot
+      name="ur_dual_D"
+      tf_prefix="ur_dual_D_"
       parent="robot_mount_D"
       joint_limits_parameters_file="${joint_limits_parameters_file_D}"
       kinematics_parameters_file="${kinematics_parameters_file_D}"
@@ -60,7 +59,7 @@
       visual_parameters_file="${visual_parameters_file_D}"
     >
       <origin xyz="0 0 0" rpy="0 0 0" />
-    </xacro:ur_robot>
+    </xacro:ur_robot> -->
 
     <!-- Agregar un plano al entorno -->
     <link name="floor">

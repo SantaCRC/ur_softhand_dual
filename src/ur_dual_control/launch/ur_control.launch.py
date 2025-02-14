@@ -47,18 +47,24 @@ from launch.substitutions import (
 
 
 def launch_setup(context, *args, **kwargs):
-    # Initialize Arguments
+    # General arguments that are used for both robots
     ur_type = LaunchConfiguration("ur_type")
-    robot_ip_I = LaunchConfiguration("robot_ip_I")
     safety_limits = LaunchConfiguration("safety_limits")
     safety_pos_margin = LaunchConfiguration("safety_pos_margin")
     safety_k_position = LaunchConfiguration("safety_k_position")
-    # General arguments
     runtime_config_package = LaunchConfiguration("runtime_config_package")
     controllers_file = LaunchConfiguration("controllers_file")
     description_package = LaunchConfiguration("description_package")
     description_file = LaunchConfiguration("description_file")
-    kinematics_params_file = LaunchConfiguration("kinematics_params_file")
+
+    # specific arguments for I (left) robot
+    robot_ip_I = LaunchConfiguration("robot_ip_I")
+
+    # specific arguments for D (right) robot
+    robot_ip_D = LaunchConfiguration("robot_ip_D")
+
+    # General arguments
+    kinematics_params_file_I = LaunchConfiguration("kinematics_params_file_I")
     tf_prefix = LaunchConfiguration("tf_prefix")
     use_fake_hardware = LaunchConfiguration("use_fake_hardware")
     fake_sensor_commands = LaunchConfiguration("fake_sensor_commands")
@@ -115,7 +121,7 @@ def launch_setup(context, *args, **kwargs):
             joint_limit_params,
             " ",
             "kinematics_params:=",
-            kinematics_params_file,
+            kinematics_params_file_I,
             " ",
             "physical_params:=",
             physical_params,
@@ -433,7 +439,7 @@ def generate_launch_description():
     declared_arguments.append(
         DeclareLaunchArgument(
             "runtime_config_package",
-            default_value="ur_robot_driver",
+            default_value="ur_dual_control",
             description='Package with the controller\'s configuration in "config" folder. '
             "Usually the argument is not set, it enables use of a custom setup.",
         )
@@ -448,7 +454,7 @@ def generate_launch_description():
     declared_arguments.append(
         DeclareLaunchArgument(
             "description_package",
-            default_value="ur_description",
+            default_value="ur_dual_control",
             description="Description package with robot URDF/XACRO files. Usually the argument "
             "is not set, it enables use of a custom description.",
         )
@@ -456,13 +462,13 @@ def generate_launch_description():
     declared_arguments.append(
         DeclareLaunchArgument(
             "description_file",
-            default_value="ur.urdf.xacro",
+            default_value="ur_dual_controlled.urdf.xacro",
             description="URDF/XACRO description file with the robot.",
         )
     )
     declared_arguments.append(
         DeclareLaunchArgument(
-            "kinematics_params_file",
+            "kinematics_params_file_I",
             default_value=PathJoinSubstitution(
                 [
                     FindPackageShare(LaunchConfiguration("description_package")),
