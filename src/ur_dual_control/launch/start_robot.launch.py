@@ -75,7 +75,6 @@ def generate_launch_description():
             "non_blocking_read": "true",
             "keep_alive_count": "10",
             "tf_prefix": "ur_dual_D_",
-            "initial_joint_controller": "scaled_joint_trajectory_controller_I",
             "script_command_port": script_command_port_I,
             "trajectory_port": trajectory_port_I,
             "reverse_port": reverse_port_I,

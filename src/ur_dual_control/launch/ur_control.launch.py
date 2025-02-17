@@ -71,6 +71,10 @@ def launch_setup(context, *args, **kwargs):
     fake_sensor_commands = LaunchConfiguration("fake_sensor_commands")
     controller_spawner_timeout = LaunchConfiguration("controller_spawner_timeout")
     initial_joint_controller = LaunchConfiguration("initial_joint_controller")
+    initial_joint_controller_I = LaunchConfiguration("initial_joint_controller_I")
+    initial_joint_controller_D = LaunchConfiguration("initial_joint_controller_D")
+    activate_joint_controller_I = LaunchConfiguration("activate_joint_controller_I")
+    activate_joint_controller_D = LaunchConfiguration("activate_joint_controller_D")
     activate_joint_controller = LaunchConfiguration("activate_joint_controller")
     launch_rviz = LaunchConfiguration("launch_rviz")
     headless_mode = LaunchConfiguration("headless_mode")
@@ -241,13 +245,35 @@ def launch_setup(context, *args, **kwargs):
         condition=UnlessCondition(use_fake_hardware),
         parameters=[
             {"headless_mode": headless_mode},
-            {"joint_controller_active": activate_joint_controller},
+            {"joint_controller_active": activate_joint_controller_I},
             {
                 "consistent_controllers": [
                     "io_and_status_controller_I",
                     "force_torque_sensor_broadcaster_I",
                     "joint_state_broadcaster",
                     "speed_scaling_state_broadcaster_I",
+                    "ur_configuration_controller",
+                ]
+            },
+        ],
+    )
+
+    controller_stopper_node_D = Node(
+        package="ur_robot_driver",
+        executable="controller_stopper_node",
+        name="controller_stopper",
+        output="screen",
+        emulate_tty=True,
+        condition=UnlessCondition(use_fake_hardware),
+        parameters=[
+            {"headless_mode": headless_mode},
+            {"joint_controller_active": activate_joint_controller_D},
+            {
+                "consistent_controllers": [
+                    "io_and_status_controller_D",
+                    "force_torque_sensor_broadcaster_D",
+                    "joint_state_broadcaster",
+                    "speed_scaling_state_broadcaster_D",
                     "ur_configuration_controller",
                 ]
             },
@@ -304,30 +330,59 @@ def launch_setup(context, *args, **kwargs):
     ]
 
     # There may be other controllers of the joints, but this is the initially-started one
-    initial_joint_controller_spawner_started = Node(
+    initial_joint_controller_spawner_started_I = Node(
         package="controller_manager",
         executable="spawner",
         arguments=[
-            initial_joint_controller,
+            initial_joint_controller_I,
             "-c",
             "/controller_manager",
             "--controller-manager-timeout",
             controller_spawner_timeout,
         ],
-        condition=IfCondition(activate_joint_controller),
+        condition=IfCondition(activate_joint_controller_I),
     )
-    initial_joint_controller_spawner_stopped = Node(
+
+    initial_joint_controller_spawner_started_D = Node(
         package="controller_manager",
         executable="spawner",
         arguments=[
-            initial_joint_controller,
+            initial_joint_controller_D,
+            "-c",
+            "/controller_manager",
+            "--controller-manager-timeout",
+            controller_spawner_timeout,
+        ],
+        condition=IfCondition(activate_joint_controller_D),
+    )    
+
+
+    initial_joint_controller_spawner_stopped_I = Node(
+        package="controller_manager",
+        executable="spawner",
+        arguments=[
+            initial_joint_controller_I,
             "-c",
             "/controller_manager",
             "--controller-manager-timeout",
             controller_spawner_timeout,
             "--inactive",
         ],
-        condition=UnlessCondition(activate_joint_controller),
+        condition=UnlessCondition(activate_joint_controller_I),
+    )
+
+    initial_joint_controller_spawner_stopped_D = Node(
+        package="controller_manager",
+        executable="spawner",
+        arguments=[
+            initial_joint_controller_D,
+            "-c",
+            "/controller_manager",
+            "--controller-manager-timeout",
+            controller_spawner_timeout,
+            "--inactive",
+        ],
+        condition=UnlessCondition(activate_joint_controller_D),
     )
 
     nodes_to_start = [
@@ -339,8 +394,10 @@ def launch_setup(context, *args, **kwargs):
         urscript_interface_I,
         robot_state_publisher_node,
         rviz_node,
-        initial_joint_controller_spawner_stopped,
-        initial_joint_controller_spawner_started,
+        initial_joint_controller_spawner_stopped_I,
+        initial_joint_controller_spawner_stopped_D,
+        initial_joint_controller_spawner_started_D,
+        initial_joint_controller_spawner_started_I,
     ] + controller_spawners
 
     return nodes_to_start
@@ -472,6 +529,35 @@ def generate_launch_description():
             description="Initially loaded robot controller.",
         )
     )
+    declared_arguments.append(
+        DeclareLaunchArgument(
+            "initial_joint_controller_I",
+            default_value="scaled_joint_trajectory_controller_I",
+            description="Initially loaded robot controller for the left robot.",
+        )
+    )
+    declared_arguments.append(
+        DeclareLaunchArgument(
+            "initial_joint_controller_D",
+            default_value="scaled_joint_trajectory_controller_D",
+            description="Initially loaded robot controller for the right robot.",
+        )
+    )
+    declared_arguments.append(
+        DeclareLaunchArgument(
+            "activate_joint_controller_I",
+            default_value="true",
+            description="Activate loaded joint controller for the left robot.",
+        )
+    )
+    declared_arguments.append(
+        DeclareLaunchArgument(
+            "activate_joint_controller_D",
+            default_value="true",
+            description="Activate loaded joint controller for the right robot.",
+        )
+    )
+    
     declared_arguments.append(
         DeclareLaunchArgument(
             "activate_joint_controller",
