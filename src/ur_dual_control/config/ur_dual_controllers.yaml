@@ -1,7 +1,7 @@
 controller_manager:
   ros__parameters:
-  
-    # First arm controllers  
+    
+    # Controllers for the first arm (ur_dual_I)
     joint_state_broadcaster_I:
       type: joint_state_broadcaster/JointStateBroadcaster
 
@@ -29,7 +29,7 @@ controller_manager:
     ur_configuration_controller_I:
       type: ur_controllers/URConfigurationController
     
-    # Second arm controllers
+    # Controllers for the second arm (ur_dual_D)
     joint_state_broadcaster_D:
       type: joint_state_broadcaster/JointStateBroadcaster
 
@@ -57,11 +57,13 @@ controller_manager:
     ur_configuration_controller_D:
       type: ur_controllers/URConfigurationController
 
+# Configuration for speed scaling broadcaster
 speed_scaling_state_broadcaster_I:
   ros__parameters:
     state_publish_rate: 100.0
     tf_prefix: "ur_dual_I_"
 
+# Configuration for IO and status controllers
 io_and_status_controller_I:
   ros__parameters:
     tf_prefix: "ur_dual_I_"
@@ -74,6 +76,7 @@ ur_configuration_controller_I:
   ros__parameters:
     tf_prefix: "ur_dual_I_"
 
+# Configuration for force torque sensor broadcaster
 force_torque_sensor_broadcaster_I:
   ros__parameters:
     sensor_name: "ur_dual_I_tcp_fts_sensor"
@@ -87,6 +90,7 @@ force_torque_sensor_broadcaster_I:
     frame_id: "ur_dual_I_tool0"
     topic_name: "ft_data"
 
+# Configuration for joint trajectory controller
 joint_trajectory_controller_I:
   ros__parameters:
     joints:
@@ -114,6 +118,7 @@ joint_trajectory_controller_I:
       ur_dual_I_wrist_2_joint: { trajectory: 0.2, goal: 0.1 }
       ur_dual_I_wrist_3_joint: { trajectory: 0.2, goal: 0.1 }
 
+# Configuration for scaled joint trajectory controller
 scaled_joint_trajectory_controller_I:
   ros__parameters:
     joints:
@@ -142,6 +147,7 @@ scaled_joint_trajectory_controller_I:
       ur_dual_I_wrist_3_joint: { trajectory: 0.2, goal: 0.1 }
     speed_scaling_interface_name: "ur_dual_I_speed_scaling/speed_scaling_factor"
 
+# Configuration for velocity controller
 forward_velocity_controller_I:
   ros__parameters:
     joints:
@@ -153,6 +159,7 @@ forward_velocity_controller_I:
       - ur_dual_I_wrist_3_joint
     interface_name: velocity
 
+# Configuration for position controller
 forward_position_controller_I:
   ros__parameters:
     joints:
