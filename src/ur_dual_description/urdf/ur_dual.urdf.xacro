@@ -33,8 +33,7 @@
     physical_parameters_file_I="$(arg physical_parameters_file_I)"
     physical_parameters_file_D="$(arg physical_parameters_file_D)"
     visual_parameters_file_I="$(arg visual_parameters_file_I)"
-    visual_parameters_file_D="$(arg visual_parameters_file_D)"
-    namespace="$(arg namespace)">
+    visual_parameters_file_D="$(arg visual_parameters_file_D)">
       <origin xyz="0 0 1" rpy="0 0 0" />
   </xacro:ur_dual>
 

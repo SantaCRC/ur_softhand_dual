@@ -1,0 +1,15 @@
+# Default initial positions for ur_dual's ros2_control fake system
+
+initial_positions:
+  ur_dual_D_elbow_joint: 0
+  ur_dual_D_shoulder_lift_joint: 0
+  ur_dual_D_shoulder_pan_joint: 0
+  ur_dual_D_wrist_1_joint: 0
+  ur_dual_D_wrist_2_joint: 0
+  ur_dual_D_wrist_3_joint: 0
+  ur_dual_I_elbow_joint: 0
+  ur_dual_I_shoulder_lift_joint: 0
+  ur_dual_I_shoulder_pan_joint: 0
+  ur_dual_I_wrist_1_joint: 0
+  ur_dual_I_wrist_2_joint: 0
+  ur_dual_I_wrist_3_joint: 0
