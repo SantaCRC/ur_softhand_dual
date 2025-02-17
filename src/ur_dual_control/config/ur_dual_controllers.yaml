@@ -66,6 +66,10 @@ io_and_status_controller_I:
   ros__parameters:
     tf_prefix: "ur_dual_I_"
 
+io_and_status_controller_D:
+  ros__parameters:
+    tf_prefix: "ur_dual_D_"
+
 ur_configuration_controller_I:
   ros__parameters:
     tf_prefix: "ur_dual_I_"
