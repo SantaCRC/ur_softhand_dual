@@ -172,8 +172,8 @@ def launch_setup(context, *args, **kwargs):
     # define update rate
     update_rate_config_file = PathJoinSubstitution(
         [
-            FindPackageShare(runtime_config_package),
-            "config",
+            FindPackageShare("ur_robot_driver"),
+            "config", 
             ur_type.perform(context) + "_update_rate.yaml",
         ]
     )
@@ -212,6 +212,18 @@ def launch_setup(context, *args, **kwargs):
         output="screen",
         emulate_tty=True,
         parameters=[{"robot_ip": robot_ip_I}],
+    )
+
+    dashboard_client_node_D = Node(
+        package="ur_robot_driver",
+        condition=IfCondition(
+            AndSubstitution(launch_dashboard_client, NotSubstitution(use_fake_hardware))
+        ),
+        executable="dashboard_client",
+        name="dashboard_client",
+        output="screen",
+        emulate_tty=True,
+        parameters=[{"robot_ip": robot_ip_D}],
     )
 
     tool_communication_node_I = Node(
@@ -389,15 +401,16 @@ def launch_setup(context, *args, **kwargs):
         control_node,
         ur_control_node,
         dashboard_client_node_I,
+        dashboard_client_node_D,
         tool_communication_node_I,
         controller_stopper_node_I,
         urscript_interface_I,
         robot_state_publisher_node,
-        rviz_node,
         initial_joint_controller_spawner_stopped_I,
         initial_joint_controller_spawner_stopped_D,
         initial_joint_controller_spawner_started_D,
         initial_joint_controller_spawner_started_I,
+        rviz_node,
     ] + controller_spawners
 
     return nodes_to_start
@@ -557,7 +570,7 @@ def generate_launch_description():
             description="Activate loaded joint controller for the right robot.",
         )
     )
-    
+
     declared_arguments.append(
         DeclareLaunchArgument(
             "activate_joint_controller",
