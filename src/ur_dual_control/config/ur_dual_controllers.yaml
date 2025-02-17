@@ -63,6 +63,11 @@ speed_scaling_state_broadcaster_I:
     state_publish_rate: 100.0
     tf_prefix: "ur_dual_I_"
 
+speed_scaling_state_broadcaster_D:
+  ros__parameters:
+    state_publish_rate: 100.0
+    tf_prefix: "ur_dual_D_"
+
 # Configuration for IO and status controllers
 io_and_status_controller_I:
   ros__parameters:
@@ -76,6 +81,10 @@ ur_configuration_controller_I:
   ros__parameters:
     tf_prefix: "ur_dual_I_"
 
+ur_configuration_controller_D:
+  ros__parameters:
+    tf_prefix: "ur_dual_D_"
+
 # Configuration for force torque sensor broadcaster
 force_torque_sensor_broadcaster_I:
   ros__parameters:
@@ -88,6 +97,19 @@ force_torque_sensor_broadcaster_I:
       - torque.y
       - torque.z
     frame_id: "ur_dual_I_tool0"
+    topic_name: "ft_data"
+
+force_torque_sensor_broadcaster_D:
+  ros__parameters:
+    sensor_name: "ur_dual_D_tcp_fts_sensor"
+    state_interface_names:
+      - force.x
+      - force.y
+      - force.z
+      - torque.x
+      - torque.y
+      - torque.z
+    frame_id: "ur_dual_D_tool0"
     topic_name: "ft_data"
 
 # Configuration for joint trajectory controller
@@ -118,6 +140,33 @@ joint_trajectory_controller_I:
       ur_dual_I_wrist_2_joint: { trajectory: 0.2, goal: 0.1 }
       ur_dual_I_wrist_3_joint: { trajectory: 0.2, goal: 0.1 }
 
+joint_trajectory_controller_D:
+  ros__parameters:
+    joints:
+      - ur_dual_D_shoulder_pan_joint
+      - ur_dual_D_shoulder_lift_joint
+      - ur_dual_D_elbow_joint
+      - ur_dual_D_wrist_1_joint
+      - ur_dual_D_wrist_2_joint
+      - ur_dual_D_wrist_3_joint
+    command_interfaces:
+      - position
+    state_interfaces:
+      - position
+      - velocity
+    state_publish_rate: 100.0
+    action_monitor_rate: 20.0
+    allow_partial_joints_goal: false
+    constraints:
+      stopped_velocity_tolerance: 0.2
+      goal_time: 0.0
+      ur_dual_D_shoulder_pan_joint: { trajectory: 0.2, goal: 0.1 }
+      ur_dual_D_shoulder_lift_joint: { trajectory: 0.2, goal: 0.1 }
+      ur_dual_D_elbow_joint: { trajectory: 0.2, goal: 0.1 }
+      ur_dual_D_wrist_1_joint: { trajectory: 0.2, goal: 0.1 }
+      ur_dual_D_wrist_2_joint: { trajectory: 0.2, goal: 0.1 }
+      ur_dual_D_wrist_3_joint: { trajectory: 0.2, goal: 0.1 }
+
 # Configuration for scaled joint trajectory controller
 scaled_joint_trajectory_controller_I:
   ros__parameters:
@@ -147,6 +196,34 @@ scaled_joint_trajectory_controller_I:
       ur_dual_I_wrist_3_joint: { trajectory: 0.2, goal: 0.1 }
     speed_scaling_interface_name: "ur_dual_I_speed_scaling/speed_scaling_factor"
 
+scaled_joint_trajectory_controller_D:
+  ros__parameters:
+    joints:
+      - ur_dual_D_shoulder_pan_joint
+      - ur_dual_D_shoulder_lift_joint
+      - ur_dual_D_elbow_joint
+      - ur_dual_D_wrist_1_joint
+      - ur_dual_D_wrist_2_joint
+      - ur_dual_D_wrist_3_joint
+    command_interfaces:
+      - position
+    state_interfaces:
+      - position
+      - velocity
+    state_publish_rate: 100.0
+    action_monitor_rate: 20.0
+    allow_partial_joints_goal: false
+    constraints:
+      stopped_velocity_tolerance: 0.2
+      goal_time: 0.0
+      ur_dual_D_shoulder_pan_joint: { trajectory: 0.2, goal: 0.1 }
+      ur_dual_D_shoulder_lift_joint: { trajectory: 0.2, goal: 0.1 }
+      ur_dual_D_elbow_joint: { trajectory: 0.2, goal: 0.1 }
+      ur_dual_D_wrist_1_joint: { trajectory: 0.2, goal: 0.1 }
+      ur_dual_D_wrist_2_joint: { trajectory: 0.2, goal: 0.1 }
+      ur_dual_D_wrist_3_joint: { trajectory: 0.2, goal: 0.1 }
+    speed_scaling_interface_name: "ur_dual_D_speed_scaling/speed_scaling_factor"
+
 # Configuration for velocity controller
 forward_velocity_controller_I:
   ros__parameters:
@@ -159,6 +236,17 @@ forward_velocity_controller_I:
       - ur_dual_I_wrist_3_joint
     interface_name: velocity
 
+forward_velocity_controller_D:
+  ros__parameters:
+    joints:
+      - ur_dual_D_shoulder_pan_joint
+      - ur_dual_D_shoulder_lift_joint
+      - ur_dual_D_elbow_joint
+      - ur_dual_D_wrist_1_joint
+      - ur_dual_D_wrist_2_joint
+      - ur_dual_D_wrist_3_joint
+    interface_name: velocity
+
 # Configuration for position controller
 forward_position_controller_I:
   ros__parameters:
@@ -169,4 +257,15 @@ forward_position_controller_I:
       - ur_dual_I_wrist_1_joint
       - ur_dual_I_wrist_2_joint
       - ur_dual_I_wrist_3_joint
+    interface_name: position
+
+forward_position_controller_D:
+  ros__parameters:
+    joints:
+      - ur_dual_D_shoulder_pan_joint
+      - ur_dual_D_shoulder_lift_joint
+      - ur_dual_D_elbow_joint
+      - ur_dual_D_wrist_1_joint
+      - ur_dual_D_wrist_2_joint
+      - ur_dual_D_wrist_3_joint
     interface_name: position
