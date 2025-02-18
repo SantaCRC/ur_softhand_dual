@@ -4,10 +4,10 @@ moveit_controller_manager: moveit_simple_controller_manager/MoveItSimpleControll
 
 moveit_simple_controller_manager:
   controller_names:
-    - scaled_joint_trajectory_controller_d
-    - scaled_joint_trajectory_controller_i
+    - scaled_joint_trajectory_controller_D
+    - scaled_joint_trajectory_controller_I
 
-  scaled_joint_trajectory_controller_d:
+  scaled_joint_trajectory_controller_D:
     type: FollowJointTrajectory
     joints:
       - ur_dual_D_shoulder_pan_joint
@@ -18,7 +18,7 @@ moveit_simple_controller_manager:
       - ur_dual_D_wrist_3_joint
     action_ns: follow_joint_trajectory
     default: true
-  scaled_joint_trajectory_controller_i:
+  scaled_joint_trajectory_controller_I:
     type: FollowJointTrajectory
     joints:
       - ur_dual_I_shoulder_pan_joint
