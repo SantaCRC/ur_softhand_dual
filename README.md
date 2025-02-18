@@ -95,6 +95,13 @@ Special thanks to **GII Lab at Universidade da Coruña** for supporting this res
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
 <!-- markdownlint-disable -->
+<table>
+  <tbody>
+    <tr>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/SantaCRC"><img src="https://avatars.githubusercontent.com/u/35088759?v=4?s=100" width="100px;" alt="Fabian Alvarez"/><br /><sub><b>Fabian Alvarez</b></sub></a><br /><a href="#projectManagement-SantaCRC" title="Project Management">📆</a></td>
+    </tr>
+  </tbody>
+</table>
 
 <!-- markdownlint-restore -->
 <!-- prettier-ignore-end -->
