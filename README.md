@@ -2,8 +2,9 @@
 
 <h1 align="center">Dual - Motion Planning with Dual UR5e</h1>
 
+
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/11a092f0-505f-4755-ab91-810e18b07f7a" alt="Dual_logo" />
+  <img src="https://github.com/user-attachments/assets/19ab565b-8b49-4afd-85c9-f3b9b28fd34a" alt="Dual_logo" />
 </p>
 
 </div>
