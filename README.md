@@ -19,7 +19,9 @@ This project integrates dual **UR5e** robotic arms using **ROS 2 Humble** for ad
 
 This repository consists of multiple branches, each tailored to specific configurations:
 
-- **`main` (Standalone Mode)** – Contains only the dual **UR5e** arms without any attached tools, providing a clean foundation for motion control and trajectory planning.
+- **`Standalone`** – Contains only the dual **UR5e** arms without any attached tools, providing a clean foundation for motion control and trajectory planning.
+- **`Main`** – This is the active develop branch the dual **UR5e**.
+- **`SoftHand`** – Features the dual **UR5e** arms with **SoftHand** end-effectors, allowing for dexterous and compliant grasping.
 - *(Additional branches include tools and specific configurations, refer to the repository for details.)*
 
 ---
