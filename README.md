@@ -84,13 +84,13 @@ Stay tuned for upcoming branches featuring **soft hands, grippers, and AI-driven
 
 ---
 
-## 🏆 Contributors & Acknowledgments
+## 🏆 Acknowledgments
 
 Special thanks to **GII Lab at Universidade da Coruña** for supporting this research. 🎓
 
 💬 Got questions? Feel free to open an issue or contribute!
 
-## Contributors
+## ✨ Contributors
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
