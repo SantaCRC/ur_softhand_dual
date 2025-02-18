@@ -19,7 +19,9 @@ This project integrates dual **UR5e** robotic arms using **ROS 2 Humble** for ad
 
 This repository consists of multiple branches, each tailored to specific configurations:
 
-- **`main` (Standalone Mode)** – Contains only the dual **UR5e** arms without any attached tools, providing a clean foundation for motion control and trajectory planning.
+- **`Standalone`** – Contains only the dual **UR5e** arms without any attached tools, providing a clean foundation for motion control and trajectory planning.
+- **`Main`** – This is the active develop branch the dual **UR5e**.
+- **`SoftHand`** – Features the dual **UR5e** arms with **SoftHand** end-effectors, allowing for dexterous and compliant grasping.
 - *(Additional branches include tools and specific configurations, refer to the repository for details.)*
 
 ---
@@ -57,7 +59,7 @@ sudo apt update && sudo apt install -y ros-humble-ur-ros2-driver
 2️⃣ Clone the repository:
 ```bash
 cd ~/ros2_ws/src
-git clone https://github.com/yourrepo/UR_SOFTHAND_DUAL.git
+git clone https://github.com/SantaCRC/ur_softhand_dual.git
 cd ..
 rosdep update && rosdep install --from-paths src --ignore-src -r -y
 colcon build
