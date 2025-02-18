@@ -1,37 +1,27 @@
-# Copyright (c) 2021 PickNik, Inc.
-#
-# Redistribution and use in source and binary forms, with or without
-# modification, are permitted provided that the following conditions are met:
-#
-#    * Redistributions of source code must retain the above copyright
-#      notice, this list of conditions and the following disclaimer.
-#
-#    * Redistributions in binary form must reproduce the above copyright
-#      notice, this list of conditions and the following disclaimer in the
-#      documentation and/or other materials provided with the distribution.
-#
-#    * Neither the name of the {copyright_holder} nor the names of its
-#      contributors may be used to endorse or promote products derived from
-#      this software without specific prior written permission.
-#
-# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
-# AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-# IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
-# ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
-# LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
-# CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
-# SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
-# INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
-# CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
-# ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
-# POSSIBILITY OF SUCH DAMAGE.
+#!/usr/bin/env python3
+"""
+Copyright (c) 2025 Grupo Integrado de Ingenieria
 
-#
-# Author: Denis Stogl
+Redistribution and use in source and binary forms, with or without modification,
+are permitted provided that the following conditions are met:
+  * Redistributions of source code must retain the above copyright notice,
+    this list of conditions and the following disclaimer.
+  * Redistributions in binary form must reproduce the above copyright notice,
+    this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+  * Neither the name of Grupo Integrado de Ingenieria nor the names of its contributors may be used to endorse or promote products derived
+    from this software without specific prior written permission.
 
-from launch_ros.actions import Node
-from launch_ros.parameter_descriptions import ParameterFile, ParameterValue
-from launch_ros.substitutions import FindPackageShare
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES,
+INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY,
+OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+Author: Fabian Alvarez
+2025, Grupo Integrado de Ingenieria
+"""
+
 
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument, OpaqueFunction
@@ -44,10 +34,15 @@ from launch.substitutions import (
     NotSubstitution,
     PathJoinSubstitution,
 )
+from launch_ros.actions import Node
+from launch_ros.parameter_descriptions import ParameterFile
+from launch_ros.substitutions import FindPackageShare
 
 
 def launch_setup(context, *args, **kwargs):
-    # General arguments that are used for both robots
+    # -------------------------------------------------------------------------
+    # Launch configurations (arguments) for general settings
+    # -------------------------------------------------------------------------
     ur_type = LaunchConfiguration("ur_type")
     safety_limits = LaunchConfiguration("safety_limits")
     safety_pos_margin = LaunchConfiguration("safety_pos_margin")
@@ -57,13 +52,15 @@ def launch_setup(context, *args, **kwargs):
     description_package = LaunchConfiguration("description_package")
     description_file = LaunchConfiguration("description_file")
 
-    # specific arguments for I (left) robot
-    robot_ip_I = LaunchConfiguration("robot_ip_I")
+    # -------------------------------------------------------------------------
+    # Robot-specific IP addresses (left and right robots)
+    # -------------------------------------------------------------------------
+    robot_ip_I = LaunchConfiguration("robot_ip_I")  # Left robot
+    robot_ip_D = LaunchConfiguration("robot_ip_D")  # Right robot
 
-    # specific arguments for D (right) robot
-    robot_ip_D = LaunchConfiguration("robot_ip_D")
-
-    # General arguments
+    # -------------------------------------------------------------------------
+    # Hardware and controller parameters
+    # -------------------------------------------------------------------------
     kinematics_params_file_I = LaunchConfiguration("kinematics_params_file_I")
     kinematics_params_file_D = LaunchConfiguration("kinematics_params_file_D")
     tf_prefix = LaunchConfiguration("tf_prefix")
@@ -79,6 +76,10 @@ def launch_setup(context, *args, **kwargs):
     launch_rviz = LaunchConfiguration("launch_rviz")
     headless_mode = LaunchConfiguration("headless_mode")
     launch_dashboard_client = LaunchConfiguration("launch_dashboard_client")
+
+    # -------------------------------------------------------------------------
+    # Tool communication parameters (for e-series robots)
+    # -------------------------------------------------------------------------
     use_tool_communication = LaunchConfiguration("use_tool_communication")
     tool_parity = LaunchConfiguration("tool_parity")
     tool_baud_rate = LaunchConfiguration("tool_baud_rate")
@@ -94,62 +95,64 @@ def launch_setup(context, *args, **kwargs):
     script_sender_port = LaunchConfiguration("script_sender_port")
     trajectory_port = LaunchConfiguration("trajectory_port")
 
-    joint_limit_params = PathJoinSubstitution(
-        [FindPackageShare(description_package), "config", ur_type, "joint_limits.yaml"]
-    )
-    physical_params = PathJoinSubstitution(
-        [FindPackageShare(description_package), "config", ur_type, "physical_parameters.yaml"]
-    )
-    visual_params = PathJoinSubstitution(
-        [FindPackageShare(description_package), "config", ur_type, "visual_parameters.yaml"]
-    )
-    script_filename = PathJoinSubstitution(
-        [FindPackageShare("ur_client_library"), "resources", "external_control.urscript"]
-    )
-    input_recipe_filename = PathJoinSubstitution(
-        [FindPackageShare("ur_robot_driver"), "resources", "rtde_input_recipe.txt"]
-    )
-    output_recipe_filename = PathJoinSubstitution(
-        [FindPackageShare("ur_robot_driver"), "resources", "rtde_output_recipe.txt"]
-    )
+    # -------------------------------------------------------------------------
+    # Define file paths and configurations using substitutions
+    # -------------------------------------------------------------------------
+    joint_limit_params = PathJoinSubstitution([
+        FindPackageShare(description_package), "config", ur_type, "joint_limits.yaml"
+    ])
+    physical_params = PathJoinSubstitution([
+        FindPackageShare(description_package), "config", ur_type, "physical_parameters.yaml"
+    ])
+    visual_params = PathJoinSubstitution([
+        FindPackageShare(description_package), "config", ur_type, "visual_parameters.yaml"
+    ])
+    script_filename = PathJoinSubstitution([
+        FindPackageShare("ur_client_library"), "resources", "external_control.urscript"
+    ])
+    input_recipe_filename = PathJoinSubstitution([
+        FindPackageShare("ur_robot_driver"), "resources", "rtde_input_recipe.txt"
+    ])
+    output_recipe_filename = PathJoinSubstitution([
+        FindPackageShare("ur_robot_driver"), "resources", "rtde_output_recipe.txt"
+    ])
 
-    robot_description_content = Command(
-        [
-            PathJoinSubstitution([FindExecutable(name="xacro")]),
-            " ",
-            PathJoinSubstitution(
-                [
-                    FindPackageShare("ur_dual_control"),
-                    "urdf",
-                    "ur_dual_controlled.urdf.xacro",
-                ]
-            ),
-        ]
-    )
+    # Generate the robot description (URDF) dynamically using xacro
+    robot_description_content = Command([
+        PathJoinSubstitution([FindExecutable(name="xacro")]),
+        " ",
+        PathJoinSubstitution([
+            FindPackageShare("ur_dual_control"), "urdf", "ur_dual_controlled.urdf.xacro",
+        ]),
+    ])
     robot_description = {"robot_description": robot_description_content}
 
-    initial_joint_controllers = PathJoinSubstitution(
-        [FindPackageShare(runtime_config_package), "config", controllers_file]
-    )
+    # Path to initial joint controllers configuration file
+    initial_joint_controllers = PathJoinSubstitution([
+        FindPackageShare(runtime_config_package), "config", controllers_file
+    ])
 
-    rviz_config_file = PathJoinSubstitution(
-        [FindPackageShare("ur_dual_description"), "rviz", "urdf.rviz"]
-    )
+    # RViz configuration file
+    rviz_config_file = PathJoinSubstitution([
+        FindPackageShare("ur_dual_description"), "rviz", "urdf.rviz"
+    ])
 
-    # define update rate
-    update_rate_config_file = PathJoinSubstitution(
-        [
-            FindPackageShare("ur_robot_driver"),
-            "config", 
-            ur_type.perform(context) + "_update_rate.yaml",
-        ]
-    )
+    # Define the update rate configuration file (depends on ur_type)
+    update_rate_config_file = PathJoinSubstitution([
+        FindPackageShare("ur_robot_driver"),
+        "config",
+        ur_type.perform(context) + "_update_rate.yaml",
+    ])
 
+    # -------------------------------------------------------------------------
+    # Nodes Definitions
+    # -------------------------------------------------------------------------
+
+    # Controller manager node for fake hardware
     control_node = Node(
         package="controller_manager",
         executable="ros2_control_node",
         parameters=[
-            #robot_description,
             update_rate_config_file,
             ParameterFile(initial_joint_controllers, allow_substs=True),
         ],
@@ -157,6 +160,7 @@ def launch_setup(context, *args, **kwargs):
         condition=IfCondition(use_fake_hardware),
     )
 
+    # UR control node for real hardware (not fake)
     ur_control_node = Node(
         package="ur_robot_driver",
         executable="ur_ros2_control_node",
@@ -169,11 +173,10 @@ def launch_setup(context, *args, **kwargs):
         condition=UnlessCondition(use_fake_hardware),
     )
 
+    # Dashboard client nodes for both robots (only if enabled and not using fake hardware)
     dashboard_client_node_I = Node(
         package="ur_robot_driver",
-        condition=IfCondition(
-            AndSubstitution(launch_dashboard_client, NotSubstitution(use_fake_hardware))
-        ),
+        condition=IfCondition(AndSubstitution(launch_dashboard_client, NotSubstitution(use_fake_hardware))),
         executable="dashboard_client",
         name="dashboard_client",
         output="screen",
@@ -184,9 +187,7 @@ def launch_setup(context, *args, **kwargs):
 
     dashboard_client_node_D = Node(
         package="ur_robot_driver",
-        condition=IfCondition(
-            AndSubstitution(launch_dashboard_client, NotSubstitution(use_fake_hardware))
-        ),
+        condition=IfCondition(AndSubstitution(launch_dashboard_client, NotSubstitution(use_fake_hardware))),
         executable="dashboard_client",
         name="dashboard_client",
         output="screen",
@@ -195,21 +196,17 @@ def launch_setup(context, *args, **kwargs):
         namespace="ur_dual_D",
     )
 
+    # Tool communication node for the left robot (if enabled)
     tool_communication_node_I = Node(
         package="ur_robot_driver",
         condition=IfCondition(use_tool_communication),
         executable="tool_communication.py",
         name="ur_tool_comm",
         output="screen",
-        parameters=[
-            {
-                "robot_ip": robot_ip_I,
-                "tcp_port": tool_tcp_port,
-                "device_name": tool_device_name,
-            }
-        ],
+        parameters=[{"robot_ip": robot_ip_I, "tcp_port": tool_tcp_port, "device_name": tool_device_name}],
     )
 
+    # URScript interface nodes for both robots
     urscript_interface_I = Node(
         package="ur_robot_driver",
         executable="urscript_interface",
@@ -226,6 +223,7 @@ def launch_setup(context, *args, **kwargs):
         namespace="ur_dual_D",
     )
 
+    # Controller stopper nodes for both robots
     controller_stopper_node_I = Node(
         package="ur_robot_driver",
         executable="controller_stopper_node",
@@ -236,15 +234,13 @@ def launch_setup(context, *args, **kwargs):
         parameters=[
             {"headless_mode": headless_mode},
             {"joint_controller_active": activate_joint_controller_I},
-            {
-                "consistent_controllers": [
-                    "io_and_status_controller_I",
-                    "force_torque_sensor_broadcaster_I",
-                    "joint_state_broadcaster",
-                    "speed_scaling_state_broadcaster_I",
-                    "ur_configuration_controller",
-                ]
-            },
+            {"consistent_controllers": [
+                "io_and_status_controller_I",
+                "force_torque_sensor_broadcaster_I",
+                "joint_state_broadcaster",
+                "speed_scaling_state_broadcaster_I",
+                "ur_configuration_controller",
+            ]},
         ],
     )
 
@@ -258,18 +254,17 @@ def launch_setup(context, *args, **kwargs):
         parameters=[
             {"headless_mode": headless_mode},
             {"joint_controller_active": activate_joint_controller_D},
-            {
-                "consistent_controllers": [
-                    "io_and_status_controller_D",
-                    "force_torque_sensor_broadcaster_D",
-                    "joint_state_broadcaster",
-                    "speed_scaling_state_broadcaster_D",
-                    "ur_configuration_controller",
-                ]
-            },
+            {"consistent_controllers": [
+                "io_and_status_controller_D",
+                "force_torque_sensor_broadcaster_D",
+                "joint_state_broadcaster",
+                "speed_scaling_state_broadcaster_D",
+                "ur_configuration_controller",
+            ]},
         ],
     )
 
+    # Robot state publisher node to broadcast TFs based on the robot description
     robot_state_publisher_node = Node(
         package="robot_state_publisher",
         executable="robot_state_publisher",
@@ -277,6 +272,7 @@ def launch_setup(context, *args, **kwargs):
         parameters=[robot_description],
     )
 
+    # RViz node for visualization (launched if 'launch_rviz' is true)
     rviz_node = Node(
         package="rviz2",
         condition=IfCondition(launch_rviz),
@@ -286,22 +282,22 @@ def launch_setup(context, *args, **kwargs):
         arguments=["-d", rviz_config_file],
     )
 
-    # Spawn controllers
+    # -------------------------------------------------------------------------
+    # Spawn Controllers
+    # -------------------------------------------------------------------------
     def controller_spawner(controllers, active=True):
+        """Spawns the specified controllers with an option to mark them as inactive."""
         inactive_flags = ["--inactive"] if not active else []
         return Node(
             package="controller_manager",
             executable="spawner",
             arguments=[
-                "--controller-manager",
-                "/controller_manager",
-                "--controller-manager-timeout",
-                controller_spawner_timeout,
-            ]
-            + inactive_flags
-            + controllers,
+                "--controller-manager", "/controller_manager",
+                "--controller-manager-timeout", controller_spawner_timeout,
+            ] + inactive_flags + controllers,
         )
 
+    # Define active and inactive controllers
     controllers_active = [
         "joint_state_broadcaster_I",
         "joint_state_broadcaster_D",
@@ -314,22 +310,20 @@ def launch_setup(context, *args, **kwargs):
         "ur_configuration_controller_I",
         "ur_configuration_controller_D",
     ]
-    controllers_inactive = ["forward_position_controller_I",]
+    controllers_inactive = ["forward_position_controller_I"]
 
-    controller_spawners = [controller_spawner(controllers_active)] + [
-        controller_spawner(controllers_inactive, active=False)
-    ]
+    controller_spawners = [
+        controller_spawner(controllers_active)
+    ] + [controller_spawner(controllers_inactive, active=False)]
 
-    # There may be other controllers of the joints, but this is the initially-started one
+    # Initial joint controller spawners for left and right robots,
+    # started or kept inactive based on 'activate_joint_controller'
     initial_joint_controller_spawner_started_I = Node(
         package="controller_manager",
         executable="spawner",
         arguments=[
-            initial_joint_controller_I,
-            "-c",
-            "/controller_manager",
-            "--controller-manager-timeout",
-            controller_spawner_timeout,
+            initial_joint_controller_I, "-c", "/controller_manager",
+            "--controller-manager-timeout", controller_spawner_timeout,
         ],
         condition=IfCondition(activate_joint_controller_I),
     )
@@ -338,25 +332,18 @@ def launch_setup(context, *args, **kwargs):
         package="controller_manager",
         executable="spawner",
         arguments=[
-            initial_joint_controller_D,
-            "-c",
-            "/controller_manager",
-            "--controller-manager-timeout",
-            controller_spawner_timeout,
+            initial_joint_controller_D, "-c", "/controller_manager",
+            "--controller-manager-timeout", controller_spawner_timeout,
         ],
         condition=IfCondition(activate_joint_controller_D),
-    )    
-
+    )
 
     initial_joint_controller_spawner_stopped_I = Node(
         package="controller_manager",
         executable="spawner",
         arguments=[
-            initial_joint_controller_I,
-            "-c",
-            "/controller_manager",
-            "--controller-manager-timeout",
-            controller_spawner_timeout,
+            initial_joint_controller_I, "-c", "/controller_manager",
+            "--controller-manager-timeout", controller_spawner_timeout,
             "--inactive",
         ],
         condition=UnlessCondition(activate_joint_controller_I),
@@ -366,16 +353,16 @@ def launch_setup(context, *args, **kwargs):
         package="controller_manager",
         executable="spawner",
         arguments=[
-            initial_joint_controller_D,
-            "-c",
-            "/controller_manager",
-            "--controller-manager-timeout",
-            controller_spawner_timeout,
+            initial_joint_controller_D, "-c", "/controller_manager",
+            "--controller-manager-timeout", controller_spawner_timeout,
             "--inactive",
         ],
         condition=UnlessCondition(activate_joint_controller_D),
     )
 
+    # -------------------------------------------------------------------------
+    # Aggregate all nodes to start
+    # -------------------------------------------------------------------------
     nodes_to_start = [
         control_node,
         ur_control_node,
@@ -398,8 +385,12 @@ def launch_setup(context, *args, **kwargs):
 
 
 def generate_launch_description():
+    # -------------------------------------------------------------------------
+    # Declare Launch Arguments
+    # -------------------------------------------------------------------------
     declared_arguments = []
-    # UR specific arguments
+
+    # UR robot type
     declared_arguments.append(
         DeclareLaunchArgument(
             "ur_type",
@@ -408,155 +399,145 @@ def generate_launch_description():
         )
     )
     declared_arguments.append(
-        DeclareLaunchArgument(
-            "robot_ip_I", description="IP address by which the robot can be reached."
-        )
+        DeclareLaunchArgument("robot_ip_I", description="IP address for the left robot.")
     )
     declared_arguments.append(
         DeclareLaunchArgument(
             "safety_limits",
             default_value="true",
-            description="Enables the safety limits controller if true.",
+            description="Enable safety limits controller.",
         )
     )
     declared_arguments.append(
         DeclareLaunchArgument(
             "safety_pos_margin",
             default_value="0.15",
-            description="The margin to lower and upper limits in the safety controller.",
+            description="Margin for safety limits.",
         )
     )
     declared_arguments.append(
         DeclareLaunchArgument(
             "safety_k_position",
             default_value="20",
-            description="k-position factor in the safety controller.",
+            description="k-position factor for safety controller.",
         )
     )
-    # General arguments
+    # General configuration arguments
     declared_arguments.append(
         DeclareLaunchArgument(
             "runtime_config_package",
             default_value="ur_dual_control",
-            description='Package with the controller\'s configuration in "config" folder. '
-            "Usually the argument is not set, it enables use of a custom setup.",
+            description='Package containing controller configuration (in the "config" folder).',
         )
     )
     declared_arguments.append(
         DeclareLaunchArgument(
             "controllers_file",
             default_value="ur_controllers.yaml",
-            description="YAML file with the controllers configuration.",
+            description="YAML file with controllers configuration.",
         )
     )
     declared_arguments.append(
         DeclareLaunchArgument(
             "description_package",
             default_value="ur_dual_control",
-            description="Description package with robot URDF/XACRO files. Usually the argument "
-            "is not set, it enables use of a custom description.",
+            description="Package with robot URDF/XACRO files.",
         )
     )
     declared_arguments.append(
         DeclareLaunchArgument(
             "description_file",
             default_value="ur_dual_controlled.urdf.xacro",
-            description="URDF/XACRO description file with the robot.",
+            description="URDF/XACRO description file for the robot.",
         )
     )
     declared_arguments.append(
         DeclareLaunchArgument(
             "kinematics_params_file_I",
-            default_value=PathJoinSubstitution(
-                [
-                    FindPackageShare(LaunchConfiguration("description_package")),
-                    "config",
-                    LaunchConfiguration("ur_type"),
-                    "default_kinematics.yaml",
-                ]
-            ),
-            description="The calibration configuration of the actual robot used.",
+            default_value=PathJoinSubstitution([
+                FindPackageShare(LaunchConfiguration("description_package")),
+                "config",
+                LaunchConfiguration("ur_type"),
+                "default_kinematics.yaml",
+            ]),
+            description="Kinematics configuration for the left robot.",
         )
     )
     declared_arguments.append(
         DeclareLaunchArgument(
             "tf_prefix",
             default_value="",
-            description="tf_prefix of the joint names, useful for "
-            "multi-robot setup. If changed, also joint names in the controllers' configuration "
-            "have to be updated.",
+            description="TF prefix for joint names (useful in multi-robot setups).",
         )
     )
     declared_arguments.append(
         DeclareLaunchArgument(
             "use_fake_hardware",
             default_value="false",
-            description="Start robot with fake hardware mirroring command to its states.",
+            description="Use fake hardware (simulate robot states).",
         )
     )
     declared_arguments.append(
         DeclareLaunchArgument(
             "fake_sensor_commands",
             default_value="false",
-            description="Enable fake command interfaces for sensors used for simple simulations. "
-            "Used only if 'use_fake_hardware' parameter is true.",
+            description="Enable fake sensor commands for simulation.",
         )
     )
     declared_arguments.append(
         DeclareLaunchArgument(
             "headless_mode",
             default_value="false",
-            description="Enable headless mode for robot control",
+            description="Enable headless mode for robot control.",
         )
     )
     declared_arguments.append(
         DeclareLaunchArgument(
             "controller_spawner_timeout",
             default_value="10",
-            description="Timeout used when spawning controllers.",
+            description="Timeout when spawning controllers.",
         )
     )
     declared_arguments.append(
         DeclareLaunchArgument(
             "initial_joint_controller",
             default_value="scaled_joint_trajectory_controller",
-            description="Initially loaded robot controller.",
+            description="Initial robot controller.",
         )
     )
     declared_arguments.append(
         DeclareLaunchArgument(
             "initial_joint_controller_I",
             default_value="scaled_joint_trajectory_controller_I",
-            description="Initially loaded robot controller for the left robot.",
+            description="Initial controller for the left robot.",
         )
     )
     declared_arguments.append(
         DeclareLaunchArgument(
             "initial_joint_controller_D",
             default_value="scaled_joint_trajectory_controller_D",
-            description="Initially loaded robot controller for the right robot.",
+            description="Initial controller for the right robot.",
         )
     )
     declared_arguments.append(
         DeclareLaunchArgument(
             "activate_joint_controller_I",
             default_value="true",
-            description="Activate loaded joint controller for the left robot.",
+            description="Activate left robot's joint controller.",
         )
     )
     declared_arguments.append(
         DeclareLaunchArgument(
             "activate_joint_controller_D",
             default_value="true",
-            description="Activate loaded joint controller for the right robot.",
+            description="Activate right robot's joint controller.",
         )
     )
-
     declared_arguments.append(
         DeclareLaunchArgument(
             "activate_joint_controller",
             default_value="true",
-            description="Activate loaded joint controller.",
+            description="Activate joint controller.",
         )
     )
     declared_arguments.append(
@@ -564,113 +545,108 @@ def generate_launch_description():
     )
     declared_arguments.append(
         DeclareLaunchArgument(
-            "launch_dashboard_client", default_value="true", description="Launch Dashboard Client?"
+            "launch_dashboard_client",
+            default_value="true",
+            description="Launch Dashboard Client?",
         )
     )
     declared_arguments.append(
         DeclareLaunchArgument(
             "use_tool_communication",
             default_value="false",
-            description="Only available for e series!",
+            description="Enable tool communication (only for e-series robots).",
         )
     )
     declared_arguments.append(
         DeclareLaunchArgument(
             "tool_parity",
             default_value="0",
-            description="Parity configuration for serial communication. Only effective, if "
-            "use_tool_communication is set to True.",
+            description="Parity configuration for serial communication.",
         )
     )
     declared_arguments.append(
         DeclareLaunchArgument(
             "tool_baud_rate",
             default_value="115200",
-            description="Baud rate configuration for serial communication. Only effective, if "
-            "use_tool_communication is set to True.",
+            description="Baud rate for serial communication.",
         )
     )
     declared_arguments.append(
         DeclareLaunchArgument(
             "tool_stop_bits",
             default_value="1",
-            description="Stop bits configuration for serial communication. Only effective, if "
-            "use_tool_communication is set to True.",
+            description="Stop bits for serial communication.",
         )
     )
     declared_arguments.append(
         DeclareLaunchArgument(
             "tool_rx_idle_chars",
             default_value="1.5",
-            description="RX idle chars configuration for serial communication. Only effective, "
-            "if use_tool_communication is set to True.",
+            description="RX idle characters for serial communication.",
         )
     )
     declared_arguments.append(
         DeclareLaunchArgument(
             "tool_tx_idle_chars",
             default_value="3.5",
-            description="TX idle chars configuration for serial communication. Only effective, "
-            "if use_tool_communication is set to True.",
+            description="TX idle characters for serial communication.",
         )
     )
     declared_arguments.append(
         DeclareLaunchArgument(
             "tool_device_name",
             default_value="/tmp/ttyUR",
-            description="File descriptor that will be generated for the tool communication device. "
-            "The user has be be allowed to write to this location. "
-            "Only effective, if use_tool_communication is set to True.",
+            description="Device file for tool communication (requires write permission).",
         )
     )
     declared_arguments.append(
         DeclareLaunchArgument(
             "tool_tcp_port",
             default_value="54321",
-            description="Remote port that will be used for bridging the tool's serial device. "
-            "Only effective, if use_tool_communication is set to True.",
+            description="TCP port for bridging the tool's serial device.",
         )
     )
     declared_arguments.append(
         DeclareLaunchArgument(
             "tool_voltage",
-            default_value="0",  # 0 being a conservative value that won't destroy anything
-            description="Tool voltage that will be setup.",
+            default_value="0",
+            description="Tool voltage configuration.",
         )
     )
     declared_arguments.append(
         DeclareLaunchArgument(
             "reverse_ip",
             default_value="0.0.0.0",
-            description="IP that will be used for the robot controller to communicate back to the driver.",
+            description="IP for the robot controller to communicate back to the driver.",
         )
     )
     declared_arguments.append(
         DeclareLaunchArgument(
             "script_command_port",
             default_value="50004",
-            description="Port that will be opened to forward URScript commands to the robot.",
+            description="Port for forwarding URScript commands to the robot.",
         )
     )
     declared_arguments.append(
         DeclareLaunchArgument(
             "reverse_port",
             default_value="50001",
-            description="Port that will be opened to send cyclic instructions from the driver to the robot controller.",
+            description="Port for sending cyclic instructions from the driver to the robot controller.",
         )
     )
     declared_arguments.append(
         DeclareLaunchArgument(
             "script_sender_port",
             default_value="50002",
-            description="The driver will offer an interface to query the external_control URScript on this port.",
+            description="Port for querying external_control URScript.",
         )
     )
     declared_arguments.append(
         DeclareLaunchArgument(
             "trajectory_port",
             default_value="50003",
-            description="Port that will be opened for trajectory control.",
+            description="Port for trajectory control.",
         )
     )
+
     return LaunchDescription(declared_arguments + [OpaqueFunction(function=launch_setup)])
