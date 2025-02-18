@@ -1,5 +1,5 @@
 # Dual - Motion Planning with Dual UR5e
-![Dual_logo](https://github.com/user-attachments/assets/11a092f0-505f-4755-ab91-810e18b07f7a)
+![Dual_logo](https://github.com/user-attachments/assets/5a25900d-8652-486c-8d73-cc5c6e39e17f)
 
 ## 🚀 Welcome to Dual!
 
