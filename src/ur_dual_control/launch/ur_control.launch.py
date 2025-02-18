@@ -124,39 +124,6 @@ def launch_setup(context, *args, **kwargs):
                     "ur_dual_controlled.urdf.xacro",
                 ]
             ),
-            " ",
-            "robot_ip_I:=",
-            robot_ip_I,
-            " ",
-            "robot_ip_D:=",
-            robot_ip_D,
-            " ",
-            "ur_type_I:=",
-            ur_type,
-            " ",
-            "ur_type_D:=",
-            ur_type,
-            " ",
-            "use_mock_hardware_I:=",
-            use_fake_hardware,
-            " ",
-            "use_mock_hardware_D:=",
-            use_fake_hardware,
-            " ",
-            "kinematics_parameters_file_I:=",
-            kinematics_params_file_I,
-            " ",
-            "kinematics_parameters_file_D:=",
-            kinematics_params_file_D,
-            " ",
-            "mock_sensor_commands_I:=",
-            fake_sensor_commands,
-            " ",
-            "mock_sensor_commands_D:=",
-            fake_sensor_commands,
-            " ",
-            "headless_mode:=",
-            headless_mode,
         ]
     )
     robot_description = {"robot_description": robot_description_content}
@@ -182,7 +149,7 @@ def launch_setup(context, *args, **kwargs):
         package="controller_manager",
         executable="ros2_control_node",
         parameters=[
-            robot_description,
+            #robot_description,
             update_rate_config_file,
             ParameterFile(initial_joint_controllers, allow_substs=True),
         ],
@@ -212,6 +179,7 @@ def launch_setup(context, *args, **kwargs):
         output="screen",
         emulate_tty=True,
         parameters=[{"robot_ip": robot_ip_I}],
+        namespace="ur_dual_I",
     )
 
     dashboard_client_node_D = Node(
@@ -224,6 +192,7 @@ def launch_setup(context, *args, **kwargs):
         output="screen",
         emulate_tty=True,
         parameters=[{"robot_ip": robot_ip_D}],
+        namespace="ur_dual_D",
     )
 
     tool_communication_node_I = Node(
@@ -246,6 +215,15 @@ def launch_setup(context, *args, **kwargs):
         executable="urscript_interface",
         parameters=[{"robot_ip": robot_ip_I}],
         output="screen",
+        namespace="ur_dual_I",
+    )
+
+    urscript_interface_D = Node(
+        package="ur_robot_driver",
+        executable="urscript_interface",
+        parameters=[{"robot_ip": robot_ip_D}],
+        output="screen",
+        namespace="ur_dual_D",
     )
 
     controller_stopper_node_I = Node(
@@ -326,13 +304,14 @@ def launch_setup(context, *args, **kwargs):
 
     controllers_active = [
         "joint_state_broadcaster_I",
+        "joint_state_broadcaster_D",
         "io_and_status_controller_I",
-        "speed_scaling_state_broadcaster_I",
-        "force_torque_sensor_broadcaster_I",
-        "ur_configuration_controller_I",
         "io_and_status_controller_D",
+        "speed_scaling_state_broadcaster_I",
         "speed_scaling_state_broadcaster_D",
+        "force_torque_sensor_broadcaster_I",
         "force_torque_sensor_broadcaster_D",
+        "ur_configuration_controller_I",
         "ur_configuration_controller_D",
     ]
     controllers_inactive = ["forward_position_controller_I",]
@@ -404,7 +383,9 @@ def launch_setup(context, *args, **kwargs):
         dashboard_client_node_D,
         tool_communication_node_I,
         controller_stopper_node_I,
+        controller_stopper_node_D,
         urscript_interface_I,
+        urscript_interface_D,
         robot_state_publisher_node,
         initial_joint_controller_spawner_stopped_I,
         initial_joint_controller_spawner_stopped_D,
