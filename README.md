@@ -1,6 +1,7 @@
-# My Robot Cell - Motion Planning with Dual UR5e
+# Dual - Motion Planning with Dual UR5e
+![Dual_logo](https://github.com/user-attachments/assets/11a092f0-505f-4755-ab91-810e18b07f7a)
 
-## 🚀 Welcome to My Robot Cell!
+## 🚀 Welcome to Dual!
 
 This project integrates dual **UR5e** robotic arms using **ROS 2 Humble** for advanced motion planning and manipulation tasks. Designed for flexibility and modularity, it provides a foundation for robotic research and industrial applications.
 
