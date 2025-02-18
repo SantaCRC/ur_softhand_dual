@@ -59,7 +59,7 @@ sudo apt update && sudo apt install -y ros-humble-ur-ros2-driver
 2️⃣ Clone the repository:
 ```bash
 cd ~/ros2_ws/src
-git clone https://github.com/yourrepo/UR_SOFTHAND_DUAL.git
+git clone https://github.com/SantaCRC/ur_softhand_dual.git
 cd ..
 rosdep update && rosdep install --from-paths src --ignore-src -r -y
 colcon build
