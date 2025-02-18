@@ -90,6 +90,17 @@ Special thanks to **GII Lab at Universidade da Coruña** for supporting this res
 
 💬 Got questions? Feel free to open an issue or contribute!
 
+## Contributors
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
 ---
 
 ✨ *Empowering the future of robotics—one motion at a time!* ✨
