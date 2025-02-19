@@ -4,7 +4,7 @@
   <name>ur_dual_control</name>
   <version>1.0.0</version>
   <description>ros2_control setup</description>
-  <maintainer email="Durchdewald@fzi.de">Felix Durchdewald</maintainer>
+  <maintainer email="alvarez.fabian@outlook.com">Fabian Alvarez</maintainer>
   <license file="LICENSE">BSD-3-Clause</license>
 
   <buildtool_depend>ament_cmake</buildtool_depend>

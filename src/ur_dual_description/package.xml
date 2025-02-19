@@ -4,14 +4,24 @@
   <name>ur_dual_description</name>
   <version>1.0.0</version>
 
-  <description>This package contains an urdf of a shared workspace.</description>
-  <maintainer email="exner@fzi.de">Felix Exner</maintainer>
+  <description>
+    This package contains a custom URDF for a dual-arm robot based on Universal Robots.
+  </description>
+
+  <maintainer email="alvarez.fabian@outlook.com">Fabian Alvarez</maintainer>
 
   <license file="LICENSE">BSD-3-Clause</license>
-  <!-- The UR background wall (meshes/ur_background.jpg)constitutes “Graphical Documentation” the use of which is subject to and governed by our “Terms and Conditions for use of Graphical Documentation”, which can be found here: https://www.universal-robots.com/legal/terms-and-conditions/terms_and_conditions_for_use_of_graphical_documentation.txt -->
-  <license file="UR_LICENSE.txt">Universal Robots A/S’ Terms and Conditions for Use of Graphical Documentation</license>
+  <!-- 
+    The UR background wall (meshes/ur_background.jpg) constitutes “Graphical Documentation”.
+    Its use is subject to and governed by our “Terms and Conditions for use of Graphical Documentation”,
+    which can be found here: 
+    https://www.universal-robots.com/legal/terms-and-conditions/terms_and_conditions_for_use_of_graphical_documentation.txt 
+  -->
+  <license file="UR_LICENSE.txt">
+    Universal Robots A/S’ Terms and Conditions for Use of Graphical Documentation
+  </license>
 
-  <author email="durchdewald@fzi.de">Felix Durchdewald</author>
+  <author email="alvarez.fabian@outlook.com">Fabian Alvarez</author>
 
   <buildtool_depend>ament_cmake</buildtool_depend>
   <exec_depend>joint_state_publisher</exec_depend>
@@ -21,7 +31,6 @@
   <exec_depend>xacro</exec_depend>
   <exec_depend>ur_description</exec_depend>
   <exec_depend>ur_robot_driver</exec_depend>
-
 
   <export>
     <build_type>ament_cmake</build_type>
