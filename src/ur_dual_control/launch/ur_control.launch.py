@@ -124,6 +124,8 @@ def launch_setup(context, *args, **kwargs):
         PathJoinSubstitution([
             FindPackageShare("ur_dual_control"), "urdf", "ur_dual_controlled.urdf.xacro",
         ]),
+        " kinematics_parameters_file_I:=", kinematics_params_file_I,
+        " kinematics_parameters_file_D:=", kinematics_params_file_D,
     ])
     robot_description = {"robot_description": robot_description_content}
 
