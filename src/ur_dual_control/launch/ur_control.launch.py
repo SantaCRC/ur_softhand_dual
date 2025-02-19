@@ -284,20 +284,52 @@ def launch_setup(context, *args, **kwargs):
         arguments=["-d", rviz_config_file],
     )
 
+    robot_controller_spawner = Node(
+        package="controller_manager",
+        executable="spawner",
+        namespace="qbhand2m1",
+        arguments=["qbhand2m1_synergies_trajectory_controller"],
+
+    )
+
+    joint_state_broadcaster_spawner = Node(
+        package="controller_manager",
+        executable="spawner",
+        namespace="qbhand2m1",
+        arguments=["qbhand2m1_joint_state_broadcaster"],
+    )
+
+
     # -------------------------------------------------------------------------
     # Spawn Controllers
     # -------------------------------------------------------------------------
     def controller_spawner(controllers, active=True):
-        """Spawns the specified controllers with an option to mark them as inactive."""
+        """Spawns the specified controllers with an option to mark them as inactive.
+        Si el nombre del controlador es de la forma /ns/controller_name, se usa 'ns' como namespace.
+        """
         inactive_flags = ["--inactive"] if not active else []
+
+        # Suponiendo que controllers es una lista de strings (por ejemplo, ["/qbhand2m1/qbhand2m1_joint_state_broadcaster"])
+        ns = ""
+        if controllers and controllers[0].startswith("/"):
+            parts = controllers[0].split("/")
+            # parts[0] es una cadena vacía debido al '/' inicial, parts[1] es el namespace
+            if len(parts) > 1:
+                ns = parts[1]
+
+        # Construir la ruta del controller_manager usando el namespace extraído
+        controller_manager_ns = f"/{ns}/controller_manager" if ns else "/controller_manager"
+
         return Node(
             package="controller_manager",
             executable="spawner",
+            namespace=ns if ns else "",  # Si ns es vacío, no se añade namespace
             arguments=[
-                "--controller-manager", "/controller_manager",
+                "--controller-manager", controller_manager_ns,
                 "--controller-manager-timeout", controller_spawner_timeout,
             ] + inactive_flags + controllers,
         )
+
 
     # Define active and inactive controllers
     controllers_active = [
@@ -362,11 +394,25 @@ def launch_setup(context, *args, **kwargs):
         condition=UnlessCondition(activate_joint_controller_D),
     )
 
+    qb_node = Node(
+          package='qb_device_driver',
+          executable='qb_device_communication_handler',
+          name='qb_device_driver_node',
+          output="log",
+          parameters=[{
+            'serial_port_name': "/tmp/ttyUSB0",
+            'use_specific_serial_port': "false"
+         }]
+  )
+
     # -------------------------------------------------------------------------
     # Aggregate all nodes to start
     # -------------------------------------------------------------------------
     nodes_to_start = [
+        #robot_controller_spawner,
+        #joint_state_broadcaster_spawner,
         control_node,
+        #qb_node,
         ur_control_node,
         dashboard_client_node_I,
         dashboard_client_node_D,

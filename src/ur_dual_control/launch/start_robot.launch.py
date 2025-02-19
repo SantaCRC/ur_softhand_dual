@@ -10,6 +10,7 @@ from launch import LaunchDescription
 from launch.actions import IncludeLaunchDescription, DeclareLaunchArgument
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import LaunchConfiguration, PathJoinSubstitution
+from launch_xml.launch_description_sources import XMLLaunchDescriptionSource
 
 def generate_launch_description():
     """Generate launch description for dual UR5e robot setup."""
@@ -49,7 +50,7 @@ def generate_launch_description():
         DeclareLaunchArgument("prefix_D", default_value="ur_dual_D_", description="Prefix for right robot."),
     ]
     
-    # Retrieve package path
+    # Retrieve package path for dual control
     dual_control_dir = get_package_share_directory("ur_dual_control")
     
     # Include controller launch file for both robots
@@ -79,7 +80,20 @@ def generate_launch_description():
         }.items(),
     )
     
-    return LaunchDescription(declared_arguments + [controller_manager])
+    # Retrieve package path for qb_hand_description
+    qb_hand_dir = get_package_share_directory("qb_hand_description")
+    
+    # Include the launch file for the qbhand2m hand with required arguments
+    qb_hand_bringup = IncludeLaunchDescription(
+    XMLLaunchDescriptionSource(os.path.join(qb_hand_dir, "launch", "bringup_qbhand2m.launch")),
+    launch_arguments={
+        "standalone": "true",
+        "activate_on_initialization": "true",
+    }.items(),
+)
+    
+    # Return the full launch description including all declared arguments and the two inclusions
+    return LaunchDescription(declared_arguments + [controller_manager, qb_hand_bringup])
 
 if __name__ == "__main__":
     generate_launch_description()
