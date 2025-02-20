@@ -1,0 +1,9 @@
+@PACKAGE_INIT@
+
+include(CMakeFindDependencyMacro)
+find_dependency(Serial)
+
+set_and_check(qbrobotics_driver_TARGETS "${CMAKE_CURRENT_LIST_DIR}/qbrobotics_driverTargets.cmake")
+include(${qbrobotics_driver_TARGETS})
+
+check_required_components(qbrobotics_driver)

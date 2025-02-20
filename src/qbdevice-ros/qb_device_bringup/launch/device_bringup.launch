@@ -1,0 +1,57 @@
+<launch>
+  <!-- device info -->
+  <arg name="device_id"/> <!--"The ID of the device [1, 128]."-->
+  <arg name="device_name"/> <!--"The unique device name used in the yaml controller configurations."-->
+  <arg name="device_type"/> <!--"The type of the device [qbhand, qbmove, qbclaw, ...]."-->
+  <!-- read/write settings -->
+  <arg name="get_currents" default="true"/> <!--"Choose whether or not to retrieve current measurements from the device."/-->
+  <arg name="get_positions" default="true"/> <!--"Choose whether or not to retrieve position measurements from the device."/-->
+  <arg name="max_repeats" default="3"/> <!--"The maximum number of consecutive repetitions to mark retrieved data as corrupted."/-->
+  <arg name="set_commands" default="true"/> <!--"Choose whether or not to send command positions to the device."/-->
+  <arg name="set_commands_async" default="true"/> <!--"Choose whether or not to send commands without waiting for ack."/-->
+  <!-- initialization settings -->
+  <arg name="rescan_on_initialization" default="false"/> <!--"Choose whether or not to rescan the serial ports on node startup."/-->
+  <!-- robot settings -->
+  <arg name="robot_name" default="$(var device_name)"/> <!--"The unique robot name."/-->
+  <arg name="robot_package" default="qb_move"/>
+  <arg name="robot_namespace" default="$(var robot_name)"/> <!--"The unique robot namespace."/-->
+  <arg name="use_rviz" default="false"/> <!--"Choose whether or not to use rviz visualization."/-->
+  <arg name="use_gui" default="false"/> <!--"Choose whether or not to use gui control."/-->
+
+  <let name="default_controller" value="$(var device_name)_synergy_trajectory_controller" if="$(eval '\'$(var device_type)\' == \'qbhand\'')"/>
+  <let name="default_controller" value="$(var device_name)_synergies_trajectory_controller" if="$(eval '\'$(var device_type)\' == \'qbhand2m\'')"/>
+  <let name="default_controller" value="$(var device_name)_position_and_preset_trajectory_controller" if="$(eval '\'$(var device_type)\' == \'qbmove\'')"/>
+  <let name="default_controller" value="$(var device_name)_deflection_trajectory_controller" if="$(eval '\'$(var device_type)\' == \'qbclaw\'')"/>
+  
+    <group>
+        <!-- push_ros_namespace to set namespace of included nodes -->
+        <push_ros_namespace namespace="$(var robot_namespace)" />
+
+        <node pkg="controller_manager" exec="ros2_control_node">
+          <param name="device_id" value="$(var device_id)"/> 
+          <param name="device_name" value="$(var device_name)"/> 
+          <param name="device_type" value="$(var device_type)"/> 
+          <param name="get_currents" value="$(var get_currents)"/> 
+          <param name="get_positions" value="$(var get_positions)"/> 
+          <param name="max_repeats" value="$(var max_repeats)"/> 
+          <param name="set_commands" value="$(var set_commands)"/> 
+          <param name="set_commands_async" value="$(var set_commands_async)"/>
+          <param name="rescan_on_initialization" value="$(var rescan_on_initialization)"/>
+          <param from="$(eval '\'$(find-pkg-share $(var robot_package)_ros2_control)\' + \'/config/$(var device_type)_controllers.yaml\'')" />
+          <param name="robot_description" value="$(command 'xacro $(find-pkg-share $(var robot_package)_description)/urdf/$(var device_type).urdf.xacro namespace:=$(var device_name)')"/>
+        </node>
+
+        <include file="$(find-pkg-share qb_device_bringup)/launch/device_spawner_and_opt_bringup.launch.py">
+          <arg name="device_id" value="$(var device_id)"/> 
+          <arg name="device_name" value="$(var device_name)"/> 
+          <arg name="device_type" value="$(var device_type)"/> 
+          <arg name="default_controller" value="$(var default_controller)"/> 
+          <arg name="robot_package" value="$(var robot_package)"/>
+          <arg name="use_rviz" value="$(var use_rviz)"/>
+          <arg name="use_gui" value="$(var use_gui)"/>
+        </include>
+
+    </group>  
+
+</launch>
+

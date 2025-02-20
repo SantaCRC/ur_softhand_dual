@@ -1,0 +1,14 @@
+# request
+int32 id
+int32 max_repeats
+bool get_positions
+bool get_currents
+bool get_commands
+---
+# response
+bool success
+int32 failures
+int16[] positions
+int16[] currents
+int16[] commands
+builtin_interfaces/Time stamp

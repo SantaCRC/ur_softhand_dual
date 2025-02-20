@@ -1,0 +1,16 @@
+<library path="qb_hand_ros2_control">
+  <class name="qb_hand_ros2_control/qbHandHW"
+         type="qb_hand_ros2_control::qbHandHW"
+         base_class_type="hardware_interface::SystemInterface">
+    <description>
+      The ros2_control minimal robot protocol with transmissions.
+    </description>
+  </class>
+  <class name="qb_hand_ros2_control/qbHand2MotorsHW"
+         type="qb_hand_ros2_control::qbHand2MotorsHW"
+         base_class_type="hardware_interface::SystemInterface">
+    <description>
+      The ros2_control minimal robot protocol with transmissions.
+    </description>
+  </class>
+</library>

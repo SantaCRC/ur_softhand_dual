@@ -1,0 +1,6 @@
+[submodule "qbrobotics-driver"]
+	path = qbrobotics-driver
+	url = https://support-qb@bitbucket.org/qbrobotics/qbrobotics-driver.git
+[submodule "serial"]
+	path = serial
+	url = https://bitbucket.org/qbrobotics/serial.git

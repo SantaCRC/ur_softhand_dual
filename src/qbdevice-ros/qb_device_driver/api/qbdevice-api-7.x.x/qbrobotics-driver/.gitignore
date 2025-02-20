@@ -1,0 +1,6 @@
+.idea/
+.vscode/
+
+*.pro.*
+*.autosave
+build/

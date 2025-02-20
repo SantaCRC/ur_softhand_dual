@@ -1,0 +1,9 @@
+<library path="qb_device_ros2_control">
+  <class name="qb_device_ros2_control/DeviceHW"
+         type="qb_device_ros2_control::DeviceHW"
+         base_class_type="hardware_interface::SystemInterface">
+    <description>
+      The ros2_control minimal robot protocol with transmissions.
+    </description>
+  </class>
+</library>

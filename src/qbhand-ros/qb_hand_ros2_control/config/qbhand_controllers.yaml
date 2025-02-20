@@ -1,0 +1,150 @@
+qbhand1:
+  controller_manager:
+    ros__parameters:
+      update_rate: 25  # Hz
+
+      qbhand1_joint_state_broadcaster:
+        type: joint_state_broadcaster/JointStateBroadcaster
+
+      qbhand1_synergy_trajectory_controller:
+        type: joint_trajectory_controller/JointTrajectoryController
+        
+  qbhand1_synergy_trajectory_controller:
+    ros__parameters:
+      command_interfaces:
+        - position
+      state_interfaces:
+        - position
+      joints:
+        - qbhand1_synergy_joint
+      constraints: # fake values due to the adaptability
+        goal_time: 10.0
+        stopped_velocity_tolerance: 10.0
+        qbhand1_synergy_joint: {trajectory: 10.0, goal: 10.0}
+      interface_name: position
+      state_publish_rate: 25.0
+      action_monitor_rate: 10.0
+      # open_loop_control: true   
+      allow_integration_in_goal_trajectories: false
+      deduce_states_from_derivatives: false
+
+qbhand2:
+  controller_manager:
+    ros__parameters:
+      update_rate: 25  # Hz
+
+      qbhand2_joint_state_broadcaster:
+        type: joint_state_broadcaster/JointStateBroadcaster
+
+      qbhand2_synergy_trajectory_controller:
+        type: joint_trajectory_controller/JointTrajectoryController
+        
+  qbhand2_synergy_trajectory_controller:
+    ros__parameters:
+      command_interfaces:
+        - position
+      state_interfaces:
+        - position
+      joints:
+        - qbhand2_synergy_joint
+      constraints: # fake values due to the adaptability
+        goal_time: 10.0
+        stopped_velocity_tolerance: 10.0
+        qbhand2_synergy_joint: {trajectory: 10.0, goal: 10.0}
+      interface_name: position
+      state_publish_rate: 25.0
+      action_monitor_rate: 10.0
+      # open_loop_control: true   
+      allow_integration_in_goal_trajectories: false
+      deduce_states_from_derivatives: false
+
+qbhand3:
+  controller_manager:
+    ros__parameters:
+      update_rate: 25  # Hz
+
+      qbhand3_joint_state_broadcaster:
+        type: joint_state_broadcaster/JointStateBroadcaster
+
+      qbhand3_synergy_trajectory_controller:
+        type: joint_trajectory_controller/JointTrajectoryController
+        
+  qbhand3_synergy_trajectory_controller:
+    ros__parameters:
+      command_interfaces:
+        - position
+      state_interfaces:
+        - position
+      joints:
+        - qbhand3_synergy_joint
+      constraints: # fake values due to the adaptability
+        goal_time: 10.0
+        stopped_velocity_tolerance: 10.0
+        qbhand3_synergy_joint: {trajectory: 10.0, goal: 10.0}
+      interface_name: position
+      state_publish_rate: 25.0
+      action_monitor_rate: 10.0
+      # open_loop_control: true   
+      allow_integration_in_goal_trajectories: false
+      deduce_states_from_derivatives: false
+
+qbhand4:
+  controller_manager:
+    ros__parameters:
+      update_rate: 25  # Hz
+
+      qbhand4_joint_state_broadcaster:
+        type: joint_state_broadcaster/JointStateBroadcaster
+
+      qbhand4_synergy_trajectory_controller:
+        type: joint_trajectory_controller/JointTrajectoryController
+        
+  qbhand4_synergy_trajectory_controller:
+    ros__parameters:
+      command_interfaces:
+        - position
+      state_interfaces:
+        - position
+      joints:
+        - qbhand4_synergy_joint
+      constraints: # fake values due to the adaptability
+        goal_time: 10.0
+        stopped_velocity_tolerance: 10.0
+        qbhand4_synergy_joint: {trajectory: 10.0, goal: 10.0}
+      interface_name: position
+      state_publish_rate: 25.0
+      action_monitor_rate: 10.0
+      # open_loop_control: true   
+      allow_integration_in_goal_trajectories: false
+      deduce_states_from_derivatives: false
+
+qbhand5:
+  controller_manager:
+    ros__parameters:
+      update_rate: 25  # Hz
+
+      qbhand5_joint_state_broadcaster:
+        type: joint_state_broadcaster/JointStateBroadcaster
+
+      qbhand5_synergy_trajectory_controller:
+        type: joint_trajectory_controller/JointTrajectoryController
+        
+  qbhand5_synergy_trajectory_controller:
+    ros__parameters:
+      command_interfaces:
+        - position
+      state_interfaces:
+        - position
+      joints:
+        - qbhand5_synergy_joint
+      constraints: # fake values due to the adaptability
+        goal_time: 10.0
+        stopped_velocity_tolerance: 10.0
+        qbhand5_synergy_joint: {trajectory: 10.0, goal: 10.0}
+      interface_name: position
+      state_publish_rate: 25.0
+      action_monitor_rate: 10.0
+      # open_loop_control: true   
+      allow_integration_in_goal_trajectories: false
+      deduce_states_from_derivatives: false
+

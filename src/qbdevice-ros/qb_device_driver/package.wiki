@@ -1,0 +1,57 @@
+<<PackageHeader(qb_device_driver)>>
+<<TOC(4)>>
+
+This is the only package among the ones in [[qb_device]] which can be used as a stand-alone ROS node, called ''Communication Handler''. It wraps the ''qbrobotics®'' API, manages the shared resources and provides a multi-node from/to multi-device communication interface.
+
+== Communication Handler ==
+
+The ''Communication Handler'' node manages the serial communication from the ROS ecosystem to the physical ''qbrobotics'' devices connected to it through any serial ports, and vice versa. The need of such a mediator is demanded to the possibility to connect several devices together (i.e. in a chain) and access them through a single serial port. Each ROS node representing a device has to request services to the owner of the shared resources, i.e. the Communication Handler.
+
+=== Command-line tools ===
+To start an instance of the Communication Handler node, be sure that the `roscore` is running and then simply execute the following command from a terminal (it '''does not require''' any configuration parameters):
+{{{
+rosrun qb_device_driver qb_device_communication_handler
+}}}
+
+=== Launch files ===
+To integrate the Communication Handler node in your application launch file you simply need to add the node to it (it '''does not require''' any configuration parameters).
+{{{
+<launch>
+  <node name="qb_device_communication_handler" pkg="qb_device_driver" type="qb_device_communication_handler" respawn="true" output="screen"/>
+  ...
+</launch>
+}}}
+
+{{{
+#!clearsilver CS/NodeAPI
+name = qb_device_communication_handler
+desc = The Communication Handler provides the following services to interact with ''qbrobotics'' devices connected to the system. Each service provides a field to specify the maximum number of repetitions that need to be done in case of errors, and fills the response with the number o actual retrials.
+srv {
+  0.name = /communication_handler/activate_motors
+  0.type = qb_device_srvs/Trigger
+  0.desc = Activates the motors of the device which ID is specified in the service request. The response `success` variable is set to `true` if motors are active.
+  1.name = /communication_handler/deactivate_motors
+  1.type = qb_device_srvs/Trigger
+  1.desc = Deactivates the motors of the device which ID is specified in the service request. The response `success` variable is set to `true` if motors are inactive.
+  2.name = /communication_handler/deregister_device
+  2.type = qb_device_srvs/Trigger
+  2.desc = Deregisters the device which ID is specified in the service request from the Communication Handler device list. Does nothing if the device was not already registered.
+  3.name = /communication_handler/get_info
+  3.type = qb_device_srvs/Trigger
+  3.desc = Retrieves the printable configuration setup of the device which ID is specified in the service request. On error, the response `message` variable is empty.
+  4.name = /communication_handler/get_measurements
+  4.type = qb_device_srvs/GetMeasurements
+  4.desc = Retrieves the motor positions (setting `get_positions`) and currents (setting `get_currents`) of the device which ID is specified in the service request. The response `success` variable is set to `true` if data retrieved (i.e. the response `currents` and `positions` variables) is meaningful.
+  5.name = /communication_handler/register_device
+  5.type = qb_device_srvs/RegisterDevice
+  5.desc = Registers the device which ID is specified in the service request in the Communication Handler device list (a real device configured with the same ID has to be connected to the system). If requested, activates the device motors or rescan the serial resources for new devices. The response `success` variable is set to `true` if the whole registration process ends with no failures.
+  6.name = /communication_handler/set_commands
+  6.type = qb_device_srvs/SetCommands
+  6.desc = Send the reference commands (i.e. the request `commands` variable) to the motors of the device which ID is specified in the service request, if `set_commands` is set (it may be set to `false` in high frequency control loop to improve performance). Additionally, the `set_commands_async` specify whether the serial communication has to be _asynchronous_ (i.e. _non-blocking_) which is faster with sporadic errors, or _blocking_ which is slower with no errors. '''Please note that the blocking improvement has been introduced since firmware v6.2.0; earlier devices need either to be upgraded or the usage of the older non-blocking method.'''
+  7.name = /communication_handler/sync_nodes
+  7.type = qb_device_srvs/Trigger
+  7.desc = Checks if all the already registered devices are completely initialized and ready for the control application; a device node is considered ready if it has requested this service at least once. The response `success` variable is set to `true` if all the control nodes registered are ready.
+}
+}}}
+
+## CategoryPackage

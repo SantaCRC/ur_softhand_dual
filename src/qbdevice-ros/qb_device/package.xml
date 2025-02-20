@@ -1,0 +1,26 @@
+<package format="2">
+  <name>qb_device</name>
+  <version>4.1.4</version>
+  <description>
+    This package contains a device-independent ROS interface for qbrobotics® devices.
+  </description>
+  <author>qbrobotics®</author>
+  <maintainer email="support@qbrobotics.com">qb Support Team</maintainer>
+  <license>BSD 3-Clause</license>
+
+  <url type="bugtracker">https://bitbucket.org/qbrobotics/qbdevice-ros/issues</url>
+  <url type="repository">https://bitbucket.org/qbrobotics/qbdevice-ros</url>
+  <url type="website">http://wiki.ros.org/qb_device</url>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <exec_depend>qb_device_bringup</exec_depend>
+  <exec_depend>qb_device_driver</exec_depend>
+  <exec_depend>qb_device_msgs</exec_depend>
+  <exec_depend>qb_device_ros2_control</exec_depend>
+
+  <export>
+    
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

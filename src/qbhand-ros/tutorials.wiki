@@ -1,0 +1,237 @@
+####################################
+## note =
+## note.0 = [[ROS/Tutorials]]
+## title = ROS Packages Installation
+## description = Install the last qb SoftHand related ROS packages
+## next =
+## next.0.link =
+## next.1.link =
+## level = BeginnerCategory
+## keywords = qbrobotics SoftHand installation
+####################################
+<<IncludeCSTemplate(TutorialCSHeaderTemplate)>>
+
+<<Version()>>
+{{{{#!wiki version kinetic_and_newer
+
+== Requirements ==
+If you have never set it up, you probably need to add your linux user to the `dialout` group to grant right access to the serial port resources. To do so, just open a terminal and execute the following command:
+{{{
+sudo gpasswd -a <user_name> dialout
+}}}
+where you need to replace the `<user_name>` with your current linux username.
+
+''Note: Don't forget to logout or reboot.''
+
+== Ubuntu Packages ==
+If you prefer to leave your catkin workspace as it is, you can simply install all the ROS packages from the Ubuntu official repositories:
+
+{{{
+sudo apt update
+sudo apt install ros-$ROS_DISTRO-qb-hand
+}}}
+
+== Sources ==
+
+{{{#!wiki caution
+Since you are interested in the ROS interfaces for our devices, it is assumed that you are familiar at least with the very basics of the ROS environment. If not, it might be useful to spend some of your time with [[ROS/Tutorials|ROS]] and [[catkin/Tutorials|catkin]] tutorials. After that, don't forget to come back here and start having fun with our Nodes.
+}}}
+
+Install the packages for a ROS user is straightforward. Nonetheless the following are the detailed steps which should be easy to understand even for ROS beginners:
+
+ 1. Clone both the `qb_device` and `qb_hand` packages to your Catkin Workspace, e.g. `~/catkin_ws`:
+ {{{
+cd `~/catkin_ws/src`
+git clone --branch production-$ROS_DISTRO https://bitbucket.org/qbrobotics/qbdevice-ros.git
+git clone --branch production-$ROS_DISTRO https://bitbucket.org/qbrobotics/qbhand-ros.git
+ }}}
+
+ 1. Compile the packages using `catkin`:
+ {{{
+cd `~/catkin_ws`
+catkin_make
+ }}}
+ '''Note:''' depending on your ROS installation, you may need some extra packages to properly compile the code. Please, be sure that you have already installed at least `ros-$ROS_DISTRO-ros-controllers`, `ros-$ROS_DISTRO-transmission-interface`, `ros-$ROS_DISTRO-joint-limits-interface`, `ros-$ROS_DISTRO-combined-robot-hw`, and their dependencies (''e.g. use `sudo apt install <ros-pkg>`'').
+
+ 1. If you were not familiar with ROS you should be happy now: everything is done! Nonetheless, if you encounter some troubles during the compilation, feel free to ask for support on [[https://bitbucket.org/account/user/qbrobotics/projects/ROS|our Bitbucket]].
+
+
+== Device Setup ==
+Connect a ''[[Robots/qbhand|qb SoftHand]]'' to your system is basically a matter of plugging in a USB cable. Nonetheless, '''read carefully''' the [[https://www.qbrobotics.com/products/qb-softhand-research/|manual]] to understand all the requirements and advices about either single-device or chained configurations.
+
+}}}}
+
+## TutorialCategory
+
+
+
+
+####################################
+## note =
+## note.0 = [[qb_device_control/Tutorials/Control|Control]]
+## title = Control Modes
+## description = Details on the control modes available for the qb SoftHand
+## next =
+## next.0.link = [[qb_hand_control/Tutorials/GUI Control|GUI Control]]
+## next.1.link =
+## level = BeginnerCategory
+## keywords = qbrobotics SoftHand control
+####################################
+<<IncludeCSTemplate(TutorialCSHeaderTemplate)>>
+
+For the sake of simplicity, we are going to cover all the control modes for a single ''[[Robots/qbhand|qb SoftHand]]'', but it is just a matter of putting things together and set the launch file parameters properly to control several devices together ([[qb_chain_control]] is dedicated for such a scope).
+
+All the control modes are initialized in the same manner but with distinct command line arguments. The default single-device control Node which brings everything up and simply waits for commands on the above mentioned Action topic is the following:
+{{{
+roslaunch qb_hand_control control.launch standalone:=true activate_on_initialization:=true device_id:=<actual_device_id>
+}}}
+
+###### The arguments explained
+ * `activate_on_initialization [false]`: Activates the motor at startup (the device will not move since the first command reference is received).
+ * `device_id [1]`: Each device has its own ID, you need to set the one of the actual device connect to your system.
+ * `standalone [false]`: Starts the Communication Handler together with the control Node. If you set this to `false` (or remove it since the default value is `false`), you need to launch the Communication Handler in a separate terminal.
+
+It is worth noting that the activation of the motor can be postponed to improved safety if you are not aware of the state of the system at startup. To do so just set `activate_on_initialization:=false` (or remove it since the default value is `false`) and make a call to the Communication Handler `activate_motors` Service, when your system is ready, e.g. as follows:
+{{{
+rosservice call /communication_handler/activate_motors {"id: <actual_device_id>, max_repeats: 0"}
+}}}
+
+###### Additional arguments
+ * `control_duration [0.01]`: The duration of the control loop expressed in seconds.
+ * `get_currents [true]`: Choose whether or not to retrieve current measurements from the device.
+ * `get_positions [true]`: Choose whether or not to retrieve position measurements from the device.
+ * `get_distinct_packages [true]`: Choose whether or not to retrieve current and position measurements from the device in two distinct packages.
+ * `max_repeats [3]`: The maximum number of consecutive repetitions to mark retrieved data as corrupted.
+ * `set_commands [true]`: Choose whether or not to send command positions to the device.
+ * `set_commands_async [true]`: Choose whether or not to send commands without waiting for ack.
+ * `use_rviz [false]`: Choose whether or not to use rviz. If enabled you should see a virtual hand on screen performing a similar behavior.
+{{{#!wiki caution
+Be aware that the ''[[Robots/qbhand|qb SoftHand]]'' is desensorized and therefore it is not possible to know exactly the position of each finger: the screen visualization is just the result of an estimation of the closure value and may differ form the real configuration of your hand (e.g. when grasping an object).
+}}}
+
+The followings are particular control modes which are enabled with few parameters, but the concepts of this paragraph hold for all of them:
+<<TutorialChain(qb_hand_control/Tutorials/GUI Control)>>
+
+## TutorialCategory
+
+
+
+
+####################################
+## note =
+## note.0 = [[qb_hand_control/Tutorials/Control Modes|Control Modes]]
+## title = GUI Control
+## description = Control the qb SoftHand through a simple GUI
+## next =
+## next.0.link = [[qb_hand_control/Tutorials/Waypoint Control|Waypoint Control]]
+## next.1.link =
+## level = BeginnerCategory
+## keywords = qbrobotics SoftHand control
+####################################
+<<IncludeCSTemplate(TutorialCSHeaderTemplate)>>
+
+This control mode is the one suggested to test that everything is working as expected. You are able to open and close the ''[[Robots/qbhand|qb SoftHand]]'' interactively, but nothing more than this.
+
+''Note that you will probably need this only the very first times and for debugging.''
+
+To start this mode just add `use_controller_gui:=true` to the general `roslaunch` command (be sure that the opposite `use_waypoints` is not used).
+
+After a while a GUI should appear to screen with two empty dropdown menus, a red enable button below them, and a ''speed scaling'' slider at the bottom.
+ 1. Select the ''Controller Manager'' namespace from the left menu, e.g. `/<robot_namespace>/control/controller_manager` (where `<robot_namespace>` is an additional argument of the launch file needed with several devices). This enables the right menu which provides all the controllers available for the connected device.
+ 1. Select the ''[[Robots/qbhand|qb SoftHand]]'' controller from the second dropdown menu and enable it through the circular button.
+ 1. A single slider will appear in the GUI to control the closure of the hand, which ranges from `0` (hand completely open) to `1` (hand completely closed). Move the slider to perform a complete grasp or to partially open/close the hand. You can also vary the speed through the bottom ''speed scaling'' slider if you like a faster/slower motion. No other timing constraints can be set in this mode.
+
+{{https://bitbucket.org/qbrobotics/qbhand-ros/raw/ddbccc369d6846549e9b03c9dce0c2dc6c1115e1/qb_hand_media/screen_gui.png|screen_gui}}
+
+## TutorialCategory
+
+
+
+
+####################################
+## note =
+## note.0 = [[qb_hand_control/Tutorials/Control Modes|Control Modes]]
+## note.1 = [[qb_hand_control/Tutorials/GUI Control|GUI Control]]
+## title = Waypoint Control
+## description = Control the qb SoftHand motion through an automatic waypoint trajectory loop
+## next =
+## next.0.link = [[qb_hand_control/Tutorials/API Control|API Control]]
+## next.1.link =
+## level = IntermediateCategory
+## keywords = qbrobotics SoftHand control
+####################################
+<<IncludeCSTemplate(TutorialCSHeaderTemplate)>>
+
+This control mode is a bit more structured and useful than the previous: it allows to set a fixed trajectory of any number of position waypoints (with timing constraints) and set the robot to cycle infinitely on it (because of the loop it is recommended to set the first and last waypoint in a similar configuration to avoid unwanted sudden changes).
+
+To start this mode just add `use_waypoints:=true` to the general `roslaunch` command (be sure that the opposite `use_controller_gui` is not used). You won't see any control interface in this case but the ''[[Robots/qbhand|qb SoftHand]]'' should start moving according to the given trajectory, parsed from a yaml file located at
+```
+<robot_package>_control/config/<robot_name>_waypoints.yaml
+```
+where `robot_name` and `robot_package` are two additional launch file arguments.
+
+== Customization ==
+You can modify the waypoint trajectory to replicate the behavior you want: either change the `<robot_package>_control/config/<robot_name>_waypoints.yaml` or add another custom application-specific file in the `config` directory. In the second case you need to set the argument `robot_name` properly when launching the command from the terminal.
+
+The waypoint configuration is as follows:
+{{{#!yaml
+# Waypoints describe the desired motion trajectory:
+#  - time [s]: can be either a single value or an interval for which joint_positions hold
+#  - joint_positions:
+#     - hand closure [0,1];
+#  - joint_velocities: optional, use it only if you want a nonzero value
+#     - hand closure [0,1]/s;
+#  - joint_accelerations: optional, use it only if you want a nonzero value
+#     - hand closure [0,1]/s^2;
+#
+# It is worth noting that, if specified, joint_positions, joint_velocities and joint_accelerations must be of size one.
+
+waypoints:
+ -
+   time: [1.0]
+   joint_positions:
+     <device_name>: [0.0]
+ -
+   time: [2.25, 2.75]
+   joint_positions:
+     <device_name>: [0.8]
+  -
+    time: [4.0]
+    joint_positions:
+      <device_name>: [0.5]
+    joint_velocities:
+      <device_name>: [-0.5]
+ -
+   ...
+}}}
+
+## TutorialCategory
+
+
+
+
+####################################
+## note =
+## note.0 = [[qb_hand_control/Tutorials/Control Modes|Control Modes]]
+## note.1 = [[qb_hand_control/Tutorials/Waypoint Control|Waypoint Control]]
+## title = API Control
+## description = Custom control application using the qbrobotics API
+## next =
+## next.0.link =
+## next.1.link =
+## level = AdvancedCategory
+## keywords = qbrobotics SoftHand control
+####################################
+<<IncludeCSTemplate(TutorialCSHeaderTemplate)>>
+
+If you need a complex (i.e. real) control application, e.g. the ''[[Robots/qbhand|qb SoftHand]]'' is mounted on a robot which uses computer vision aid to grasp objects, the previous two control modes don't really help much. What we provide for real applications is the full ROS libraries to manage and control the hand.
+
+You have to dig into the [[qb_hand]] package documentation and find what better suite for your needs, e.g. extend the `qbDeviceControl` class provided, or even redesign some of its parts by following an approach similar to ours.
+
+{{{#!wiki caution
+Our recommendation is to use as much as possible our resources, classes and macros to help you while developing your application. Don't reinvent the wheel!
+}}}
+
+At last, if you come up with a something useful for the whole community, it will be amazing if you propose your improvement with a Pull Request in the package of interest on [[https://bitbucket.org/account/user/qbrobotics/projects/ROS|our Bitbucket]].
+
+## TutorialCategory

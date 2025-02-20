@@ -1,0 +1,429 @@
+# This YAML file must contains the configuration of each mesh to properly build the URDF automagically.
+# The aim of this additional file is to encapsulate all the physical properties in a single place without hiding them
+# in a long URDF structure.
+#
+# Note: there is no need to modify this file unless you hack the qbhand physical mechanism. Nonetheless it is
+#       recommended to create a distinct YAML file for each version of the qbhand (this helps with versioning and
+#       leaves the default configuration as is).
+#
+# Brief description:
+# * The `default` group holds the anchors for the common default settings, i.e. avoid annoying repetitions.
+# * The `qb_hand_<left/right>` group contains the current properties to build the URDF correctly.
+
+default:
+  parameters:
+    axis_abduction: &axis_abduction "0 0 -1"
+    axis_flexion: &axis_flexion "0 0 -1"
+    dynamics: &dynamics
+      damping: 0.0
+      friction: 0.0
+    effort_limit: &effort 100
+    velocity_limit: &velocity 100
+    virtual_mechanism: &virtual_mechanism
+      position: "0.013 0 0"
+      orientation: "0 0 0"
+    synergy: &synergy
+      axis: "0 0 1"  # it is not important though
+      dynamics: *dynamics
+      limits:
+        lower: 0.0
+        upper: 1.0
+        effort: *effort
+        velocity: *velocity
+    manipulation: &manipulation
+      axis: "0 0 1"  # it is not important though
+      dynamics: *dynamics
+      limits:
+        lower: -1.0
+        upper: 1.0
+        effort: *effort
+        velocity: *velocity
+    motor_1: &motor_1
+      axis: "0 0 1"  # it is not important though
+      dynamics: *dynamics
+      limits:
+        lower: 0
+        upper: 1.0
+        effort: *effort
+        velocity: *velocity
+    motor_2: &motor_2
+      axis: "0 0 1"  # it is not important though
+      dynamics: *dynamics
+      limits:
+        lower: 0
+        upper: 1.0
+        effort: *effort
+        velocity: *velocity
+
+  finger:
+    knuckle: &knuckle
+      mesh: "ph_knuckle"
+      mesh_collision: "ph_knuckle_collision"
+      # 'position' and 'orientation' should be specified each time
+      position: "0 0 0"
+      orientation: "0 0 0"
+      axis: *axis_abduction
+      mimic_reduction: 0.0
+      dynamics: *dynamics
+      limits:
+        lower: -0.524
+        upper: 0.524
+        effort: *effort
+        velocity: *velocity
+      inertial:
+        mass: 0.0095  # 9.5g
+        origin:
+          position: "4.2753603e-04  0.0 -1.4321738e-03"  # y^ less than e-04 from CAD --> 1.6685384e-07
+          orientation: "0 0 0"
+        inertia:
+          ixx: 6.4337303e-07
+          ixy: 0.0  # less than e-09 from CAD --> -6.1071201e-12
+          ixz: -3.9373913e-08
+          iyy: 1.1253771e-06
+          iyz: 0.0  # less than e-09 from CAD --> 1.0214952e-11
+          izz: 7.2336948e-07
+
+    knuckle_thumb_r: &knuckle_thumb_r
+      mesh: "ph_thumb_r"
+      mesh_collision: "ph_thumb_r_collision"
+      # 'position' and 'orientation' should be specified each time
+      position: "0 0 0"
+      orientation: "0 0 0"
+      axis: *axis_abduction
+      mimic_reduction: 2.542
+      dynamics: *dynamics
+      limits:
+        lower: 0.0
+        upper: 1.571
+        effort: *effort
+        velocity: *velocity
+      inertial:
+        mass: 0.0100  # 10.0g
+        origin:
+          position: "1.3071561e-02 -2.7357764e-03 6.4347823e-04"
+          orientation: "0 0 0"
+        inertia:
+          ixx: 3.5865978e-07
+          ixy: 2.0944224e-07
+          ixz: -6.8657569e-08
+          iyy: 1.3885564e-06
+          iyz: 3.2170608e-08
+          izz: 1.3571203e-06
+
+    knuckle_thumb_l: &knuckle_thumb_l
+      << : *knuckle_thumb_r
+      mesh: "ph_thumb_l"
+      mesh_collision: "ph_thumb_l_collision"
+      inertial:
+        mass: 0.0100  # 10.0g
+        origin:
+          position: "1.3071561e-02 2.7346340e-03 6.4090487e-04"
+          orientation: "0 0 0"
+        inertia:
+          ixx: 3.5827953e-07
+          ixy: -2.0934657e-07
+          ixz: -6.8435459e-08
+          iyy: 1.3882698e-06
+          iyz: -3.2001578e-08
+          izz: 1.3570267e-06
+
+    medium: &medium
+      mesh: "ph_medium"
+      mesh_collision: "ph_medium_collision"
+      position: "0.017 0 0"
+      orientation: "0 0 0"
+      axis: *axis_flexion
+      mimic_reduction: 0.785
+      virtual_mechanism: *virtual_mechanism
+      dynamics: *dynamics
+      limits:
+        lower: 0.0
+        upper: 0.785
+        effort: *effort
+        velocity: *velocity
+      inertial:
+        mass: 0.0082  # 8.2g
+        origin:
+          position: "8.7707437e-03 -1.7863138e-03 0.0"  # z^ less than e-04 from CAD --> -2.5774703e-05
+          orientation: "0 0 0"
+        inertia:
+          ixx: 2.2722068e-07
+          ixy: 1.1586053e-08
+          ixz: 0.0  # less than e-09 from CAD --> -5.6391369e-11
+          iyy: 5.5947233e-07
+          iyz: 0.0  # less than e-09 from CAD --> 2.3431511e-11
+          izz: 5.9562195e-07
+
+    medium_after_knuckle: &medium_after_knuckle
+      << : *medium
+      position: "0.009 0 0"
+      orientation: "1.57 0 0"
+
+    short: &short
+      mesh: "ph_short"
+      mesh_collision: "ph_short_collision"
+      position: "0.009 0 0"
+      orientation: "0 0 0"
+      axis: *axis_flexion
+      mimic_reduction: 0.785
+      virtual_mechanism: *virtual_mechanism
+      dynamics: *dynamics
+      limits:
+        lower: 0.0
+        upper: 0.785
+        effort: *effort
+        velocity: *velocity
+      inertial:
+        mass: 0.0063  # 6.3g
+        origin:
+          position: "4.7601567e-03 -1.3786947e-03 0.0"  # z^ less than e-04 from CAD --> -3.0200439e-07
+          orientation: "0 0 0"
+        inertia:
+          ixx: 1.8024201e-07
+          ixy: 5.7567980e-09
+          ixz: 0.0  # less than e-09 from CAD --> -1.8174442e-12
+          iyy: 2.3516266e-07
+          iyz: 0.0  # less than e-09 from CAD --> -1.0435060e-11
+          izz: 2.6915040e-07
+
+    short_after_knuckle: &short_after_knuckle
+      << : *short
+      position: "0.009 0 0"
+      orientation: "1.57 0 0"
+
+    short_after_medium: &short_after_medium
+      << : *short
+      position: "0.017 0 0"
+      orientation: "0 0 0"
+
+    distal: &distal
+      mesh: "ph_distal"
+      mesh_collision: "ph_distal_collision"
+      position: "0.009 0 0"
+      orientation: "0 0 0"
+      axis: *axis_flexion
+      mimic_reduction: 0.785
+      virtual_mechanism: *virtual_mechanism
+      dynamics: *dynamics
+      limits:
+        lower: 0.0
+        upper: 0.785
+        effort: *effort
+        velocity: *velocity
+      inertial:
+        mass: 0.0090  # 9.0g
+        origin:
+          position: "8.8025467e-03 -1.7219289e-03 0.0"  # z^ less than e-04 from CAD --> -2.1350175e-07
+          orientation: "0 0 0"
+        inertia:
+          ixx: 2.6586142e-07
+          ixy: 1.2416847e-08
+          ixz: 0.0  # less than e-09 from CAD --> -8.6698823e-12
+          iyy: 5.9935767e-07
+          iyz: 0.0  # less than e-09 from CAD --> -9.3832346e-12
+          izz: 6.6781963e-07
+
+qbhand_right:
+  90_deg_flange_base:
+    mesh: "flange_deg_90"
+    mesh_collision: "flange_deg_90"
+    position: "1.0 7.8738498e-04 1.5878899e-02"
+    orientation: "3.14 0 0"
+    inertial:
+      mass: 0.205
+      origin:
+        position: "0.0 7.8738498e-04 1.5878899e-02"  # x^ less than e-04 from CAD --> -1.9242016e-07
+        orientation: "0 0 1.57"
+      inertia:
+        ixx: 1.2506929e-04
+        ixy: 0.0  # approx
+        ixz: 0.0  # approx
+        iyy: 1.3387790e-04
+        iyz: 0.0  # approx
+        izz: 1.9218394e-04
+  
+  base:
+    mesh: "flange_iso_04"
+    mesh_collision: "flange_iso_04"
+    position: "0.0 7.8738498e-04 1.5878899e-02"
+    orientation: "0 0 0"
+    inertial:
+      mass: 0.450
+      origin:
+        position: "0.0030 -0.0449 0.0135"
+        orientation: "0 0 0"
+      inertia:  # all approx
+        ixx: 0.00045
+        ixy: 0.0
+        ixz: 0.0
+        iyy: 0.00060
+        iyz: 0.0
+        izz: 0.00025
+
+  palm:
+    mesh: "palm_pinch_r"
+    mesh_collision: "palm_pinch_r"
+    position: "-0.0045 0.0145 0.144"
+    orientation: "1.57 0 0"
+    inertial:
+      mass: 0.450
+      origin:
+        position: "0.0030 -0.0449 0.0135"
+        orientation: "0 0 0"
+      inertia:  # all approx
+        ixx: 0.00045
+        ixy: 0.0
+        ixz: 0.0
+        iyy: 0.00060
+        iyz: 0.0
+        izz: 0.00025
+
+  synergy: *synergy
+  manipulation: *manipulation
+  motor_1: *motor_1
+  motor_2: *motor_2
+
+  # all fingers have the same base structure and only few things change among them (e.g. the pose of the knuckle)
+  thumb:
+    knuckle:
+      << : *knuckle_thumb_r
+      position: "-0.044 -0.0465 -0.002"
+      orientation: "-1.57 3.14 0.0"
+    proximal:
+      << : *short
+      position: "0.0255 -0.0038 -0.00012"
+      orientation: "-1.1415 0.0 0.0"
+    distal: *distal
+
+  index:
+    knuckle:
+      << : *knuckle
+      position: "-0.02 -0.007 0.014"
+      orientation: "0 0 1.57"
+      mimic_reduction: -0.2
+    proximal: *medium_after_knuckle
+    middle: *short_after_medium
+    distal: *distal
+
+  middle:
+    knuckle:
+      << : *knuckle
+      position: "0 0 0.014"
+      orientation: "0 0 1.57"
+      mimic_reduction: 0.0
+    proximal: *medium_after_knuckle
+    middle: *short_after_medium
+    distal: *distal
+
+  ring:
+    knuckle:
+      << : *knuckle
+      position: "0.02 -0.007 0.014"
+      orientation: "0 0 1.57"
+      mimic_reduction: 0.2
+    proximal: *medium_after_knuckle
+    middle: *short_after_medium
+    distal: *distal
+
+  little:
+    knuckle:
+      << : *knuckle
+      position: "0.04 -0.012 0.014"
+      orientation: "0 0 1.57"
+      mimic_reduction: 0.4
+    proximal: *short_after_knuckle
+    middle: *short
+    distal: *distal
+
+
+qbhand_left:
+  base:
+    mesh: "flange_iso_04"
+    mesh_collision: "flange_iso_04"
+    inertial:
+      mass: 0.205
+      origin:
+        position: "0.0 7.8738498e-04 1.5878899e-02"  # x^ less than e-04 from CAD --> -1.9242016e-07
+        orientation: "0 0 0"
+      inertia:
+        ixx: 1.2506929e-04
+        ixy: 0.0  # approx
+        ixz: 0.0  # approx
+        iyy: 1.3387790e-04
+        iyz: 0.0  # approx
+        izz: 1.9218394e-04
+
+  palm:
+    mesh: "palm_pinch_l"
+    mesh_collision: "palm_pinch_l"
+    position: "0.0045 0.0145 0.144"
+    orientation: "1.57 0 3.14"
+    inertial:
+      mass: 0.450
+      origin:
+        position: "0.0030 -0.0449 -0.0135"
+        orientation: "0 0 0"
+      inertia:  # all approx
+        ixx: 0.00045
+        ixy: 0.0
+        ixz: 0.0
+        iyy: 0.00060
+        iyz: 0.0
+        izz: 0.00025
+
+  synergy: *synergy
+  manipulation: *manipulation
+  motor_1: *motor_1
+  motor_2: *motor_2
+
+  # all fingers have the same base structure and only few things change among them (e.g. the pose of the knuckle)
+  thumb:
+    knuckle:
+      << : *knuckle_thumb_l
+      position: "-0.044 -0.0465 0.002"
+      orientation: "-1.57 3.14 0.0"
+    proximal:
+      << : *short
+      position: "0.0255 0.0038 -0.00012"
+      orientation: "-2.0 0.0 0.0"
+    distal: *distal
+
+  index:
+    knuckle:
+      << : *knuckle
+      position: "-0.02 -0.007 -0.014"
+      orientation: "0 3.14 -1.57"
+      mimic_reduction: 0.2
+    proximal: *medium_after_knuckle
+    middle: *short_after_medium
+    distal: *distal
+
+  middle:
+    knuckle:
+      << : *knuckle
+      position: "0 0 -0.014"
+      orientation: "0 3.14 -1.57"
+      mimic_reduction: 0.0
+    proximal: *medium_after_knuckle
+    middle: *short_after_medium
+    distal: *distal
+
+  ring:
+    knuckle:
+      << : *knuckle
+      position: "0.02 -0.007 -0.014"
+      orientation: "0 3.14 -1.57"
+      mimic_reduction: -0.2
+    proximal: *medium_after_knuckle
+    middle: *short_after_medium
+    distal: *distal
+
+  little:
+    knuckle:
+      << : *knuckle
+      position: "0.04 -0.012 -0.014"
+      orientation: "0 3.14 -1.57"
+      mimic_reduction: -0.4
+    proximal: *short_after_knuckle
+    middle: *short
+    distal: *distal

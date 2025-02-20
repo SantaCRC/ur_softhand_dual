@@ -1,0 +1,31 @@
+<launch>
+  <!-- device info -->
+  <arg name="device_id" default="1"/><!--"The ID of the device [1, 128]."/-->
+  <arg name="device_type" default="qbhand2m"/><!--"The type of the device [qbhand, qbmove, ...]."/-->
+  <arg name="device_name" default="$(var device_type)$(var device_id)"/><!--"The unique device namespace used in the yaml controller configurations (also in the urdf if not already specified there)."/-->
+  <!-- description settings -->
+  <arg name="robot_name" default="$(var device_name)"/><!--"The unique robot namespace."/-->
+  <arg name="robot_package" default="qb_hand"/><!--"The base package name prefix for the robot configurations [urdf, rviz, ...]."/-->
+  <arg name="use_rviz" default="false"/><!--"Choose whether or not to use rviz."/-->
+  <arg name="use_gui" default="false"/> <!--"Choose whether or not to use gui control."/-->
+  <arg name="standalone" default="false"/><!--"Choose whether or not to start the Communication Handler."/-->
+  <arg name="use_specific_serial_port" default="false"/><!--"Choose whether or not to use a specific serial port."/-->
+  <arg name="serial_port_name" default="/tmp/ttyUSB0"/><!--"The name of the specific serial port on which the qbhand is connected"/-->
+
+  <!-- bring up robot description, joint and robot state publishers (also can start rviz) -->
+  <include file="$(find-pkg-share qb_device_bringup)/launch/device_bringup.launch">
+    <arg name="device_name" value="$(var device_name)"/>
+    <arg name="device_id" value="$(var device_id)"/>
+    <arg name="device_type" value="$(var device_type)"/>
+    <arg name="robot_name" value="$(var robot_name)"/>
+    <arg name="robot_package" value="$(var robot_package)"/>
+    <arg name="use_rviz" value="$(var use_rviz)"/>
+    <arg name="use_gui" value="$(var use_gui)"/>
+  </include>
+  <group if="$(var standalone)">
+    <include file="$(find-pkg-share qb_device_driver)/launch/communication_handler.launch.py">
+      <arg name="use_specific_serial_port" value="$(var use_specific_serial_port)"/>
+      <arg name="serial_port_name" value="$(var serial_port_name)"/>
+    </include>
+  </group>
+</launch>

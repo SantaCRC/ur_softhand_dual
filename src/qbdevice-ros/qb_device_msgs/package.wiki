@@ -1,0 +1,7 @@
+<<PackageHeader(qb_device_msgs)>>
+
+Each ''qbrobotics®'' device-independent custom ROS message is documented directly in its `.msg` specification and it is designed to fit most of the users needs. Indeed we recommend to use these messages as they are whenever it is possible. However we understand that your application may require few specific additional information. Since it is difficult to provide one-size-fit-all messages, integrate your specification in a new coherent custom message, and feel free to propose your changes with a Pull Request in our repository if you think that it could be helpful for someone else.
+
+<<MsgSrvDoc(qb_device_msgs)>>
+
+## CategoryPackage
