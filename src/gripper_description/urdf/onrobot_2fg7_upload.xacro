@@ -1,0 +1,12 @@
+<?xml version="1.0" ?>
+<robot name="2fg7_outwards" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:include filename="$(find onrobot_gripper)/urdf/onrobot_2fg7.xacro" />
+ <xacro:onrobot_2fg7_gripper prefix="" finger_configuration="outwards"/>
+
+  
+  <xacro:include filename="$(find onrobot_gripper)/urdf/gzplugin_grasp_fix.urdf.xacro"/>
+  <xacro:include filename="$(find onrobot_gripper)/urdf/mimic_fix.urdf.xacro"/>
+  <xacro:gzplugin_grasp_fix/>
+  <xacro:mimic_fix/>
+  
+</robot>

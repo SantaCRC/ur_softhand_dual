@@ -2,6 +2,7 @@
 <robot xmlns:xacro="http://ros.org/wiki/xacro">
   <xacro:include filename="$(find ur_description)/urdf/ur_macro.xacro"/>
   <xacro:include filename="$(find qb_hand_description)/urdf/qbhand.utils.xacro"/>
+  <xacro:include filename="$(find onrobot_gripper)/urdf/onrobot_2fg7_upload.xacro"/>
 	<xacro:arg name="namespace" default="qbhand2m1"/>
 	<xacro:arg name="generate_control_tag" default="false"/>
 
@@ -66,6 +67,12 @@
       <child link="root_link"/> <!-- Enlace base de la SoftHand -->
       <origin xyz="0 0 0" rpy="0 0 0"/> <!-- Ajusta el offset según sea necesario -->
     </joint> 
+
+    <joint name="world_joint" type="fixed">
+      <parent link="ur_dual_D_tool0" />
+      <child link = "base_link" />
+      <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+    </joint>
 
 
     <!-- Definición del brazo derecho (D) -->
