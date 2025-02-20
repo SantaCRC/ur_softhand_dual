@@ -1,6 +1,16 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://ros.org/wiki/xacro">
   <xacro:include filename="$(find ur_description)/urdf/ur_macro.xacro"/>
+  <xacro:include filename="$(find qb_hand_description)/urdf/qbhand.utils.xacro"/>
+	<xacro:arg name="namespace" default="qbhand2m1"/>
+	<xacro:arg name="generate_control_tag" default="false"/>
+
+	<link name="root_link"/>
+	<xacro:build_hand_2m_from_yaml configuration="qbhand_right" namespace="$(arg namespace)" parent="root" generate_control_tag="$(arg generate_control_tag)">
+		<origin xyz="0 0 0" rpy="0 0 0"/>
+	</xacro:build_hand_2m_from_yaml>
+
+
 
 
   <!-- Macro para definir los dos brazos del UR -->
@@ -48,7 +58,14 @@
       generate_ros2_control_tag="false"
     >
       <origin xyz="0 0 0" rpy="0 0 0" />
-    </xacro:ur_robot> 
+    </xacro:ur_robot>
+
+     <!-- Conectar la SoftHand al UR5e -->
+    <joint name="wrist_3_to_hand_mount" type="fixed">
+      <parent link="ur_dual_I_tool0"/>
+      <child link="root_link"/> <!-- Enlace base de la SoftHand -->
+      <origin xyz="0 0 0" rpy="0 0 0"/> <!-- Ajusta el offset según sea necesario -->
+    </joint> 
 
 
     <!-- Definición del brazo derecho (D) -->

@@ -157,6 +157,7 @@ def launch_setup(context, *args, **kwargs):
         parameters=[
             update_rate_config_file,
             ParameterFile(initial_joint_controllers, allow_substs=True),
+            "--ros-args", "--log-level", "DEBUG",
         ],
         output="screen",
         condition=IfCondition(use_fake_hardware),
@@ -358,6 +359,7 @@ def launch_setup(context, *args, **kwargs):
         arguments=[
             initial_joint_controller_I, "-c", "/controller_manager",
             "--controller-manager-timeout", controller_spawner_timeout,
+            "--ros-args", "--log-level", "DEBUG",
         ],
         condition=IfCondition(activate_joint_controller_I),
     )
@@ -368,6 +370,7 @@ def launch_setup(context, *args, **kwargs):
         arguments=[
             initial_joint_controller_D, "-c", "/controller_manager",
             "--controller-manager-timeout", controller_spawner_timeout,
+            "--ros-args", "--log-level", "DEBUG",
         ],
         condition=IfCondition(activate_joint_controller_D),
     )
@@ -379,6 +382,7 @@ def launch_setup(context, *args, **kwargs):
             initial_joint_controller_I, "-c", "/controller_manager",
             "--controller-manager-timeout", controller_spawner_timeout,
             "--inactive",
+            "--ros-args", "--log-level", "DEBUG",
         ],
         condition=UnlessCondition(activate_joint_controller_I),
     )
@@ -390,6 +394,7 @@ def launch_setup(context, *args, **kwargs):
             initial_joint_controller_D, "-c", "/controller_manager",
             "--controller-manager-timeout", controller_spawner_timeout,
             "--inactive",
+            "--ros-args", "--log-level", "DEBUG",
         ],
         condition=UnlessCondition(activate_joint_controller_D),
     )
@@ -542,7 +547,7 @@ def generate_launch_description():
     declared_arguments.append(
         DeclareLaunchArgument(
             "controller_spawner_timeout",
-            default_value="10",
+            default_value="40",
             description="Timeout when spawning controllers.",
         )
     )
