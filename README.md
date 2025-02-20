@@ -13,6 +13,8 @@
 
 This project integrates dual **UR5e** robotic arms using **ROS 2 Humble** for advanced motion planning and manipulation tasks. Designed for flexibility and modularity, it provides a foundation for robotic research and industrial applications.
 
+This branch is intended to use the **SoftHand 2 Research by QB Robotics**.
+
 ---
 
 ## 📌 Branch Structure
@@ -59,7 +61,7 @@ sudo apt update && sudo apt install -y ros-humble-ur-ros2-driver
 2️⃣ Clone the repository:
 ```bash
 cd ~/ros2_ws/src
-git clone https://github.com/SantaCRC/ur_softhand_dual.git
+git clone -b SoftHand https://github.com/SantaCRC/ur_softhand_dual.git
 cd ..
 rosdep update && rosdep install --from-paths src --ignore-src -r -y
 colcon build
