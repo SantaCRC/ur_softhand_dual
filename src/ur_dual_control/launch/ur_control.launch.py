@@ -157,7 +157,6 @@ def launch_setup(context, *args, **kwargs):
         parameters=[
             update_rate_config_file,
             ParameterFile(initial_joint_controllers, allow_substs=True),
-            "--ros-args", "--log-level", "DEBUG",
         ],
         output="screen",
         condition=IfCondition(use_fake_hardware),
@@ -285,21 +284,6 @@ def launch_setup(context, *args, **kwargs):
         arguments=["-d", rviz_config_file],
     )
 
-    robot_controller_spawner = Node(
-        package="controller_manager",
-        executable="spawner",
-        namespace="qbhand2m1",
-        arguments=["qbhand2m1_synergies_trajectory_controller"],
-
-    )
-
-    joint_state_broadcaster_spawner = Node(
-        package="controller_manager",
-        executable="spawner",
-        namespace="qbhand2m1",
-        arguments=["qbhand2m1_joint_state_broadcaster"],
-    )
-
 
     # -------------------------------------------------------------------------
     # Spawn Controllers
@@ -359,7 +343,6 @@ def launch_setup(context, *args, **kwargs):
         arguments=[
             initial_joint_controller_I, "-c", "/controller_manager",
             "--controller-manager-timeout", controller_spawner_timeout,
-            "--ros-args", "--log-level", "DEBUG",
         ],
         condition=IfCondition(activate_joint_controller_I),
     )
@@ -370,7 +353,6 @@ def launch_setup(context, *args, **kwargs):
         arguments=[
             initial_joint_controller_D, "-c", "/controller_manager",
             "--controller-manager-timeout", controller_spawner_timeout,
-            "--ros-args", "--log-level", "DEBUG",
         ],
         condition=IfCondition(activate_joint_controller_D),
     )
@@ -382,7 +364,6 @@ def launch_setup(context, *args, **kwargs):
             initial_joint_controller_I, "-c", "/controller_manager",
             "--controller-manager-timeout", controller_spawner_timeout,
             "--inactive",
-            "--ros-args", "--log-level", "DEBUG",
         ],
         condition=UnlessCondition(activate_joint_controller_I),
     )
@@ -394,30 +375,15 @@ def launch_setup(context, *args, **kwargs):
             initial_joint_controller_D, "-c", "/controller_manager",
             "--controller-manager-timeout", controller_spawner_timeout,
             "--inactive",
-            "--ros-args", "--log-level", "DEBUG",
         ],
         condition=UnlessCondition(activate_joint_controller_D),
     )
-
-    qb_node = Node(
-          package='qb_device_driver',
-          executable='qb_device_communication_handler',
-          name='qb_device_driver_node',
-          output="log",
-          parameters=[{
-            'serial_port_name': "/tmp/ttyUSB0",
-            'use_specific_serial_port': "false"
-         }]
-  )
 
     # -------------------------------------------------------------------------
     # Aggregate all nodes to start
     # -------------------------------------------------------------------------
     nodes_to_start = [
-        #robot_controller_spawner,
-        #joint_state_broadcaster_spawner,
         control_node,
-        #qb_node,
         ur_control_node,
         dashboard_client_node_I,
         dashboard_client_node_D,
