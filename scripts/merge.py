@@ -12,6 +12,8 @@ class JointStateMerger(Node):
             JointState, '/joint_states', self.ur5_callback, 10)
         self.joint_qbhand_sub = self.create_subscription(
             JointState, '/qbhand2m1/joint_states', self.qbhand_callback, 10)
+        self.joint_finger_sub = self.create_subscription(
+            JointState, '/finger_joint_states', self.finger_callback, 10)
 
         # Publicador en el tópico original /joint_states
         self.publisher_ = self.create_publisher(JointState, '/joint_states', 10)
@@ -19,6 +21,7 @@ class JointStateMerger(Node):
         # Variables para almacenar los estados de articulaciones
         self.ur5_joint_state = JointState()
         self.qbhand_joint_state = JointState()
+        self.finger_joint_state = JointState()
 
     def ur5_callback(self, msg):
         self.ur5_joint_state = msg
@@ -28,15 +31,35 @@ class JointStateMerger(Node):
         self.qbhand_joint_state = msg
         self.publish_merged_joint_states()
 
+    def finger_callback(self, msg):
+        self.finger_joint_state = msg
+        self.publish_merged_joint_states()
+
     def publish_merged_joint_states(self):
         # Crear el mensaje combinado
         merged_msg = JointState()
 
-        # Combinar nombres, posiciones, velocidades y esfuerzos de ambas fuentes
-        merged_msg.name = self.ur5_joint_state.name + self._replace_qbhand_names(self.qbhand_joint_state.name)
-        merged_msg.position = list(self.ur5_joint_state.position) + list(self.qbhand_joint_state.position)
-        merged_msg.velocity = list(self.ur5_joint_state.velocity) + list(self.qbhand_joint_state.velocity)
-        merged_msg.effort = list(self.ur5_joint_state.effort) + list(self.qbhand_joint_state.effort)
+        # Fusionar nombres, posiciones, velocidades y esfuerzos de las tres fuentes
+        merged_msg.name = (
+            self.ur5_joint_state.name +
+            self._replace_qbhand_names(self.qbhand_joint_state.name) +
+            self.finger_joint_state.name
+        )
+        merged_msg.position = (
+            list(self.ur5_joint_state.position) +
+            list(self.qbhand_joint_state.position) +
+            list(self.finger_joint_state.position)
+        )
+        merged_msg.velocity = (
+            list(self.ur5_joint_state.velocity) +
+            list(self.qbhand_joint_state.velocity) +
+            list(self.finger_joint_state.velocity)
+        )
+        merged_msg.effort = (
+            list(self.ur5_joint_state.effort) +
+            list(self.qbhand_joint_state.effort) +
+            list(self.finger_joint_state.effort)
+        )
 
         # Establecer la marca de tiempo
         merged_msg.header.stamp = self.get_clock().now().to_msg()
@@ -45,8 +68,9 @@ class JointStateMerger(Node):
         self.publisher_.publish(merged_msg)
 
     def _replace_qbhand_names(self, qbhand_names):
-        # Remueve el prefijo "m1" de los nombres de las articulaciones de QBHand
-        return [name.replace("qbhand2m1_", "qbhand2m1_") for name in qbhand_names]
+        # Aquí podrías modificar o limpiar los nombres de las juntas de qbhand si es necesario.
+        # En este ejemplo se mantiene igual, pero se deja la función para futuras modificaciones.
+        return qbhand_names
 
 def main(args=None):
     rclpy.init(args=args)
