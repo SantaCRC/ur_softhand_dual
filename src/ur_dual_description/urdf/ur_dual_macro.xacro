@@ -44,7 +44,6 @@
       kinematics_parameters_file="${kinematics_parameters_file_I}"
       physical_parameters_file="${physical_parameters_file_I}"
       visual_parameters_file="${visual_parameters_file_I}"
-      generate_ros2_control_tag="false"
     >
       <origin xyz="0 0 0" rpy="0 0 0" />
     </xacro:ur_robot> 
@@ -58,7 +57,6 @@
       kinematics_parameters_file="${kinematics_parameters_file_D}"
       physical_parameters_file="${physical_parameters_file_D}"
       visual_parameters_file="${visual_parameters_file_D}"
-      generate_ros2_control_tag="false"
     >
       <origin xyz="0 0 0" rpy="0 0 0" />
     </xacro:ur_robot>

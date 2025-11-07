@@ -3,7 +3,7 @@
 
   <!-- Include necessary definitions -->
   <xacro:include filename="$(find ur_dual_description)/urdf/ur_dual_macro.xacro"/>
-  <xacro:include filename="$(find ur_description)/urdf/ur.ros2_control.xacro"/>
+  <xacro:include filename="$(find ur_robot_driver)/urdf/ur.ros2_control.xacro"/>
   <xacro:include filename="$(find ur_description)/urdf/inc/ur_common.xacro"/>
 
   <!-- Define arguments for parameterizing the description -->
@@ -29,6 +29,7 @@
   <xacro:arg name="use_mock_hardware_I" default="false" />
   <xacro:arg name="mock_sensor_commands_I" default="false" />
   <xacro:arg name="robot_ip_I" default="10.113.36.100" />
+  <xacro:arg name="reverse_ip" default="0.0.0.0" />
   <xacro:arg name="reverse_port_I" default="50006" />
   <xacro:arg name="script_sender_port_I" default="50007" />
   <xacro:arg name="script_command_port_I" default="50010" />
@@ -79,13 +80,13 @@
     name="ur_dual_I"
     tf_prefix="ur_dual_I_"
     robot_ip="$(arg robot_ip_I)"
-    hash_kinematics="${kinematics_hash}"
     script_filename="$(arg ur_script_filename)"
+    kinematics_parameters_file="$(arg kinematics_parameters_file_I)"
     output_recipe_filename="$(arg ur_output_recipe_filename)"
     input_recipe_filename="$(arg ur_input_recipe_filename)"
-    use_fake_hardware="$(arg use_mock_hardware_I)"
-    fake_sensor_commands="$(arg mock_sensor_commands_I)"
+    use_mock_hardware="$(arg use_mock_hardware_I)"
     headless_mode="$(arg headless_mode)"
+    reverse_ip="$(arg reverse_ip)"
     reverse_port="$(arg reverse_port_I)"
     script_sender_port="$(arg script_sender_port_I)"
     script_command_port="$(arg script_command_port_I)"
@@ -104,13 +105,13 @@
     name="ur_dual_D"
     tf_prefix="ur_dual_D_"
     robot_ip="$(arg robot_ip_D)"
-    hash_kinematics="${kinematics_hash}"
+    kinematics_parameters_file="$(arg kinematics_parameters_file_D)"
     script_filename="$(arg ur_script_filename)"
     output_recipe_filename="$(arg ur_output_recipe_filename)"
     input_recipe_filename="$(arg ur_input_recipe_filename)"
-    use_fake_hardware="$(arg use_mock_hardware_D)"
-    fake_sensor_commands="$(arg mock_sensor_commands_D)"
+    use_mock_hardware="$(arg use_mock_hardware_D)"
     headless_mode="$(arg headless_mode)"
+    reverse_ip="$(arg reverse_ip)"
     reverse_port="$(arg reverse_port_D)"
     script_sender_port="$(arg script_sender_port_D)"
     script_command_port="$(arg script_command_port_D)"

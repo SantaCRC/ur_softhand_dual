@@ -159,13 +159,12 @@ def launch_setup(context, *args, **kwargs):
             ParameterFile(initial_joint_controllers, allow_substs=True),
         ],
         output="screen",
-        condition=IfCondition(use_fake_hardware),
     )
 
     # UR control node for real hardware (not fake)
     ur_control_node = Node(
-        package="ur_robot_driver",
-        executable="ur_ros2_control_node",
+        package="controller_manager",
+        executable="ros2_control_node",
         parameters=[
             robot_description,
             update_rate_config_file,
@@ -367,7 +366,7 @@ def launch_setup(context, *args, **kwargs):
     # -------------------------------------------------------------------------
     nodes_to_start = [
         control_node,
-        ur_control_node,
+        #ur_control_node,
         dashboard_client_node_I,
         dashboard_client_node_D,
         tool_communication_node_I,
