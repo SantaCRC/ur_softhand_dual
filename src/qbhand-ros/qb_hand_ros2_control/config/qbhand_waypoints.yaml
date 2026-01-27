@@ -1,0 +1,21 @@
+publisher_joint_trajectory_controller:
+  ros__parameters:
+
+    wait_sec_between_publish: 1
+
+    controller_name: "_synergy_trajectory_controller"
+    joints: [_synergy_joint]
+
+    goal_names: ["pos1", "pos2", "pos3", "pos4", "pos5", "pos6"]
+    pos1:
+      positions: [0.9]
+    pos2: 
+      positions: [0.0]
+    pos3: 
+      positions: [0.3]
+    pos4:
+      positions: [0.0]
+    pos5:
+      positions: [1.0]
+    pos6:
+      positions: [0.0]

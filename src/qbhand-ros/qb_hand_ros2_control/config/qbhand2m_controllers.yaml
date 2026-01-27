@@ -1,0 +1,300 @@
+qbhand2m1:
+  controller_manager:
+    ros__parameters:
+      update_rate: 25  # Hz
+
+      qbhand2m1_joint_state_broadcaster:
+        type: joint_state_broadcaster/JointStateBroadcaster
+
+      qbhand2m1_synergies_trajectory_controller:
+        type: joint_trajectory_controller/JointTrajectoryController
+      
+      qbhand2m1_motor_positions_trajectory_controller:
+        type: joint_trajectory_controller/JointTrajectoryController
+
+  qbhand2m1_synergies_trajectory_controller: # control the qbhand motors and its relative synergy
+    ros__parameters:
+      command_interfaces:
+        - position
+      state_interfaces:
+        - position
+      joints:
+        - qbhand2m1_synergy_joint
+        - qbhand2m1_manipulation_joint
+      constraints:  # fake values due to the adaptability
+        goal_time: 10.0
+        stopped_velocity_tolerance: 10.0
+        goal_time: 10.0
+        stopped_velocity_tolerance: 10.0
+        qbhand2m1_synergy_joint: {trajectory: 10.0, goal: 10.0}
+        qbhand2m1_manipulation_joint: {trajectory: 10.0, goal: 10.0}
+      interface_name: position
+      state_publish_rate: 25.0
+      action_monitor_rate: 10.0
+      # open_loop_control: true   
+      allow_integration_in_goal_trajectories: true
+      deduce_states_from_derivatives: false
+
+  qbhand2m1_motor_positions_trajectory_controller: # control the qbhand 2 with motor positions
+    ros__parameters:
+      command_interfaces:
+        - position
+      state_interfaces:
+        - position
+      joints:
+        - qbhand2m1_motor_1_joint
+        - qbhand2m1_motor_2_joint
+      constraints:  # fake values due to the adaptability
+        goal_time: 10.0
+        stopped_velocity_tolerance: 10.0
+        goal_time: 10.0
+        stopped_velocity_tolerance: 10.0
+        qbhand2m1_motor_1_joint: {trajectory: 10.0, goal: 10.0}
+        qbhand2m1_motor_2_joint: {trajectory: 10.0, goal: 10.0}
+      interface_name: position
+      state_publish_rate: 25.0
+      action_monitor_rate: 10.0
+      # open_loop_control: true   
+      allow_integration_in_goal_trajectories: true
+      deduce_states_from_derivatives: false
+
+qbhand2m2:
+  controller_manager:
+    ros__parameters:
+      update_rate: 25  # Hz
+
+      qbhand2m2_joint_state_broadcaster:
+        type: joint_state_broadcaster/JointStateBroadcaster
+
+      qbhand2m2_synergies_trajectory_controller:
+        type: joint_trajectory_controller/JointTrajectoryController
+      
+      qbhand2m2_motor_positions_trajectory_controller:
+        type: joint_trajectory_controller/JointTrajectoryController
+
+  qbhand2m2_synergies_trajectory_controller: # control the qbhand motors and its relative synergy
+    ros__parameters:
+      command_interfaces:
+        - position
+      state_interfaces:
+        - position
+      joints:
+        - qbhand2m2_synergy_joint
+        - qbhand2m2_manipulation_joint
+      constraints:  # fake values due to the adaptability
+        goal_time: 10.0
+        stopped_velocity_tolerance: 10.0
+        goal_time: 10.0
+        stopped_velocity_tolerance: 10.0
+        qbhand2m2_synergy_joint: {trajectory: 10.0, goal: 10.0}
+        qbhand2m2_manipulation_joint: {trajectory: 10.0, goal: 10.0}
+      interface_name: position
+      state_publish_rate: 25.0
+      action_monitor_rate: 10.0
+      # open_loop_control: true   
+      allow_integration_in_goal_trajectories: true
+      deduce_states_from_derivatives: false
+
+  qbhand2m2_motor_positions_trajectory_controller: # control the qbhand 2 with motor positions
+    ros__parameters:
+      command_interfaces:
+        - position
+      state_interfaces:
+        - position
+      joints:
+        - qbhand2m2_motor_1_joint
+        - qbhand2m2_motor_2_joint
+      constraints:  # fake values due to the adaptability
+        goal_time: 10.0
+        stopped_velocity_tolerance: 10.0
+        goal_time: 10.0
+        stopped_velocity_tolerance: 10.0
+        qbhand2m2_motor_1_joint: {trajectory: 10.0, goal: 10.0}
+        qbhand2m2_motor_2_joint: {trajectory: 10.0, goal: 10.0}
+      interface_name: position
+      state_publish_rate: 25.0
+      action_monitor_rate: 10.0
+      # open_loop_control: true   
+      allow_integration_in_goal_trajectories: true
+      deduce_states_from_derivatives: false
+
+qbhand2m3:
+  controller_manager:
+    ros__parameters:
+      update_rate: 25  # Hz
+
+      qbhand2m3_joint_state_broadcaster:
+        type: joint_state_broadcaster/JointStateBroadcaster
+
+      qbhand2m3_synergies_trajectory_controller:
+        type: joint_trajectory_controller/JointTrajectoryController
+      
+      qbhand2m3_motor_positions_trajectory_controller:
+        type: joint_trajectory_controller/JointTrajectoryController
+
+  qbhand2m3_synergies_trajectory_controller: # control the qbhand motors and its relative synergy
+    ros__parameters:
+      command_interfaces:
+        - position
+      state_interfaces:
+        - position
+      joints:
+        - qbhand2m3_synergy_joint
+        - qbhand2m3_manipulation_joint
+      constraints:  # fake values due to the adaptability
+        goal_time: 10.0
+        stopped_velocity_tolerance: 10.0
+        goal_time: 10.0
+        stopped_velocity_tolerance: 10.0
+        qbhand2m3_synergy_joint: {trajectory: 10.0, goal: 10.0}
+        qbhand2m3_manipulation_joint: {trajectory: 10.0, goal: 10.0}
+      interface_name: position
+      state_publish_rate: 25.0
+      action_monitor_rate: 10.0
+      # open_loop_control: true   
+      allow_integration_in_goal_trajectories: true
+      deduce_states_from_derivatives: false
+
+  qbhand2m3_motor_positions_trajectory_controller: # control the qbhand 2 with motor positions
+    ros__parameters:
+      command_interfaces:
+        - position
+      state_interfaces:
+        - position
+      joints:
+        - qbhand2m3_motor_1_joint
+        - qbhand2m3_motor_2_joint
+      constraints:  # fake values due to the adaptability
+        goal_time: 10.0
+        stopped_velocity_tolerance: 10.0
+        goal_time: 10.0
+        stopped_velocity_tolerance: 10.0
+        qbhand2m3_motor_1_joint: {trajectory: 10.0, goal: 10.0}
+        qbhand2m3_motor_2_joint: {trajectory: 10.0, goal: 10.0}
+      interface_name: position
+      state_publish_rate: 25.0
+      action_monitor_rate: 10.0
+      # open_loop_control: true   
+      allow_integration_in_goal_trajectories: true
+      deduce_states_from_derivatives: false
+
+qbhand2m4:
+  controller_manager:
+    ros__parameters:
+      update_rate: 25  # Hz
+
+      qbhand2m4_joint_state_broadcaster:
+        type: joint_state_broadcaster/JointStateBroadcaster
+
+      qbhand2m4_synergies_trajectory_controller:
+        type: joint_trajectory_controller/JointTrajectoryController
+      
+      qbhand2m4_motor_positions_trajectory_controller:
+        type: joint_trajectory_controller/JointTrajectoryController
+
+  qbhand2m4_synergies_trajectory_controller: # control the qbhand motors and its relative synergy
+    ros__parameters:
+      command_interfaces:
+        - position
+      state_interfaces:
+        - position
+      joints:
+        - qbhand2m4_synergy_joint
+        - qbhand2m4_manipulation_joint
+      constraints:  # fake values due to the adaptability
+        goal_time: 10.0
+        stopped_velocity_tolerance: 10.0
+        goal_time: 10.0
+        stopped_velocity_tolerance: 10.0
+        qbhand2m4_synergy_joint: {trajectory: 10.0, goal: 10.0}
+        qbhand2m4_manipulation_joint: {trajectory: 10.0, goal: 10.0}
+      interface_name: position
+      state_publish_rate: 25.0
+      action_monitor_rate: 10.0
+      # open_loop_control: true   
+      allow_integration_in_goal_trajectories: true
+      deduce_states_from_derivatives: false
+
+  qbhand2m4_motor_positions_trajectory_controller: # control the qbhand 2 with motor positions
+    ros__parameters:
+      command_interfaces:
+        - position
+      state_interfaces:
+        - position
+      joints:
+        - qbhand2m4_motor_1_joint
+        - qbhand2m4_motor_2_joint
+      constraints:  # fake values due to the adaptability
+        goal_time: 10.0
+        stopped_velocity_tolerance: 10.0
+        goal_time: 10.0
+        stopped_velocity_tolerance: 10.0
+        qbhand2m4_motor_1_joint: {trajectory: 10.0, goal: 10.0}
+        qbhand2m4_motor_2_joint: {trajectory: 10.0, goal: 10.0}
+      interface_name: position
+      state_publish_rate: 25.0
+      action_monitor_rate: 10.0
+      # open_loop_control: true   
+      allow_integration_in_goal_trajectories: true
+      deduce_states_from_derivatives: false
+
+qbhand2m5:
+  controller_manager:
+    ros__parameters:
+      update_rate: 25  # Hz
+
+      qbhand2m5_joint_state_broadcaster:
+        type: joint_state_broadcaster/JointStateBroadcaster
+
+      qbhand2m5_synergies_trajectory_controller:
+        type: joint_trajectory_controller/JointTrajectoryController
+      
+      qbhand2m5_motor_positions_trajectory_controller:
+        type: joint_trajectory_controller/JointTrajectoryController
+
+  qbhand2m5_synergies_trajectory_controller: # control the qbhand motors and its relative synergy
+    ros__parameters:
+      command_interfaces:
+        - position
+      state_interfaces:
+        - position
+      joints:
+        - qbhand2m5_synergy_joint
+        - qbhand2m5_manipulation_joint
+      constraints:  # fake values due to the adaptability
+        goal_time: 10.0
+        stopped_velocity_tolerance: 10.0
+        goal_time: 10.0
+        stopped_velocity_tolerance: 10.0
+        qbhand2m5_synergy_joint: {trajectory: 10.0, goal: 10.0}
+        qbhand2m5_manipulation_joint: {trajectory: 10.0, goal: 10.0}
+      interface_name: position
+      state_publish_rate: 25.0
+      action_monitor_rate: 10.0
+      # open_loop_control: true   
+      allow_integration_in_goal_trajectories: true
+      deduce_states_from_derivatives: false
+
+  qbhand2m5_motor_positions_trajectory_controller: # control the qbhand 2 with motor positions
+    ros__parameters:
+      command_interfaces:
+        - position
+      state_interfaces:
+        - position
+      joints:
+        - qbhand2m5_motor_1_joint
+        - qbhand2m5_motor_2_joint
+      constraints:  # fake values due to the adaptability
+        goal_time: 10.0
+        stopped_velocity_tolerance: 10.0
+        goal_time: 10.0
+        stopped_velocity_tolerance: 10.0
+        qbhand2m5_motor_1_joint: {trajectory: 10.0, goal: 10.0}
+        qbhand2m5_motor_2_joint: {trajectory: 10.0, goal: 10.0}
+      interface_name: position
+      state_publish_rate: 25.0
+      action_monitor_rate: 10.0
+      # open_loop_control: true   
+      allow_integration_in_goal_trajectories: true
+      deduce_states_from_derivatives: false
+

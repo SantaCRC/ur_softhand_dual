@@ -1,0 +1,11 @@
+# request
+int32 id
+bool activate
+bool rescan
+int32 max_repeats
+---
+# response
+bool success
+int32 failures
+string message
+qb_device_msgs/Info info

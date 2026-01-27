@@ -283,20 +283,37 @@ def launch_setup(context, *args, **kwargs):
         arguments=["-d", rviz_config_file],
     )
 
+
     # -------------------------------------------------------------------------
     # Spawn Controllers
     # -------------------------------------------------------------------------
     def controller_spawner(controllers, active=True):
-        """Spawns the specified controllers with an option to mark them as inactive."""
+        """Spawns the specified controllers with an option to mark them as inactive.
+        Si el nombre del controlador es de la forma /ns/controller_name, se usa 'ns' como namespace.
+        """
         inactive_flags = ["--inactive"] if not active else []
+
+        # Suponiendo que controllers es una lista de strings (por ejemplo, ["/qbhand2m1/qbhand2m1_joint_state_broadcaster"])
+        ns = ""
+        if controllers and controllers[0].startswith("/"):
+            parts = controllers[0].split("/")
+            # parts[0] es una cadena vacía debido al '/' inicial, parts[1] es el namespace
+            if len(parts) > 1:
+                ns = parts[1]
+
+        # Construir la ruta del controller_manager usando el namespace extraído
+        controller_manager_ns = f"/{ns}/controller_manager" if ns else "/controller_manager"
+
         return Node(
             package="controller_manager",
             executable="spawner",
+            namespace=ns if ns else "",  # Si ns es vacío, no se añade namespace
             arguments=[
-                "--controller-manager", "/controller_manager",
+                "--controller-manager", controller_manager_ns,
                 "--controller-manager-timeout", controller_spawner_timeout,
             ] + inactive_flags + controllers,
         )
+
 
     # Define active and inactive controllers
     controllers_active = [
@@ -495,7 +512,7 @@ def generate_launch_description():
     declared_arguments.append(
         DeclareLaunchArgument(
             "controller_spawner_timeout",
-            default_value="10",
+            default_value="40",
             description="Timeout when spawning controllers.",
         )
     )

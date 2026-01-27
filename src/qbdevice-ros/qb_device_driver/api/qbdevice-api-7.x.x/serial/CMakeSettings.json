@@ -1,0 +1,40 @@
+﻿{
+  "configurations": [
+    {
+      "name": "debug-msvc",
+      "generator": "Ninja",
+      "configurationType": "Debug",
+      "inheritEnvironments": [ "msvc_x64_x64" ],
+      "buildRoot": "${projectDir}\\build\\cmake-build-${name}",
+      "installRoot": "${projectDir}\\build\\cmake-install-${name}",
+      "cmakeCommandArgs": "-DCMAKE_WINDOWS_EXPORT_ALL_SYMBOLS=ON -DBUILD_SHARED_LIBS=ON",
+      "buildCommandArgs": "",
+      "ctestCommandArgs": "-C Debug --output-on-failure",
+      "variables": [
+        {
+          "name": "GTest_DIR",
+          "value": "C:/Program Files (x86)/googletest-distribution",
+          "type": "PATH"
+        }
+      ]
+    },
+    {
+      "name": "release-msvc",
+      "generator": "Ninja",
+      "configurationType": "Release",
+      "inheritEnvironments": [ "msvc_x64_x64" ],
+      "buildRoot": "${projectDir}\\build\\cmake-build-${name}",
+      "installRoot": "${projectDir}\\build\\cmake-install-${name}",
+      "cmakeCommandArgs": "-DCMAKE_WINDOWS_EXPORT_ALL_SYMBOLS=ON -DBUILD_SHARED_LIBS=ON",
+      "buildCommandArgs": "",
+      "ctestCommandArgs": "-C Release --output-on-failure",
+      "variables": [
+        {
+          "name": "GTest_DIR",
+          "value": "C:/Program Files (x86)/googletest-distribution",
+          "type": "PATH"
+        }
+      ]
+    }
+  ]
+}
