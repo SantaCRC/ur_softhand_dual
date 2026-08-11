@@ -1,0 +1,7 @@
+float64 gap
+int64 id 0
+int64 force 50
+int64 speed 50
+---
+int64 status
+

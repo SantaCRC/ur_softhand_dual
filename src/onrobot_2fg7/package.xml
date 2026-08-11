@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>onrobot_2fg7</name>
+  <version>1.0.0</version>
+  <description>A client for the OnRobot 2FG7 gripper XML-RPC server</description>
+  <maintainer email="ddovrat@cs.technion.ac.il">dave</maintainer>
+  <license>Apache-2.0</license>
+  
+  <exec_depend>xmlrpc</exec_depend>
+  <exec_depend>rclpy</exec_depend>
+  <exec_depend>rcl_interfaces</exec_depend>
+  <exec_depend>onrobot_2fg7_interfaces</exec_depend>
+  <exec_depend>ros2launch</exec_depend>
+
+  <test_depend>ament_copyright</test_depend>
+  <test_depend>ament_flake8</test_depend>
+  <test_depend>ament_pep257</test_depend>
+  <test_depend>python3-pytest</test_depend>
+
+  <export>
+    <build_type>ament_python</build_type>
+  </export>
+</package>

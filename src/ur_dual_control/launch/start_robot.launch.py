@@ -38,14 +38,14 @@ def generate_launch_description():
     # Declare launch arguments
     declared_arguments = [
         DeclareLaunchArgument("ur_type", default_value="ur5e", description="Type of UR robot."),
-        DeclareLaunchArgument("reverse_ip", default_value="10.113.36.200", description="IP address of the host PC for reverse connection."),
-        DeclareLaunchArgument("robot_ip_I", default_value="10.113.36.100", description="IP address of left robot."),
+        DeclareLaunchArgument("reverse_ip", default_value="10.113.40.112", description="IP address of the host PC for reverse connection."),
+        DeclareLaunchArgument("robot_ip_I", default_value="10.113.40.10", description="IP address of left robot."),
         DeclareLaunchArgument("script_command_port_I", default_value="50004", description="Script command port for left robot."),
         DeclareLaunchArgument("trajectory_port_I", default_value="50003", description="Trajectory control port for left robot."),
         DeclareLaunchArgument("reverse_port_I", default_value="50001", description="Reverse communication port for left robot."),
         DeclareLaunchArgument("script_sender_port_I", default_value="50002", description="Script sender port for left robot."),
         DeclareLaunchArgument("prefix_I", default_value="ur_dual_I_", description="Prefix for left robot."),
-        DeclareLaunchArgument("robot_ip_D", default_value="10.113.36.247", description="IP address of right robot."),
+        DeclareLaunchArgument("robot_ip_D", default_value="10.113.40.162", description="IP address of right robot."),
         DeclareLaunchArgument("script_command_port_D", default_value="50014", description="Script command port for right robot."),
         DeclareLaunchArgument("trajectory_port_D", default_value="50013", description="Trajectory control port for right robot."),
         DeclareLaunchArgument("reverse_port_D", default_value="50011", description="Reverse communication port for right robot."),

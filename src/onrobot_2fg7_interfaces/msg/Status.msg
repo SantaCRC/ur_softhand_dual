@@ -1,0 +1,18 @@
+int64 status
+bool busy
+bool error_linear_sensor
+bool error_not_calibrated
+bool grip_detected
+float64 finger_height
+float64 finger_length
+bool finger_orientation_outward
+float64 fingertip_offset
+int64 force
+int64 max_force
+float64 max_internal_width
+float64 internal_width
+float64 min_internal_width
+float64 min_external_width
+float64 external_width
+float64 max_external_width
+

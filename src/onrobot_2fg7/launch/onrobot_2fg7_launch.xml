@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+  <node pkg="onrobot_2fg7" exec="status" name="onrobot_2fg7_status_publisher">
+  	<param from="$(find-pkg-share onrobot_2fg7)/config/onrobot_2fg7_status_publisher.yaml" />
+  </node>
+  <node pkg="onrobot_2fg7" exec="grip" name="onrobot_2fg7_grip_service">
+  	<param from="$(find-pkg-share onrobot_2fg7)/config/onrobot_2fg7_grip_service.yaml" />
+  </node>
+</launch>
+

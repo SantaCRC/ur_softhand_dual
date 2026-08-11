@@ -1,0 +1,15 @@
+float64 angle
+float64 angle_speed
+bool busy
+float64 depth
+float64 fingertip_offset
+float64 relative_depth
+bool s1_pushed
+bool s1_triggered
+bool s2_pushed
+bool s2_triggered
+bool safety_failed
+float64 speed
+int64 status
+float64 width
+bool grip_detected

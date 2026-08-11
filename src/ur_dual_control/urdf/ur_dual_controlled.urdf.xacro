@@ -28,7 +28,7 @@
   <!-- Network and control parameters for UR5e I -->
   <xacro:arg name="use_mock_hardware_I" default="false" />
   <xacro:arg name="mock_sensor_commands_I" default="false" />
-  <xacro:arg name="robot_ip_I" default="10.113.36.100" />
+  <xacro:arg name="robot_ip_I" default="10.113.40.10" />
   <xacro:arg name="reverse_ip" default="0.0.0.0" />
   <xacro:arg name="reverse_port_I" default="50006" />
   <xacro:arg name="script_sender_port_I" default="50007" />
@@ -38,7 +38,7 @@
   <!-- Network and control parameters for UR5e D -->
   <xacro:arg name="use_mock_hardware_D" default="false" />
   <xacro:arg name="mock_sensor_commands_D" default="false" />
-  <xacro:arg name="robot_ip_D" default="10.113.36.247" />
+  <xacro:arg name="robot_ip_D" default="10.113.40.162" />
   <xacro:arg name="reverse_port_D" default="50001" />
   <xacro:arg name="script_sender_port_D" default="50002" />
   <xacro:arg name="script_command_port_D" default="50004" />
